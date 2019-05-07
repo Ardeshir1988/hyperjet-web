@@ -12,6 +12,7 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
+            products: [],
             cart: [],
             totalItems: 0,
             totalAmount: 0,
@@ -55,7 +56,7 @@ class App extends React.Component {
         let productID = selectedProducts.id;
         let productQty = selectedProducts.quantity;
         if (this.checkProduct(productID)) {
-            console.log("hi");
+
             let index = cartItem.findIndex(x => x.id == productID);
             cartItem[index].quantity =
                 Number(cartItem[index].quantity) + Number(productQty);
@@ -145,7 +146,7 @@ class App extends React.Component {
 
     return (
 
-          <div>
+       <div className="container">
               <Header
                   cartBounce={this.state.cartBounce}
                   total={this.state.totalAmount}
@@ -161,7 +162,12 @@ class App extends React.Component {
               />
             <Switch>
                 <Route exact path={'/'} render={ props => <Categories {...props} />}/>
-                <Route  path={'/products'} component={Products} />
+                <Route  path={'/products'}  render={props => <Products {...props}
+                                                                       searchTerm={this.state.term}
+                                                                       addToCart={this.handleAddToCart}
+                                                                       productQuantity={this.state.quantity}
+                                                                       updateQuantity={this.updateQuantity}
+                                                                       openModal={this.openModal} />} />
             </Switch>
             <Footer/>
           </div>

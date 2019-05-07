@@ -1,11 +1,11 @@
 
 import React, { Component } from "react";
-
+import Counter from "./Counter";
 
 class Product extends Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     // state = {
     //     redirect: false
@@ -22,8 +22,6 @@ class Product extends Component {
     //         return <Redirect to='/products' />
     //     }
     // };
-
-
 
     // {
     //         "productId": 4420,
@@ -47,12 +45,106 @@ class Product extends Component {
     //         "product_priority": null,
     //         "productStepDiscount": 0
     //     }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedProduct: {},
+            quickViewProdcut: {},
+            isAdded: false
+        };
+    }
+    addToCart(image, name, price, id, quantity) {
+        this.setState(
+            {
+                selectedProduct: {
+                    image: image,
+                    name: name,
+                    price: price,
+                    id: id,
+                    quantity: quantity
+                }
+            },
+            function() {
+                this.props.addToCart(this.state.selectedProduct);
+            }
+        );
+        this.setState(
+            {
+                isAdded: true
+            },
+            function() {
+                setTimeout(() => {
+                    this.setState({
+                        isAdded: false,
+                        selectedProduct: {}
+                    });
+                }, 3500);
+            }
+        );
+    }
+    quickView(image, name, price, id) {
+        this.setState(
+            {
+                quickViewProdcut: {
+                    image: image,
+                    name: name,
+                    price: price,
+                    id: id
+                }
+            },
+            function() {
+                this.props.openModal(this.state.quickViewProdcut);
+            }
+        );
+    }
+
     render() {
+        let image = 'http://maxproapp.com/files/'+this.props.productImage;
+        let name = this.props.productName;
+        let price = this.props.productPrice;
+        let id = this.props.productId;
+        let quantity = this.props.productQuantity;
+        console.log('id='+id+'-name='+quantity);
         return (
-            <div>
-                    <img src={'http://5.9.250.180/files/'+this.props.productImage} alt={'product_pic1'}/>
-                <h4>{this.props.productName}</h4>
-                <h4>{this.props.productPrice}</h4>
+            <div className="product">
+                <div className="product-image">
+                <img
+                    src={image}
+                    alt={name}
+                    onClick={this.quickView.bind(
+                        this,
+                        image,
+                        name,
+                        price,
+                        id,
+                        quantity
+                    )}
+                />
+                </div>
+                <h4 className="product-name">{name}</h4>
+                <h4 className="product-price">{price}</h4>
+                <div className="product-action">
+                    <Counter
+                        productQuantity={quantity}
+                        updateQuantity={this.props.updateQuantity}
+                        resetQuantity={this.resetQuantity}
+                    />
+                    <button
+                        className={!this.state.isAdded ? "" : "added"}
+                        type="button"
+                        onClick={this.addToCart.bind(
+                            this,
+                            image,
+                            name,
+                            price,
+                            id,
+                            quantity
+                        )}
+                    >
+                        {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+                    </button>
+                </div>
             </div>
         );
     }

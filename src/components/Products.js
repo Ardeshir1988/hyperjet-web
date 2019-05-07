@@ -7,6 +7,7 @@ import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
 class Products extends Component {
 
+
     state = {
         productList: []
     };
@@ -52,6 +53,12 @@ class Products extends Component {
         let term = this.props.searchTerm;
         let x;
 
+        function searchingFor(term) {
+            return function(x) {
+                return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
+            };
+        }
+
         productsData=   this.state.productList.map(product => {
                 //        "categoryId": 23,
                 //         "categoryName": "محصولات جدید",
@@ -64,6 +71,10 @@ class Products extends Component {
                         productImage={product.product_pic1}
                         productPrice={product.product_price}
                         productId={product.productId}
+                        addToCart={this.props.addToCart}
+                        productQuantity={this.props.productQuantity}
+                        updateQuantity={this.props.updateQuantity}
+                        openModal={this.props.openModal}
                     />
                 );
             });
