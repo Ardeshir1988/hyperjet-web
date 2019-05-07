@@ -5,6 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Categories from "./Categories";
 import Products from "./Products";
+import QuickView from "./QuickView"
 
 
 class App extends React.Component {
@@ -170,6 +171,11 @@ class App extends React.Component {
                                                                        openModal={this.openModal} />} />
             </Switch>
             <Footer/>
+           <QuickView
+               product={this.state.quickViewProduct}
+               openModal={this.state.modalActive}
+               closeModal={this.closeModal}
+           />
           </div>
     );
   }
