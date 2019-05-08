@@ -105,7 +105,6 @@ class Product extends Component {
         let price = this.props.productPrice;
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
-        console.log('id='+id+'-name='+quantity);
         return (
             <div className="product">
                 <div className="product-image">

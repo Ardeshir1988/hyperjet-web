@@ -14,7 +14,7 @@ class Categories extends Component {
     componentDidMount() {
     let url =
         "http://5.9.250.180/service/product/getcats";
-    let sz='Basic dXNlcjE6MXVzZXI=';
+    let sz='Basic '+btoa('user1:1user');
     axios.get(url, {headers:{'Authorization': sz}})
         .then(response => {
             const cats=response.data;

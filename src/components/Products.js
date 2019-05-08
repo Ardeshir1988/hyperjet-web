@@ -4,26 +4,68 @@ import axios from "axios";
 import queryString from 'query-string';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import Types from "./Types";
+import {withRouter} from 'react-router-dom'
+import Category from "./Category";
 
 class Products extends Component {
 
 
     state = {
+
         productList: []
     };
 
+
     componentDidMount() {
         const values = queryString.parse(this.props.location.search);
-        console.log(values.catid);
 
-        let url = "http://5.9.250.180/service/product/productbycat?catid="+values.catid;
+        if (values.typeid===undefined) {
+            console.log('createProductsPageWithTypes');
+            this.createProductsPageWithTypes(values.catid);
+            this.setState({typeid:0});
+            this.setState({catid:values.catid});
+
+        }
+        else {
+            console.log('createProductsPageWithoutTypes');
+            this.createProductsPageWithoutTypes(values.typeid);
+            this.setState({typeid:values.typeid});
+            this.setState({catid:0});
+        }
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.location.search !== this.props.location.search) {
+            console.log('NotEQQQQQQQUAL============');
+            this.componentDidMount();
+        }
+    }
+
+    createProductsPageWithTypes(catid){
+        console.log('catid======'+catid);
+        let url = "http://5.9.250.180/service/product/productbycat?catid="+catid;
+
         let sz='Basic dXNlcjE6MXVzZXI=';
         axios.get(url, {headers:{'Authorization': sz}})
             .then(response => {
                 const productList=response.data;
                 this.setState({productList});
             });
+        this.setState({catid:catid})
+    }
+    createProductsPageWithoutTypes(typeid){
+        console.log('typeid======'+typeid);
+        let url = "http://5.9.250.180/service/product/productbytype?typeid="+typeid;
 
+        let sz='Basic dXNlcjE6MXVzZXI=';
+        axios.get(url, {headers:{'Authorization': sz}})
+            .then(response => {
+                const productList=response.data;
+                this.setState({productList});
+            });
+        this.setState({typeid:typeid})
     }
 
     //         "productId": 4420,
@@ -48,7 +90,6 @@ class Products extends Component {
     //         "productStepDiscount": 0
 
     render() {
-
         let productsData;
         let term = this.props.searchTerm;
         let x;
@@ -65,6 +106,7 @@ class Products extends Component {
                 //         "categoryPic": "new-product-category.png",
                 //         "position": 1
                 return (
+                    <div>
                     <Product
                         key={product.productId}
                         productName={product.productName}
@@ -76,6 +118,7 @@ class Products extends Component {
                         updateQuantity={this.props.updateQuantity}
                         openModal={this.props.openModal}
                     />
+                    </div>
                 );
             });
         let view;
@@ -84,18 +127,37 @@ class Products extends Component {
         } else if (productsData.length <= 0 && term) {
             view = <NoResults />;
         } else {
-            view = (
-                <CSSTransitionGroup
-                    transitionName="fadeIn"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}
-                    component="div"
-                    className="products"
-                >
-                    {productsData}
-                </CSSTransitionGroup>
-            );
+            if (this.state.typeid === 0) {
+                view = (
+
+                    <CSSTransitionGroup
+                        transitionName="fadeIn"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={300}
+                        component="div"
+                        className="products"
+                    >
+                        <Types         {...this.props} catid={this.state.catid}/>
+                        {productsData}
+                    </CSSTransitionGroup>
+                );
+            } else {
+
+                view = (
+
+                    <CSSTransitionGroup
+                        transitionName="fadeIn"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={300}
+                        component="div"
+                        className="products"
+                    >
+                        {productsData}
+                    </CSSTransitionGroup>
+                );
+            }
         }
+
         return <div className="products-wrapper">{view}</div>;
     }
 }
