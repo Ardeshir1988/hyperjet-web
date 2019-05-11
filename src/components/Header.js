@@ -4,6 +4,7 @@ import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
 import "../scss/style.scss";
+import Dm from "../utils/DataManager";
 
 class Header extends Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class Header extends Component {
             this.handleClickOutside.bind(this),
             true
         );
+
     }
     componentWillUnmount() {
         document.removeEventListener(
@@ -67,7 +69,13 @@ class Header extends Component {
             true
         );
     }
+    updateBasket(){
+        if (Dm.getBasketData())
+            if (Dm.getBasketData().length > this.state.cart)
+                this.setState( {cart:Dm.getBasketData()});
+    }
     render() {
+        this.updateBasket();
         let cartItems;
         cartItems = this.state.cart.map(product => {
             return (

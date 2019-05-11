@@ -12,7 +12,8 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-transition-group": "^1.1.2",
     "query-string": "^6.5.0",
-    "node-sass": "^4.9.0"
+    "node-sass": "^4.9.0",
+    "store": "^2.0.12"
   },
   "scripts": {
     "start": "react-scripts start",

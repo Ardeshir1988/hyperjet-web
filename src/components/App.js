@@ -5,8 +5,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Categories from "./Categories";
 import Products from "./Products";
-import QuickView from "./QuickView"
-
+import QuickView from "./QuickView";
+import Dm from "../utils/DataManager";
 
 class App extends React.Component {
 
@@ -14,9 +14,9 @@ class App extends React.Component {
         super();
         this.state = {
             products: [],
-            cart: [],
-            totalItems: 0,
-            totalAmount: 0,
+            cart: this.initialBasket(),
+            totalItems: this.initialBasket().length,
+            totalAmount: this.intialAmount(),
             term: "",
             category: "",
             cartBounce: false,
@@ -35,6 +35,7 @@ class App extends React.Component {
         this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+
     }
 
 
@@ -92,6 +93,7 @@ class App extends React.Component {
         this.setState({
             cart: cart
         });
+        Dm.removeProductFromBasket(id);
         this.sumTotalItems(this.state.cart);
         this.sumTotalAmount(this.state.cart);
         e.preventDefault();
@@ -142,11 +144,32 @@ class App extends React.Component {
         });
     }
 
+    updateBasket(){
+            if (Dm.getBasketData())
+                if (Dm.getBasketData().length > this.state.cart)
+                    this.setState( {cart:Dm.getBasketData()});
+        }
+    initialBasket(){
+        if (Dm.getBasketData()) {
+            return Dm.getBasketData();
+        }else
+        return [];
+        }
+     intialAmount(){
+            if (Dm.getBasketData()) {
+                let cart= Dm.getBasketData();
+                let total = 0;
+
+                for (var i = 0; i < cart.length; i++) {
+                    total += cart[i].price * parseInt(cart[i].quantity);
+                }
+                return total;
+            }else
+                return 0;
+        }
     render() {
-
-
+    this.updateBasket();
     return (
-
        <div className="container">
               <Header
                   cartBounce={this.state.cartBounce}

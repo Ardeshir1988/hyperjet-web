@@ -1,11 +1,8 @@
 
 import React, { Component } from "react";
 import Counter from "./Counter";
-
+import Dm from "../utils/DataManager";
 class Product extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
 
     // state = {
     //     redirect: false
@@ -54,7 +51,9 @@ class Product extends Component {
             isAdded: false
         };
     }
+
     addToCart(image, name, price, id, quantity) {
+        Dm.saveProductToBasket(id,name,image,price);
         this.setState(
             {
                 selectedProduct: {
@@ -83,6 +82,7 @@ class Product extends Component {
             }
         );
     }
+
     quickView(image, name, price, id) {
         this.setState(
             {
