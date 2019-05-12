@@ -5,8 +5,7 @@ import queryString from 'query-string';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Types from "./Types";
-import {withRouter} from 'react-router-dom'
-import Category from "./Category";
+import Urls from "../utils/URLs";
 
 class Products extends Component {
 
@@ -38,17 +37,14 @@ class Products extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.location.search !== this.props.location.search) {
-            console.log('NotEQQQQQQQUAL============');
             this.componentDidMount();
         }
     }
 
     createProductsPageWithTypes(catid){
-        console.log('catid======'+catid);
-        let url = "http://5.9.250.180/service/product/productbycat?catid="+catid;
 
-        let sz='Basic dXNlcjE6MXVzZXI=';
-        axios.get(url, {headers:{'Authorization': sz}})
+        let url = Urls.baseUrl()+"product/productbycat?catid="+catid;
+        axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const productList=response.data;
                 this.setState({productList});
@@ -57,10 +53,8 @@ class Products extends Component {
     }
     createProductsPageWithoutTypes(typeid){
         console.log('typeid======'+typeid);
-        let url = "http://5.9.250.180/service/product/productbytype?typeid="+typeid;
-
-        let sz='Basic dXNlcjE6MXVzZXI=';
-        axios.get(url, {headers:{'Authorization': sz}})
+        let url = Urls.baseUrl()+"/product/productbytype?typeid="+typeid;
+        axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const productList=response.data;
                 this.setState({productList});

@@ -3,7 +3,7 @@ import Category from "./Category";
 import axios from "axios/index";
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-
+import Urls from "../utils/URLs"
 class Categories extends Component {
 
 
@@ -12,10 +12,8 @@ class Categories extends Component {
     };
 
     componentDidMount() {
-    let url =
-        "http://5.9.250.180/service/product/getcats";
-    let sz='Basic '+btoa('user1:1user');
-    axios.get(url, {headers:{'Authorization': sz}})
+    let url = Urls.baseUrl()+"product/getcats";
+    axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
         .then(response => {
             const cats=response.data;
         this.setState({cats});
