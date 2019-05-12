@@ -70,7 +70,7 @@ function getStepContent(step) {
     }
 }
 
-class Registeration extends React.Component {
+class Registration extends React.Component {
     state = {
         activeStep: 0,
         mobile:'',
@@ -191,8 +191,8 @@ class Registeration extends React.Component {
     }
 }
 
-Registeration.propTypes = {
+Registration.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Registeration);
+export default withStyles(styles)(Registration);
