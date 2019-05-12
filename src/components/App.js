@@ -8,6 +8,7 @@ import Products from "./Products";
 import QuickView from "./QuickView";
 import Dm from "../utils/DataManager";
 
+
 class App extends React.Component {
 
     constructor() {
@@ -184,6 +185,7 @@ class App extends React.Component {
                   updateQuantity={this.updateQuantity}
                   productQuantity={this.state.moq}
               />
+
             <Switch>
                 <Route exact path={'/'} render={ props => <Categories {...props} />}/>
                 <Route  path={'/products'}  render={props => <Products {...props}
@@ -193,6 +195,7 @@ class App extends React.Component {
                                                                        updateQuantity={this.updateQuantity}
                                                                        openModal={this.openModal} />} />
             </Switch>
+
             <Footer/>
            <QuickView
                product={this.state.quickViewProduct}

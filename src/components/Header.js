@@ -6,6 +6,7 @@ import { findDOMNode } from "react-dom";
 import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 
+import RightSideMenu from './SideMenu';
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +15,11 @@ class Header extends Component {
             cart: this.props.cartItems,
             mobileSearch: false
         };
+
+
     }
+
+
     handleCart(e) {
         e.preventDefault();
         this.setState({
@@ -226,7 +231,9 @@ class Header extends Component {
                             </div>
                         </div>
                     </div>
+                    <RightSideMenu />
                 </div>
+
             </header>
         );
     }

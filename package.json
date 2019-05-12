@@ -13,7 +13,9 @@
     "react-transition-group": "^1.1.2",
     "query-string": "^6.5.0",
     "node-sass": "^4.9.0",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
