@@ -4,12 +4,15 @@ import store from 'store';
 class DataManager {
     
 
-    static setUserData(){
-
+    static setUserMobile(mobile){
+        store.set('user',{mobile:mobile})
     }
 
-    static getUserData(){
-
+    static getUserMobile(){
+        let user=store.get('user');
+        if (user)
+        return user.mobile;
+        else return 0;
     }
    static saveProductToBasket(id,name,img,price){
 

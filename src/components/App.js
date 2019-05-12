@@ -7,7 +7,9 @@ import Categories from "./Categories";
 import Products from "./Products";
 import QuickView from "./QuickView";
 import Dm from "../utils/DataManager";
-
+import Smenu from "../components/SideMenu";
+import SignIn from "./SignIn";
+import Checkout from "./Registeration";
 
 class App extends React.Component {
 
@@ -169,9 +171,10 @@ class App extends React.Component {
                 return 0;
         }
     render() {
-    this.updateBasket();
+    // this.updateBasket();
     return (
        <div className="container">
+           {/*<Checkout />*/}
               <Header
                   cartBounce={this.state.cartBounce}
                   total={this.state.totalAmount}
