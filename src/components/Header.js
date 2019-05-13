@@ -5,9 +5,9 @@ import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
 import "../scss/style.scss";
 import Dm from "../utils/DataManager";
-
 import RightSideMenu from './SideMenu';
 import AppBar from "@material-ui/core/es/AppBar/AppBar";
+import Basket from "./Basket";
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -129,13 +129,7 @@ class Header extends Component {
             <header>
                 <AppBar color={"inherit"}>
                 <div className="container">
-                    <div className="brand">
-                        <img
-                            className="logo"
-                            src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png"
-                            alt="Veggy Brand Logo"
-                        />
-                    </div>
+           <Basket />
 
                     <div className="search">
                         <a
