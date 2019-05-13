@@ -14,7 +14,28 @@ class DataManager {
         return user.mobile;
         else return 0;
     }
-   static saveProductToBasket(id,name,img,price){
+    static setTempToken(token){
+        store.set('temp',{tempToken:token})
+    }
+    static getTempToken(){
+        return store.get('temp');
+    }
+    static setToken(token){
+        let mobile =this.getUserMobile();
+        store.set('user',{mobile:mobile,token:token});
+        store.remove('temp');
+        store.remove('confirmcode');
+    }
+    static getUserData(){
+        return store.get('user');
+    }
+    static setConfirmCode(code){
+        store.set('confirmcode',{code:code});
+    }
+    static getConfirmCode(){
+        return store.get('confirmcode');
+    }
+    static saveProductToBasket(id,name,img,price){
 
         let storedBasket =store.get('basket');
         if (storedBasket) {

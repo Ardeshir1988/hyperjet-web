@@ -47,12 +47,10 @@ class SignIn extends React.Component{
     }
 
     handleChange (event) {
-        this.setState( {mobile: event.target.value} )
+        Dm.setConfirmCode(  event.target.value )
     }
 
-    setMobileAndRedirect(){
-        Dm.setUserMobile(this.state.mobile);
-    }
+
     render() {
         const { classes } = this.props;
 

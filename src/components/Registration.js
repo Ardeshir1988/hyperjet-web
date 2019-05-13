@@ -17,6 +17,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import getThemeProps from "@material-ui/core/es/styles/getThemeProps";
+import Urls from "../utils/URLs";
+import axios from "axios";
 
 
 const styles = theme => ({
@@ -80,14 +83,46 @@ class Registration extends React.Component {
 
 
     handleNext = () => {
-        if (Dm.getUserMobile().length===11 && Dm.getUserMobile().startsWith('09')) {
+        if (this.state.activeStep === 0) {
+            let mobile = Dm.getUserMobile();
+            if (mobile && mobile.length === 11 && mobile.startsWith('09')) {
+                this.getTempToken(mobile);
+                this.setState(state => ({
+                    activeStep: state.activeStep + 1,
+                }));
+
+            } else {
+                this.setState({msg: true})
+            }
+        }else {
+            console.log('=====Active========'+this.state.activeStep);
+            this.confirmMobile();
             this.setState(state => ({
                 activeStep: state.activeStep + 1,
             }));
-        }else {
-           this.setState({msg:true})
         }
     };
+    getTempToken(mobile){
+
+        let url = Urls.baseUrl()+"user/register?mobile="+mobile;
+        axios.post(url, null,{headers:{'Authorization': Urls.getAuthToken()}})
+            .then(response => {
+                const temp=response.data;
+                Dm.setTempToken(temp.tempToken);
+            });
+    }
+    confirmMobile(){
+        let code=Dm.getConfirmCode().code;
+        let tempToken=Dm.getTempToken().tempToken;
+        let userConfirm={id:tempToken,confirmcode:code,message:''};
+        console.log(userConfirm);
+        let url = Urls.baseUrl()+"user/confirm";
+        axios.post(url, userConfirm,{headers:{'Authorization': Urls.getAuthToken()}})
+            .then(response => {
+                const userToken=response.data;
+                Dm.setToken(userToken.token);
+            });
+    }
 
     handleBack = () => {
         this.setState(state => ({
@@ -125,15 +160,14 @@ class Registration extends React.Component {
                                 </Step>
                             ))}
                         </Stepper>
-                        <React.Fragment setMobile={()=>this.setMobile}>
+                        <React.Fragment>
                             {activeStep === steps.length ? (
                                 <React.Fragment>
                                     <Typography variant="h5" gutterBottom>
-                                        Thank you for your order.
+                                        به هایپرجت خوش آمدید
                                     </Typography>
                                     <Typography variant="subtitle1">
-                                        Your order number is #2001539. We have emailed your order confirmation, and will
-                                        send you an update when your order has shipped.
+                                        مشتاقانه جهت خدمتگذاری آماده هستیم
                                     </Typography>
                                 </React.Fragment>
                             ) : (
@@ -194,5 +228,4 @@ class Registration extends React.Component {
 Registration.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(Registration);
