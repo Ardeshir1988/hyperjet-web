@@ -1,6 +1,7 @@
 
 import React, { Component } from "react";
 import Counter from "./Counter";
+import Card from '@material-ui/core/Card';
 import Dm from "../utils/DataManager";
 class Product extends Component {
 
@@ -106,7 +107,8 @@ class Product extends Component {
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
         return (
-            <div className="product">
+            <Card className="product">
+
                 <div className="product-image">
                 <img
                     src={image}
@@ -144,7 +146,8 @@ class Product extends Component {
                         {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
                     </button>
                 </div>
-            </div>
+
+            </Card>
         );
     }
 }

@@ -7,6 +7,7 @@ import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 
 import RightSideMenu from './SideMenu';
+import AppBar from "@material-ui/core/es/AppBar/AppBar";
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -84,6 +85,7 @@ class Header extends Component {
         let cartItems;
         cartItems = this.state.cart.map(product => {
             return (
+
                 <li className="cart-item" key={product.name}>
                     <img className="product-image" src={product.image} />
                     <div className="product-info">
@@ -123,7 +125,9 @@ class Header extends Component {
             );
         }
         return (
+
             <header>
+                <AppBar color={"inherit"}>
                 <div className="container">
                     <div className="brand">
                         <img
@@ -233,8 +237,9 @@ class Header extends Component {
                     </div>
                     <RightSideMenu />
                 </div>
-
+            </AppBar>
             </header>
+
         );
     }
 }
