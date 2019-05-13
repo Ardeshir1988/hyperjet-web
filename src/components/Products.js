@@ -100,7 +100,6 @@ class Products extends Component {
                 //         "categoryPic": "new-product-category.png",
                 //         "position": 1
                 return (
-                    <div>
                     <Product
                         key={product.productId}
                         productName={product.productName}
@@ -112,7 +111,6 @@ class Products extends Component {
                         updateQuantity={this.props.updateQuantity}
                         openModal={this.props.openModal}
                     />
-                    </div>
                 );
             });
         let view;
