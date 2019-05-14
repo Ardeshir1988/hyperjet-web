@@ -297,9 +297,10 @@ header {
     .amount {
       color: $gray-dark;
       font-weight: 700;
+      font-size: 12px;
       text-align: right;
       &:before {
-        content: "₹ ";
+        content: "تومان";
       }
     }
   }

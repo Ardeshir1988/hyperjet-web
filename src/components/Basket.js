@@ -6,13 +6,11 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import IconButton from "@material-ui/core/IconButton";
-
+import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Button from '@material-ui/core/Button';
 
 
 const styles = {
@@ -37,40 +35,27 @@ class Basket extends React.Component {
     };
 
     render() {
+        const quantity='تعداد';
+
+        const totalAmount='مجموع خرید';
+        const deliveryFee='هزینه تحویل';
+        const checkout='خرید';
+        const toman='تومان';
+
         const { classes } = this.props;
 
         const sideList = (
             <div className={classes.list}>
                 <List>
-
-
-                    <li className="cart-item" >
-
-
-                        <div className="product-total">
-                            <p className="quantity">
-                                2
-                            </p>
-                            <p className="amount">25000</p>
-                        </div>
-                        {/*<a*/}
-                        {/*    className="product-remove"*/}
-                        {/*    href="#"*/}
-
-                        {/*>*/}
-                        {/*    ×*/}
-                        {/*</a>*/}
-                        <div className="product-info">
-                            <p className="product-name">لوبیا سبز باغ عرفان</p>
-                            <p className="product-price">12500</p>
-                        </div>
-                        <img className="product-image" src='http://maxproapp.com/files/farsi-6262586802384.png' />
-                    </li>
-
-
-
-
-
+                    {this.props.cart.map(p=> {
+                        return (<BasketProduct
+                        id={p.id}
+                        name={p.name}
+                        price={p.price}
+                        quantity={p.quantity}
+                        image={p.image}/>);
+                        }
+                    )}
 
                     {/*{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
                     {/*    <ListItem button key={text}>*/}
@@ -81,12 +66,31 @@ class Basket extends React.Component {
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+
+                        <ListItem>
+                            <ListItemText primary={this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0) } />
+                            <ListItemText primary={quantity} />
+
                         </ListItem>
-                    ))}
+
+                    <ListItem>
+                        <ListItemText primary={this.props.total} />
+                        <ListItemText primary={totalAmount} />
+
+                    </ListItem>
+                    <ListItem>
+                        <ListItemText primary={6000} />
+                        <ListItemText primary={deliveryFee} />
+                    </ListItem>
+                    <ListItem>
+
+                            <ListItemText primary={6000} />
+                            <ListItemText primary={this.props.total} />
+
+                    <Button variant="contained" color="primary" className={classes.button}>
+                        {checkout}
+                    </Button>
+                    </ListItem>
                 </List>
             </div>
         );

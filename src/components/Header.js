@@ -48,32 +48,32 @@ class Header extends Component {
             }
         );
     }
-    handleClickOutside(event) {
-        const cartNode = findDOMNode(this.refs.cartPreview);
-        const buttonNode = findDOMNode(this.refs.cartButton);
-        if (cartNode.classList.contains("active")) {
-            if (!cartNode || !cartNode.contains(event.target)) {
-                this.setState({
-                    showCart: false
-                });
-                event.stopPropagation();
-            }
-        }
-    }
+    // handleClickOutside(event) {
+    //     const cartNode = findDOMNode(this.refs.cartPreview);
+    //     const buttonNode = findDOMNode(this.refs.cartButton);
+    //     if (cartNode.classList.contains("active")) {
+    //         if (!cartNode || !cartNode.contains(event.target)) {
+    //             this.setState({
+    //                 showCart: false
+    //             });
+    //             event.stopPropagation();
+    //         }
+    //     }
+    // }
     componentDidMount() {
-        document.addEventListener(
-            "click",
-            this.handleClickOutside.bind(this),
-            true
-        );
+        // document.addEventListener(
+        //     "click",
+        //     this.handleClickOutside.bind(this),
+        //     true
+        // );
 
     }
     componentWillUnmount() {
-        document.removeEventListener(
-            "click",
-            this.handleClickOutside.bind(this),
-            true
-        );
+        // document.removeEventListener(
+        //     "click",
+        //     this.handleClickOutside.bind(this),
+        //     true
+        // );
     }
     updateBasket(){
         if (Dm.getBasketData())
@@ -129,7 +129,7 @@ class Header extends Component {
             <header>
                 <AppBar color={"inherit"}>
                 <div className="container">
-           <Basket />
+           <Basket  cart={this.state.cart} total={this.props.total}/>
 
                     <div className="search">
                         <a
@@ -174,61 +174,61 @@ class Header extends Component {
                         </form>
                     </div>
 
-                    <div className="cart">
-                        <div className="cart-info">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>No. of items</td>
-                                    <td>:</td>
-                                    <td>
-                                        <strong>{this.props.totalItems}</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Sub Total</td>
-                                    <td>:</td>
-                                    <td>
-                                        <strong>{this.props.total}</strong>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <a
-                            className="cart-icon"
-                            href="#"
-                            onClick={this.handleCart.bind(this)}
-                            ref="cartButton"
-                        >
-                            <img
-                                className={this.props.cartBounce ? "tada" : " "}
-                                src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
-                                alt="Cart"
-                            />
-                            {this.props.totalItems ? (
-                                <span className="cart-count">{this.props.totalItems}</span>
-                            ) : (
-                                ""
-                            )}
-                        </a>
-                        <div
-                            className={
-                                this.state.showCart ? "cart-preview active" : "cart-preview"
-                            }
-                            ref="cartPreview"
-                        >
-                            <CartScrollBar>{view}</CartScrollBar>
-                            <div className="action-block">
-                                <button
-                                    type="button"
-                                    className={this.state.cart.length > 0 ? " " : "disabled"}
-                                >
-                                    PROCEED TO CHECKOUT
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div className="cart">*/}
+                    {/*    <div className="cart-info">*/}
+                    {/*        <table>*/}
+                    {/*            <tbody>*/}
+                    {/*            <tr>*/}
+                    {/*                <td>No. of items</td>*/}
+                    {/*                <td>:</td>*/}
+                    {/*                <td>*/}
+                    {/*                    <strong>{this.props.totalItems}</strong>*/}
+                    {/*                </td>*/}
+                    {/*            </tr>*/}
+                    {/*            <tr>*/}
+                    {/*                <td>Sub Total</td>*/}
+                    {/*                <td>:</td>*/}
+                    {/*                <td>*/}
+                    {/*                    <strong>{this.props.total}</strong>*/}
+                    {/*                </td>*/}
+                    {/*            </tr>*/}
+                    {/*            </tbody>*/}
+                    {/*        </table>*/}
+                    {/*    </div>*/}
+                    {/*    <a*/}
+                    {/*        className="cart-icon"*/}
+                    {/*        href="#"*/}
+                    {/*        onClick={this.handleCart.bind(this)}*/}
+                    {/*        ref="cartButton"*/}
+                    {/*    >*/}
+                    {/*        <img*/}
+                    {/*            className={this.props.cartBounce ? "tada" : " "}*/}
+                    {/*            src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"*/}
+                    {/*            alt="Cart"*/}
+                    {/*        />*/}
+                    {/*        {this.props.totalItems ? (*/}
+                    {/*            <span className="cart-count">{this.props.totalItems}</span>*/}
+                    {/*        ) : (*/}
+                    {/*            ""*/}
+                    {/*        )}*/}
+                    {/*    </a>*/}
+                    {/*    <div*/}
+                    {/*        className={*/}
+                    {/*            this.state.showCart ? "cart-preview active" : "cart-preview"*/}
+                    {/*        }*/}
+                    {/*        ref="cartPreview"*/}
+                    {/*    >*/}
+                    {/*        <CartScrollBar>{view}</CartScrollBar>*/}
+                    {/*        <div className="action-block">*/}
+                    {/*            <button*/}
+                    {/*                type="button"*/}
+                    {/*                className={this.state.cart.length > 0 ? " " : "disabled"}*/}
+                    {/*            >*/}
+                    {/*                PROCEED TO CHECKOUT*/}
+                    {/*            </button>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     <RightSideMenu />
                 </div>
             </AppBar>

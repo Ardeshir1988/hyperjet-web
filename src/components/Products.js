@@ -18,13 +18,11 @@ class Products extends Component {
 
     componentDidMount() {
         const values = queryString.parse(this.props.location.search);
-
         if (values.typeid===undefined) {
             console.log('createProductsPageWithTypes');
             this.createProductsPageWithTypes(values.catid);
             this.setState({typeid:0});
             this.setState({catid:values.catid});
-
         }
         else {
             console.log('createProductsPageWithoutTypes');
@@ -32,12 +30,23 @@ class Products extends Component {
             this.setState({typeid:values.typeid});
             this.setState({catid:0});
         }
-
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.location.search !== this.props.location.search) {
-            this.componentDidMount();
+            const values = queryString.parse(this.props.location.search);
+            if (values.typeid===undefined) {
+                console.log('createProductsPageWithTypes');
+                this.createProductsPageWithTypes(values.catid);
+                this.setState({typeid:0});
+                this.setState({catid:values.catid});
+            }
+            else {
+                console.log('createProductsPageWithoutTypes');
+                this.createProductsPageWithoutTypes(values.typeid);
+                this.setState({typeid:values.typeid});
+                this.setState({catid:0});
+            }
         }
     }
 
@@ -53,7 +62,7 @@ class Products extends Component {
     }
     createProductsPageWithoutTypes(typeid){
         console.log('typeid======'+typeid);
-        let url = Urls.baseUrl()+"/product/productbytype?typeid="+typeid;
+        let url = Urls.baseUrl()+"product/productbytype?typeid="+typeid;
         axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const productList=response.data;
@@ -84,6 +93,7 @@ class Products extends Component {
     //         "productStepDiscount": 0
 
     render() {
+        console.log("=====ProductsRender=====");
         let productsData;
         let term = this.props.searchTerm;
         let x;
