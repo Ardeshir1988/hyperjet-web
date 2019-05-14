@@ -149,7 +149,17 @@ class Product extends Component {
                     {/*    {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}*/}
                     {/*</button>*/}
                     <IconButton color="default" aria-label="Add to shopping cart">
-                        <AddShoppingCart/>
+                        <AddShoppingCart
+                            onClick={this.addToCart.bind(
+                                    this,
+                                    image,
+                                    name,
+                                    price,
+                                    id,
+                                    quantity
+                                )}
+
+                        />
                     </IconButton>
 
                 </div>
