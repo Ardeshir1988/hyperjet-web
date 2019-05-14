@@ -4,7 +4,7 @@ class Type extends Component{
 
     redirectToTarget = () => {
         console.log(this.props.typeid);
-        this.props.history.push(`/products?typeid=`+this.props.typeId)
+        this.props.history.push(`/type_products?typeid=`+this.props.typeId)
     };
 
     render() {

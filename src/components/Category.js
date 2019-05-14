@@ -7,7 +7,7 @@ class Category extends Component {
 
 
     redirectToTarget = () => {
-        this.props.history.push(`/products?catid=`+this.props.categoryId)
+        this.props.history.push(`/cat_products?catid=`+this.props.categoryId)
     };
 
 

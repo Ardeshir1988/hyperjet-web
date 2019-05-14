@@ -7,7 +7,7 @@ import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Types from "./Types";
 import Urls from "../utils/URLs";
 
-class Products extends Component {
+class ProductsWithTypes extends Component {
 
 
     state = {
@@ -18,15 +18,13 @@ class Products extends Component {
 
     componentDidMount() {
         const values = queryString.parse(this.props.location.search);
-        let typeid=values.typeid;
-        console.log('typeid======'+typeid);
-        let url = Urls.baseUrl()+"product/productbytype?typeid="+typeid;
+        let url = Urls.baseUrl()+"product/productbycat?catid="+values.catid;
         axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const productList=response.data;
                 this.setState({productList});
             });
-        this.setState({typeid:typeid})
+        this.setState({catid:values.catid});
     }
 
 
@@ -65,24 +63,24 @@ class Products extends Component {
         }
 
         productsData=   this.state.productList.map(product => {
-                //        "categoryId": 23,
-                //         "categoryName": "محصولات جدید",
-                //         "categoryPic": "new-product-category.png",
-                //         "position": 1
-                return (
-                    <Product
-                        key={product.productId}
-                        productName={product.productName}
-                        productImage={product.product_pic1}
-                        productPrice={product.product_price}
-                        productId={product.productId}
-                        addToCart={this.props.addToCart}
-                        productQuantity={this.props.productQuantity}
-                        updateQuantity={this.props.updateQuantity}
-                        openModal={this.props.openModal}
-                    />
-                );
-            });
+            //        "categoryId": 23,
+            //         "categoryName": "محصولات جدید",
+            //         "categoryPic": "new-product-category.png",
+            //         "position": 1
+            return (
+                <Product
+                    key={product.productId}
+                    productName={product.productName}
+                    productImage={product.product_pic1}
+                    productPrice={product.product_price}
+                    productId={product.productId}
+                    addToCart={this.props.addToCart}
+                    productQuantity={this.props.productQuantity}
+                    updateQuantity={this.props.updateQuantity}
+                    openModal={this.props.openModal}
+                />
+            );
+        });
         let view;
         if (productsData.length <= 0 && !term) {
 
@@ -99,13 +97,14 @@ class Products extends Component {
                         component="div"
                         className="products"
                     >
+                        <Types         {...this.props} catid={this.state.catid}/>
                         {productsData}
                     </CSSTransitionGroup>
                 );
-            }
 
+        }
 
         return <div className="products-wrapper">{view}</div>;
     }
 }
-export default Products;
+export default ProductsWithTypes;

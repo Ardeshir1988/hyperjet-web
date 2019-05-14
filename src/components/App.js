@@ -8,6 +8,7 @@ import Products from "./Products";
 import QuickView from "./QuickView";
 import Dm from "../utils/DataManager";
 import Registration from "./Registration";
+import ProductsWithTypes from "./ProductsWithTypes";
 
 class App extends React.Component {
 
@@ -189,12 +190,18 @@ class App extends React.Component {
 
             <Switch>
                 <Route exact path={'/'} render={ props => <Categories {...props} />}/>
-                <Route  path={'/products'}  render={props => <Products {...props}
+                <Route  path={'/cat_products'}  render={props => <ProductsWithTypes {...props}
                                                                        searchTerm={this.state.term}
                                                                        addToCart={this.handleAddToCart}
                                                                        productQuantity={this.state.quantity}
                                                                        updateQuantity={this.updateQuantity}
                                                                        openModal={this.openModal} />} />
+                 <Route path={'/type_products'} render={props => <Products {...props}
+                                                                         searchTerm={this.state.term}
+                                                                         addToCart={this.handleAddToCart}
+                                                                         productQuantity={this.state.quantity}
+                                                                         updateQuantity={this.updateQuantity}
+                                                                         openModal={this.openModal} />}  />
             </Switch>
 
             <Footer/>
