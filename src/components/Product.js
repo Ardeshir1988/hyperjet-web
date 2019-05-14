@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import Counter from "./Counter";
 import Card from '@material-ui/core/Card';
 import Dm from "../utils/DataManager";
+import AddShoppingCart from "@material-ui/icons/AddShoppingCart";
+import IconButton from "@material-ui/core/IconButton";
+import RemoveIcon from "@material-ui/core/SvgIcon/SvgIcon";
 class Product extends Component {
 
     // state = {
@@ -126,25 +129,29 @@ class Product extends Component {
                 <h4 className="product-name">{name}</h4>
                 <h4 className="product-price">{price}</h4>
                 <div className="product-action">
-                    <Counter
-                        productQuantity={quantity}
-                        updateQuantity={this.props.updateQuantity}
-                        resetQuantity={this.resetQuantity}
-                    />
-                    <button
-                        className={!this.state.isAdded ? "" : "added"}
-                        type="button"
-                        onClick={this.addToCart.bind(
-                            this,
-                            image,
-                            name,
-                            price,
-                            id,
-                            quantity
-                        )}
-                    >
-                        {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
-                    </button>
+                    {/*<Counter*/}
+                    {/*    productQuantity={quantity}*/}
+                    {/*    updateQuantity={this.props.updateQuantity}*/}
+                    {/*    resetQuantity={this.resetQuantity}*/}
+                    {/*/>*/}
+                    {/*<button*/}
+                    {/*    className={!this.state.isAdded ? "" : "added"}*/}
+                    {/*    type="button"*/}
+                    {/*    onClick={this.addToCart.bind(*/}
+                    {/*        this,*/}
+                    {/*        image,*/}
+                    {/*        name,*/}
+                    {/*        price,*/}
+                    {/*        id,*/}
+                    {/*        quantity*/}
+                    {/*    )}*/}
+                    {/*>*/}
+                    {/*    {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}*/}
+                    {/*</button>*/}
+                    <IconButton color="default" aria-label="Add to shopping cart">
+                        <AddShoppingCart/>
+                    </IconButton>
+
                 </div>
 
             </Card>
