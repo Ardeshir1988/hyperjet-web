@@ -127,7 +127,7 @@ class Product extends Component {
                 />
                 </div>
                 <h4 className="product-name">{name}</h4>
-                <h4 className="product-price">{price}</h4>
+                <h2 className="product-price">{price}</h2>
                 <div className="product-action">
                     {/*<Counter*/}
                     {/*    productQuantity={quantity}*/}
