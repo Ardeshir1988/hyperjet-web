@@ -95,10 +95,17 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/src/components/ProductsWithTypes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1764">
               <caret line="105" selection-start-line="105" selection-end-line="105" />
+=======
+        <entry file="file://$PROJECT_DIR$/src/components/Products.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="162" column="41" selection-start-line="162" selection-start-column="41" selection-end-line="162" selection-end-column="41" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -118,6 +125,18 @@
           </provider>
         </entry>
       </file>
+<<<<<<< Updated upstream
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/utils/URLs.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+>>>>>>> Stashed changes
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -333,11 +352,19 @@
       <workItem from="1557759217488" duration="16455000" />
       <workItem from="1557817800618" duration="12457000" />
       <workItem from="1557847783037" duration="257000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1558241426056" duration="5628000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="157994000" />
+=======
+    <option name="totallyTimeSpent" value="171628000" />
+>>>>>>> Stashed changes
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -666,7 +693,18 @@
     <entry file="file://$PROJECT_DIR$/src/components/Type.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
+<<<<<<< Updated upstream
           <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
+=======
+          <caret line="6" column="34" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="46" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -682,18 +720,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Products.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="504">
           <caret line="105" selection-start-line="105" selection-end-line="105" />
+=======
+        <state relative-caret-position="378">
+          <caret line="162" column="41" selection-start-line="162" selection-start-column="41" selection-end-line="162" selection-end-column="41" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/src/components/Product.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="576">
           <caret line="159" column="34" lean-forward="true" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/utils/URLs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
