@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Product from "./Product";
 import axios from "axios";
 import queryString from 'query-string';
-
 import Urls from "../utils/URLs";
 
 
@@ -45,10 +44,6 @@ class Products extends Component {
      return (
 
          this.state.productList.map(product => {
-                //        "categoryId": 23,
-                //         "categoryName": "محصولات جدید",
-                //         "categoryPic": "new-product-category.png",
-                //         "position": 1
                 return (
                     <Product
                         key={product.productId}

@@ -61,7 +61,7 @@ class App extends React.Component {
         let productQty = selectedProducts.quantity;
         if (this.checkProduct(productID)) {
 
-            let index = cartItem.findIndex(x => x.id == productID);
+            let index = cartItem.findIndex(x => x.id === productID);
             cartItem[index].quantity =
                 Number(cartItem[index].quantity) + Number(productQty);
             this.setState({
@@ -90,7 +90,7 @@ class App extends React.Component {
     }
     handleRemoveProduct(id, e) {
         let cart = this.state.cart;
-        let index = cart.findIndex(x => x.id == id);
+        let index = cart.findIndex(x => x.id === id);
         cart.splice(index, 1);
         this.setState({
             cart: cart
@@ -186,6 +186,7 @@ class App extends React.Component {
                   categoryTerm={this.state.category}
                   updateQuantity={this.updateQuantity}
                   productQuantity={this.state.moq}
+                  addToCart={this.handleAddToCart}
               />
 
             <Switch>

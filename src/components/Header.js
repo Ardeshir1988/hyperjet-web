@@ -8,6 +8,7 @@ import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';
 
 import Basket from "./Basket";
+import Product from "./Product";
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -124,7 +125,7 @@ class Header extends Component {
             <header>
 
                 <div className="container">
-           <Basket   cart={this.state.cart} total={this.props.total}/>
+           <Basket        addToCart={this.props.addToCart}   cart={this.state.cart} total={this.props.total} removeProductFromCart={this.props.removeProductFromCart}/>
 
                     <div className="search">
                         <a

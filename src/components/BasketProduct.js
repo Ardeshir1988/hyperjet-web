@@ -10,15 +10,49 @@ class BasketProduct extends React.Component{
         super(props);
         this.state = {
             count: this.props.quantity,
-            remove:this.props.removeProduct
+            remove:this.props.removeProduct,
+            update:this.props.update
         };
 
     }
 
-    addCount(id){
+    addToCart(image, name, price, id, quantity) {
+        Dm.saveProductToBasket(id,name,image,price);
+        this.props.handleBasketData(Dm.getBasketData());
         this.setState({ count: this.state.count + 1 });
-        Dm.saveProductToBasket(id,'','','');
+        this.setState(
+            {
+                selectedProduct: {
+                    image: image,
+                    name: name,
+                    price: price,
+                    id: id,
+                    quantity: 1
+                }
+            },
+            function() {
+                this.props.addToCart(this.state.selectedProduct);
+            }
+        );
+        this.setState(
+            {
+                isAdded: true
+            },
+            function() {
+                setTimeout(() => {
+                    this.setState({
+                        isAdded: false,
+                        selectedProduct: {}
+                    });
+                }, 3500);
+            }
+        );
     }
+    //
+    // addCount(id){
+    //     this.setState({ count: this.state.count + 1 });
+    //     Dm.saveProductToBasket(id,'','','');
+    // }
     removeCount(e,id){
         if (this.state.count === 1)
         {
@@ -27,6 +61,7 @@ class BasketProduct extends React.Component{
             this.setState({count: this.state.count - 1});
             Dm.decreaseQuantity(id);
         }
+        this.props.handleBasketData(Dm.getBasketData());
     }
     render() {
 
@@ -49,7 +84,14 @@ class BasketProduct extends React.Component{
                 <img className="product-image" src={this.props.image} />
                 <div>
                     <IconButton color="primary" aria-label="Add to shopping cart">
-                        <AddIcon onClick={() => this.addCount(this.props.id)} />
+                        <AddIcon onClick= {this.addToCart.bind(
+                            this,
+                            this.props.image,
+                            this.props.name,
+                            this.props.price,
+                            this.props.id,
+                            this.state.count
+                        )} />
 
                     </IconButton>
 

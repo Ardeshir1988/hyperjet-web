@@ -127,11 +127,11 @@ class Product extends Component {
                 <h4 className="product-name">{name}</h4>
                 <h2 className="product-price">{price}</h2>
                 <div className="product-action">
-                    <Counter
-                        productQuantity={quantity}
-                        updateQuantity={this.props.updateQuantity}
-                        resetQuantity={this.resetQuantity}
-                    />
+                    {/*<Counter*/}
+                    {/*    productQuantity={quantity}*/}
+                    {/*    updateQuantity={this.props.updateQuantity}*/}
+                    {/*    resetQuantity={this.resetQuantity}*/}
+                    {/*/>*/}
                     <button
                         className={!this.state.isAdded ? "" : "added"}
                         type="button"

@@ -12,6 +12,7 @@ import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
 import Dm from "../utils/DataManager";
+import Product from "./Product";
 
 
 const styles = {
@@ -41,13 +42,22 @@ class Basket extends React.Component {
         this.setState({
             status: status,
         });
+        let cart=Dm.getBasketData();
+        this.setState({cart:cart});
+        this.handleBasketData(cart);
     };
 
-    handleBasketData(){
-        this.setState( {         totalCount:this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0),
-            totalAmount:this.props.total})
+    handleBasketData(cart){
+        this.setState({totalCount:cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)});
+        let total=0;
+        for (var i = 0; i < cart.length; i++) {
+            total += cart[i].price * parseInt(cart[i].quantity);
+        }
+        this.setState({
+            totalAmount: total
+        });
     }
-    handleRemoveProduct(id, e) {
+    handleRemoveProduct(id) {
         let cart = this.state.cart;
         let index = cart.findIndex(x => x.id === id);
         cart.splice(index, 1);
@@ -72,8 +82,9 @@ class Basket extends React.Component {
                 <List>
                     {this.state.cart.map(p=> {
                         return (<BasketProduct
+                            addToCart={this.props.addToCart}
                             removeProduct={this.handleRemoveProduct}
-
+                            handleBasketData={this.handleBasketData}
                         id={p.id}
                         name={p.name}
                         price={p.price}
