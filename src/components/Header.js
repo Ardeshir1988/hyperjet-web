@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import CartScrollBar from "./CartScrollBar";
+
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { findDOMNode } from "react-dom";
+
 import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';
-import AppBar from "@material-ui/core/es/AppBar/AppBar";
+
 import Basket from "./Basket";
 class Header extends Component {
     constructor(props) {
@@ -21,12 +21,7 @@ class Header extends Component {
     }
 
 
-    handleCart(e) {
-        e.preventDefault();
-        this.setState({
-            showCart: !this.state.showCart
-        });
-    }
+
     handleSubmit(e) {
         e.preventDefault();
     }
@@ -127,9 +122,9 @@ class Header extends Component {
         return (
 
             <header>
-                <AppBar color={"inherit"}>
+
                 <div className="container">
-           <Basket  cart={this.state.cart} total={this.props.total}/>
+           <Basket   cart={this.state.cart} total={this.props.total}/>
 
                     <div className="search">
                         <a
@@ -231,7 +226,6 @@ class Header extends Component {
                     {/*</div>*/}
                     <RightSideMenu />
                 </div>
-            </AppBar>
             </header>
 
         );

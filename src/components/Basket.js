@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
+import Dm from "../utils/DataManager";
 
 
 const styles = {
@@ -23,16 +24,38 @@ const styles = {
 };
 
 class Basket extends React.Component {
-    state = {
-        status:false
-    };
 
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            status:false,
+            cart: this.props.cart,
+            totalCount:this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0),
+            totalAmount:this.props.total
+        };
+        this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+        this.handleBasketData=this.handleBasketData.bind(this);
+    }
     toggleDrawer = (status) => () => {
         this.setState({
             status: status,
         });
     };
+
+    handleBasketData(){
+        this.setState( {         totalCount:this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0),
+            totalAmount:this.props.total})
+    }
+    handleRemoveProduct(id, e) {
+        let cart = this.state.cart;
+        let index = cart.findIndex(x => x.id === id);
+        cart.splice(index, 1);
+        this.setState({
+            cart: cart
+        });
+        Dm.removeProductFromBasket(id);
+    }
 
     render() {
         const quantity='تعداد';
@@ -47,8 +70,10 @@ class Basket extends React.Component {
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    {this.props.cart.map(p=> {
+                    {this.state.cart.map(p=> {
                         return (<BasketProduct
+                            removeProduct={this.handleRemoveProduct}
+
                         id={p.id}
                         name={p.name}
                         price={p.price}
@@ -56,25 +81,18 @@ class Basket extends React.Component {
                         image={p.image}/>);
                         }
                     )}
-
-                    {/*{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                    {/*    <ListItem button key={text}>*/}
-                    {/*        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                    {/*        <ListItemText primary={text} />*/}
-                    {/*    </ListItem>*/}
-                    {/*))}*/}
                 </List>
                 <Divider />
                 <List>
 
                         <ListItem>
-                            <ListItemText primary={this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0) } />
+                            <ListItemText primary={this.state.totalCount} />
                             <ListItemText primary={quantity} />
 
                         </ListItem>
 
                     <ListItem>
-                        <ListItemText primary={this.props.total} />
+                        <ListItemText primary={this.state.totalAmount} />
                         <ListItemText primary={totalAmount} />
 
                     </ListItem>
@@ -85,7 +103,7 @@ class Basket extends React.Component {
                     <ListItem>
 
                             <ListItemText primary={6000} />
-                            <ListItemText primary={this.props.total} />
+                            <ListItemText primary={this.state.totalAmount} />
 
                     <Button variant="contained" color="primary" className={classes.button}>
                         {checkout}
@@ -99,7 +117,6 @@ class Basket extends React.Component {
 
         return (
             <div>
-                {/*//   <Button onClick={this.toggleDrawer(true)}>Open Right</Button>*/}
                 <IconButton  color="default" aria-label="Open drawer">
                     <ShoppingCartIcon onClick={this.toggleDrawer(true)}/>
                 </IconButton>

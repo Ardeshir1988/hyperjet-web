@@ -60,6 +60,23 @@ class DataManager {
 
 
     }
+    static decreaseQuantity(id){
+        let storedBasket =store.get('basket');
+        if (storedBasket) {
+            let productIndex = storedBasket.findIndex(function (item) {
+                return item.id === parseInt(id)
+            });
+            if (productIndex>=0) {
+
+                if(storedBasket[productIndex].quantity>1) {
+                    storedBasket[productIndex].quantity -= 1;
+                    store.set('basket', storedBasket);
+                }else {
+                    this.removeProductFromBasket(id)
+                }
+            }
+        }
+    }
     static removeProductFromBasket(id){
         let storedBasket =store.get('basket');
         if (storedBasket) {
