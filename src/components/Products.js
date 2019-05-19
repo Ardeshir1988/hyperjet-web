@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import Product from "./Product";
 import axios from "axios";
 import queryString from 'query-string';
-import NoResults from "../empty-states/NoResults";
-import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import Types from "./Types";
+
 import Urls from "../utils/URLs";
+
 
 class Products extends Component {
 
@@ -13,6 +12,7 @@ class Products extends Component {
     state = {
 
         productList: []
+
     };
 
 
@@ -30,28 +30,6 @@ class Products extends Component {
     }
 
 
-
-    //         "productId": 4420,
-    //         "productName": "کراکر کراکس سبزیجات و پنیرشیرین عسل",
-    //         "productDetails": "",
-    //         "productParentTypeId": 0,
-    //         "measure": "70 گرمی",
-    //         "productTypeName": "کیک و بیسکوئیت",
-    //         "productCatName": "بستنی و تنقلات",
-    //         "product_pic1": "shirinasal-6261149014110.png",
-    //         "product_pic2": null,
-    //         "product_pic3": null,
-    //         "product_price": 700,
-    //         "product_price_discount": 700,
-    //         "productBrand": "شیرین عسل",
-    //         "priceid": 700,
-    //         "productPosition": 0,
-    //         "productStatus": "t",
-    //         "product_min_quantity": null,
-    //         "product_max_quantity": null,
-    //         "product_priority": null,
-    //         "productStepDiscount": 0
-
     render() {
         console.log("=====ProductsRender=====");
         let productsData;
@@ -64,7 +42,9 @@ class Products extends Component {
             };
         }
 
-        productsData=   this.state.productList.map(product => {
+     return (
+
+         this.state.productList.map(product => {
                 //        "categoryId": 23,
                 //         "categoryName": "محصولات جدید",
                 //         "categoryPic": "new-product-category.png",
@@ -82,30 +62,13 @@ class Products extends Component {
                         openModal={this.props.openModal}
                     />
                 );
-            });
-        let view;
-        if (productsData.length <= 0 && !term) {
+            })
 
-        } else if (productsData.length <= 0 && term) {
-            view = <NoResults />;
-        } else {
-
-                view = (
-
-                    <CSSTransitionGroup
-                        transitionName="fadeIn"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={300}
-                        component="div"
-                        className="products"
-                    >
-                        {productsData}
-                    </CSSTransitionGroup>
-                );
-            }
+     )
 
 
-        return <div className="products-wrapper">{view}</div>;
+
+
     }
 }
 export default Products;

@@ -110,7 +110,7 @@ class Product extends Component {
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
         return (
-            <Card className="product">
+            <div className="product">
 
                 <div className="product-image">
                 <img
@@ -129,42 +129,42 @@ class Product extends Component {
                 <h4 className="product-name">{name}</h4>
                 <h2 className="product-price">{price}</h2>
                 <div className="product-action">
-                    {/*<Counter*/}
-                    {/*    productQuantity={quantity}*/}
-                    {/*    updateQuantity={this.props.updateQuantity}*/}
-                    {/*    resetQuantity={this.resetQuantity}*/}
-                    {/*/>*/}
-                    {/*<button*/}
-                    {/*    className={!this.state.isAdded ? "" : "added"}*/}
-                    {/*    type="button"*/}
-                    {/*    onClick={this.addToCart.bind(*/}
-                    {/*        this,*/}
-                    {/*        image,*/}
-                    {/*        name,*/}
-                    {/*        price,*/}
-                    {/*        id,*/}
-                    {/*        quantity*/}
-                    {/*    )}*/}
-                    {/*>*/}
-                    {/*    {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}*/}
-                    {/*</button>*/}
-                    <IconButton color="default" aria-label="Add to shopping cart">
-                        <AddShoppingCart
-                            onClick={this.addToCart.bind(
-                                    this,
-                                    image,
-                                    name,
-                                    price,
-                                    id,
-                                    quantity
-                                )}
+                    <Counter
+                        productQuantity={quantity}
+                        updateQuantity={this.props.updateQuantity}
+                        resetQuantity={this.resetQuantity}
+                    />
+                    <button
+                        className={!this.state.isAdded ? "" : "added"}
+                        type="button"
+                        onClick={this.addToCart.bind(
+                            this,
+                            image,
+                            name,
+                            price,
+                            id,
+                            quantity
+                        )}
+                    >
+                        {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+                    </button>
+                    {/*<IconButton color="default" aria-label="Add to shopping cart">*/}
+                    {/*    <AddShoppingCart*/}
+                    {/*        onClick={this.addToCart.bind(*/}
+                    {/*                this,*/}
+                    {/*                image,*/}
+                    {/*                name,*/}
+                    {/*                price,*/}
+                    {/*                id,*/}
+                    {/*                quantity*/}
+                    {/*            )}*/}
 
-                        />
-                    </IconButton>
+                    {/*    />*/}
+                    {/*</IconButton>*/}
 
                 </div>
 
-            </Card>
+            </div>
         );
     }
 }

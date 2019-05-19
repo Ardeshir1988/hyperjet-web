@@ -15,7 +15,8 @@
     "node-sass": "^4.9.0",
     "store": "^2.0.12",
     "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2"
+    "@material-ui/icons": "^3.0.2",
+    "react-infinite-scroll-component": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
