@@ -16,6 +16,12 @@ import Button from '@material-ui/core/Button';
 import Urls from "../utils/URLs";
 import axios from "axios";
 import Dm from "../utils/DataManager";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
@@ -26,38 +32,34 @@ const styles = theme => ({
 
 class ReviewCheckout extends React.Component {
 state={
+    open: false,
     suburbs:[],
     addressDetail:""
 };
     componentDidMount() {
-        // let url = Urls.baseUrl()+"user/getcats";
-        // axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
-        //     .then(response => {
-        //         const cats=response.data;
-        //         this.setState({cats});
-        //     });
 
         axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const suburbs=response.data.suburblist;
                 this.setState({suburbs});
                 this.setState({threshold:response.data.threshold});
-                this.setState({cost:response.data.deliveryCost})
+                this.setState({cost:response.data.deliveryCost});
+                axios.post(Urls.baseUrl()+"user/getuseraddress",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
+                    .then(response=>{
+                            const address=response.data[0];
+                            console.log('=========='+address.addressDetail);
+                            if (address !== undefined)
+                                this.setState({
+                                    addressDetail:address.addressDetail,
+                                    suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId)
+                                })
+                        }
+                    );
             });
-        //
+        let basket=Dm.getBasketData();
+        if (basket.length === 0)   this.setState({ open: true });
+        this.handleBasketData(basket);
 
-        axios.post(Urls.baseUrl()+"user/getuseraddress",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
-            .then(response=>{
-                const address=response.data[0];
-                console.log('=========='+address.addressDetail);
-                if (address !== undefined)
-                this.setState({
-                    addressDetail:address.addressDetail,
-                    suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId)
-                })
-                }
-            );
-        this.handleBasketData(Dm.getBasketData());
     }
     handleBasketData(cart){
         let total=0;
@@ -71,12 +73,33 @@ state={
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
     };
+    backHome(){
+        window.location.replace("/")
+    }
     render() {
 
         const { classes } = this.props;
-        let add=this.state.addressDetail;
+
         return (
             <Paper className={classes.root} elevation={1}>
+                <Dialog
+                    open={this.state.open}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title">{"بررسی خرید بدون کالا"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                     سبد کالا شما خالی است
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+
+                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
+                            خرید
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
                 <Typography variant="h6" gutterBottom>
                     آدرس محل تحویل
                 </Typography>
