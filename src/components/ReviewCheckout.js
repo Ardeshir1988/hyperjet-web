@@ -26,7 +26,8 @@ const styles = theme => ({
 
 class ReviewCheckout extends React.Component {
 state={
-    suburbs:[]
+    suburbs:[],
+    addressDetail:""
 };
     componentDidMount() {
         // let url = Urls.baseUrl()+"user/getcats";
@@ -38,12 +39,24 @@ state={
 
         axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
-                const suburbs=response.data.suburblist.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>);
+                const suburbs=response.data.suburblist;
                 this.setState({suburbs});
                 this.setState({threshold:response.data.threshold});
                 this.setState({cost:response.data.deliveryCost})
             });
+        //
 
+        axios.post(Urls.baseUrl()+"user/getuseraddress",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
+            .then(response=>{
+                const address=response.data[0];
+                console.log('=========='+address.addressDetail);
+                if (address !== undefined)
+                this.setState({
+                    addressDetail:address.addressDetail,
+                    suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId)
+                })
+                }
+            );
         this.handleBasketData(Dm.getBasketData());
     }
     handleBasketData(cart){
@@ -55,9 +68,13 @@ state={
             totalAmount: total
         });
     }
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.value });
+    };
     render() {
 
         const { classes } = this.props;
+        let add=this.state.addressDetail;
         return (
             <Paper className={classes.root} elevation={1}>
                 <Typography variant="h6" gutterBottom>
@@ -77,8 +94,10 @@ state={
                         <FormControl className={classes.formControl}>
 
                             <Select
+                                value={this.state.suburb}
+                                onChange={this.handleChange('suburb')}
                                 native>
-                                { this.state.suburbs}
+                                { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}
                             </Select>
                         </FormControl>
                     </Grid>
@@ -89,8 +108,9 @@ state={
                             id="address"
                             name="address"
                             label="آدرس"
-                            fullWidth
-                        />
+                            onChange= {this.handleChange('addressDetail')}
+                            value={this.state.addressDetail}
+                            fullWidth />
                     </Grid>
 
                     <Grid item xs={12}>
