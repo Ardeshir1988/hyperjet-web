@@ -7,8 +7,10 @@ import Categories from "./Categories";
 import Products from "./Products";
 import QuickView from "./QuickView";
 import Dm from "../utils/DataManager";
-import Registration from "./Registration";
 import ProductsWithTypes from "./ProductsWithTypes";
+import Checkout from "./Checkout";
+import Urls from "../utils/URLs";
+import axios from "axios/index";
 
 class App extends React.Component {
 
@@ -26,6 +28,7 @@ class App extends React.Component {
             quickViewProduct: {},
             modalActive: false
         };
+        this.setThreshold();
         this.handleSearch = this.handleSearch.bind(this);
         this.handleMobileSearch = this.handleMobileSearch.bind(this);
         this.handleCategory = this.handleCategory.bind(this);
@@ -39,7 +42,13 @@ class App extends React.Component {
         this.closeModal = this.closeModal.bind(this);
 
     }
-
+    setThreshold(){
+        axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
+            .then(response => {
+                const setting=response.data;
+                Dm.setDeliveryThreshold(setting.deliveryCost,setting.threshold)
+            });
+    }
 
     // Search by Keyword
     handleSearch(event) {
@@ -147,9 +156,10 @@ class App extends React.Component {
     }
 
     updateBasket(){
-            if (Dm.getBasketData())
+            if (Dm.getBasketData()) {
                 if (Dm.getBasketData().length > this.state.cart)
-                    this.setState( {cart:Dm.getBasketData()});
+                    this.setState({cart: Dm.getBasketData()});
+            }else Dm.setEmptyBasket();
         }
     initialBasket(){
         if (Dm.getBasketData()) {
@@ -171,9 +181,11 @@ class App extends React.Component {
         }
     render() {
     this.updateBasket();
-    return (
+         if(window.location.pathname.startsWith('/checkout')) return (<Checkout/>);
+        else
+            return (
        <div className="container">
-           {/*<Registration />*/}
+
               <Header
                   cartBounce={this.state.cartBounce}
                   total={this.state.totalAmount}

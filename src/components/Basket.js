@@ -12,12 +12,13 @@ import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
 import Dm from "../utils/DataManager";
-import Product from "./Product";
+import axios from "axios";
+import Urls from "../utils/URLs";
 
 
 const styles = {
     list: {
-        width: 250,
+        width: 270,
     },
     fullList: {
         width: 'auto',
@@ -33,7 +34,8 @@ class Basket extends React.Component {
             status:false,
             cart: this.props.cart,
             totalCount:this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0),
-            totalAmount:this.props.total
+            totalAmount:this.props.total,
+            setting:{"cost":0,"threshold":0}
         };
         this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
         this.handleBasketData=this.handleBasketData.bind(this);
@@ -44,6 +46,7 @@ class Basket extends React.Component {
         });
         let cart=Dm.getBasketData();
         this.setState({cart:cart});
+        this.setState({setting:Dm.getDeliveryThreshold()});
         this.handleBasketData(cart);
     };
 
@@ -67,9 +70,13 @@ class Basket extends React.Component {
         Dm.removeProductFromBasket(id);
     }
 
-    render() {
-        const quantity='تعداد';
+    redirectTo(path){
+        window.location.href=(path);
+    }
 
+    render() {
+
+        const quantity='تعداد';
         const totalAmount='مجموع خرید';
         const deliveryFee='هزینه تحویل';
         const checkout='خرید';
@@ -108,15 +115,15 @@ class Basket extends React.Component {
 
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary={6000} />
+                        <ListItemText>{(this.state.totalAmount>=this.state.setting.threshold) ? 0 : this.state.setting.cost} </ListItemText>
                         <ListItemText primary={deliveryFee} />
                     </ListItem>
                     <ListItem>
 
-                            <ListItemText primary={6000} />
-                            <ListItemText primary={this.state.totalAmount} />
+                            <ListItemText primary={(this.state.totalAmount>=this.state.setting.threshold) ?
+                                this.state.totalAmount :this.state.totalAmount+this.state.setting.cost } />
 
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>this.redirectTo("/checkout")}>
                         {checkout}
                     </Button>
                     </ListItem>

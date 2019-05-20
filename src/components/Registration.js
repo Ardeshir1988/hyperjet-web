@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types/prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -14,18 +12,15 @@ import SingInForm from './SignIn';
 import ConfrimForm from './Confirmation';
 import Dm from "../utils/DataManager";
 import Snackbar from '@material-ui/core/Snackbar';
-
+import { Route, Redirect } from 'react-router'
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import getThemeProps from "@material-ui/core/es/styles/getThemeProps";
 import Urls from "../utils/URLs";
 import axios from "axios";
 
 
 const styles = theme => ({
-    appBar: {
-        position: 'relative',
-    },
+
     layout: {
         width: 'auto',
         marginLeft: theme.spacing.unit * 2,
@@ -103,7 +98,6 @@ class Registration extends React.Component {
         }
     };
     getTempToken(mobile){
-
         let url = Urls.baseUrl()+"user/register?mobile="+mobile;
         axios.post(url, null,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
@@ -121,6 +115,7 @@ class Registration extends React.Component {
             .then(response => {
                 const userToken=response.data;
                 Dm.setToken(userToken.token);
+
             });
     }
 
@@ -139,7 +134,9 @@ class Registration extends React.Component {
             activeStep: 0,
         });
     };
-
+    redirectTo(path){
+        window.location.replace(path);
+    }
     render() {
         const { classes } = this.props;
         const { activeStep } = this.state;
@@ -169,6 +166,8 @@ class Registration extends React.Component {
                                     <Typography variant="subtitle1">
                                         مشتاقانه جهت خدمتگذاری آماده هستیم
                                     </Typography>
+                                    <Button variant="contained" color="secondary" onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
+                                    <Button style={{marginLeft:10}} variant="contained" color="primary" onClick={()=>this.redirectTo('/checkout')}>بررسی خرید</Button>
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>

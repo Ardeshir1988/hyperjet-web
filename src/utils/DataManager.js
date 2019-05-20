@@ -21,13 +21,14 @@ class DataManager {
         return store.get('temp');
     }
     static setToken(token){
+        console.log('set--token======');
         let mobile =this.getUserMobile();
-        store.set('user',{mobile:mobile,token:token});
+        store.set('validuser',{mobile:mobile,token:token});
         store.remove('temp');
         store.remove('confirmcode');
     }
     static getUserData(){
-        return store.get('user');
+        return store.get('validuser');
     }
     static setConfirmCode(code){
         store.set('confirmcode',{code:code});
@@ -60,6 +61,10 @@ class DataManager {
 
 
     }
+    static setEmptyBasket(){
+        let basket = [];
+        store.set('basket', basket);
+    }
     static decreaseQuantity(id){
         let storedBasket =store.get('basket');
         if (storedBasket) {
@@ -91,6 +96,12 @@ class DataManager {
     }
      static getBasketData(){
         return  store.get('basket');
+    }
+    static setDeliveryThreshold(cost,threshold){
+        store.set('deliverythreshold',{cost:cost,threshold:threshold})
+    }
+    static getDeliveryThreshold(){
+       return store.get('deliverythreshold')
     }
      getOrderData(){
 

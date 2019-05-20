@@ -9,6 +9,8 @@ import RightSideMenu from './SideMenu';
 
 import Basket from "./Basket";
 import Product from "./Product";
+import axios from "axios";
+import Urls from "../utils/URLs";
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -18,10 +20,7 @@ class Header extends Component {
             mobileSearch: false
         };
 
-
     }
-
-
 
     handleSubmit(e) {
         e.preventDefault();
@@ -63,6 +62,7 @@ class Header extends Component {
         //     true
         // );
 
+
     }
     componentWillUnmount() {
         // document.removeEventListener(
@@ -77,6 +77,7 @@ class Header extends Component {
                 this.setState( {cart:Dm.getBasketData()});
     }
     render() {
+
         this.updateBasket();
         let cartItems;
         cartItems = this.state.cart.map(product => {
@@ -125,7 +126,7 @@ class Header extends Component {
             <header>
 
                 <div className="container">
-           <Basket        addToCart={this.props.addToCart}   cart={this.state.cart} total={this.props.total} removeProductFromCart={this.props.removeProductFromCart}/>
+           <Basket     addToCart={this.props.addToCart}   cart={this.state.cart} total={this.props.total} removeProductFromCart={this.props.removeProductFromCart}/>
 
                     <div className="search">
                         <a

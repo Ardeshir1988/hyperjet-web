@@ -4,6 +4,8 @@ import axios from "axios/index";
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Urls from "../utils/URLs"
+import Dm from "../utils/DataManager"
+
 class Categories extends Component {
 
 
@@ -19,6 +21,11 @@ class Categories extends Component {
         this.setState({cats});
     });
 
+        // axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
+        //     .then(response => {
+        //         const setting=response.data;
+        //         Dm.setDeliveryThreshold(setting.deliveryCost,setting.threshold)
+        //     });
     }
 
     render() {
