@@ -111,8 +111,10 @@ state={
         axios.post(Urls.baseUrl()+"order/ordercheck",order,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response=>{
                     const orderResponse=response.data;
-                this.setState({orderid:orderResponse.orderId})
-                this.setState({orderStatus:true})
+                this.setState({orderid:orderResponse.orderId});
+                this.setState({orderStatus:true});
+                if (orderResponse.orderId !== 0)
+                Dm.setEmptyBasket();
                 }
             );
 
