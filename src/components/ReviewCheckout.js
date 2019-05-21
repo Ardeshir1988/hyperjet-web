@@ -49,7 +49,7 @@ state={
                     .then(response=>{
                             const address=response.data[0];
                             console.log('=========='+address.addressDetail);
-                            if (address !== undefined)
+                            if (address.addressDetail !== undefined)
                                 this.setState({
                                     addressDetail:address.addressDetail,
                                     suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId)
