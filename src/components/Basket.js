@@ -123,7 +123,7 @@ class Basket extends React.Component {
                             <ListItemText primary={(this.state.totalAmount>=this.state.setting.threshold) ?
                                 this.state.totalAmount :this.state.totalAmount+this.state.setting.cost } />
 
-                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>this.redirectTo("/checkout")}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>this.redirectTo("/user/checkout")}>
                         {checkout}
                     </Button>
                     </ListItem>

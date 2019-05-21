@@ -94,32 +94,10 @@ state={
     backHome(){
         window.location.replace("/");
     }
-    backHome(){
-        window.location.replace("/orderstatus");
+    orderStatus(){
+        window.location.replace("/user/orderstatus");
     }
     sendOrder(){
-
-        //    private String token;
-        //     private List<CartProduct>productlist ;
-        //     private int addressId;
-        //     private String addressName;
-        //     private String addressCity;
-        //     private String addressArea;
-        //     private String addressDetail;
-        //     private String orderArrivalNoticeType;
-        //     private String orderPhoneNumber;
-        //     private String orderInstruction;
-        //     private String orderPaymentType;
-        //     private String orderSubTotal;
-        //     private int orderDeliveryCost;
-
-
-        console.log("====addressId="+this.state.addressId+"=====AddressArea="+this.state.suburb+
-            this.state.suburbs.filter(s=>s.tblsuburbId===parseInt(this.state.suburb))
-                .map(s=>s.tblsuburbName)+ "====AddressDetail==="+
-            this.state.addressDetail+"===orderInstruction==="+this.state.orderInstruction+
-            "====orderPaymentType===="+ this.state.orderPaymentType+"=====Arival==="+
-            this.state.orderArrivalNoticeType+"===token==="+this.state.token);
 
         let order={token:this.state.token,productlist:this.state.productlist,
             addressId:parseInt(this.state.addressId), addressCity:"تهران",addressArea:this.state.addressArea,
@@ -174,7 +152,7 @@ state={
                     </DialogContent>
                     <DialogActions>
 
-                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
+                        <Button variant="contained" onClick={()=>this.orderStatus()} color="secondary" autoFocus>
                             وضعیت سفارش
                         </Button>
                     </DialogActions>

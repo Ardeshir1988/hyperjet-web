@@ -9,6 +9,7 @@ import QuickView from "./QuickView";
 import Dm from "../utils/DataManager";
 import ProductsWithTypes from "./ProductsWithTypes";
 import Checkout from "./Checkout";
+import OrderStatus from "./OrderStatus"
 import Urls from "../utils/URLs";
 import axios from "axios/index";
 
@@ -181,11 +182,17 @@ class App extends React.Component {
         }
     render() {
     this.updateBasket();
-         if(window.location.pathname.startsWith('/checkout')) return (<Checkout/>);
-        else
-            return (
-       <div className="container">
-
+         if(window.location.pathname.startsWith('/user')) {
+             let path=window.location.pathname.split('/');
+             switch (path[2]) {
+                 case "checkout":return (<Checkout/>);
+                 case "orderstatus":return (<OrderStatus/>);
+                 default:return (<Checkout/>);
+             }
+         }
+         else
+             return (
+             <div className="container">
               <Header
                   cartBounce={this.state.cartBounce}
                   total={this.state.totalAmount}
@@ -198,9 +205,7 @@ class App extends React.Component {
                   categoryTerm={this.state.category}
                   updateQuantity={this.updateQuantity}
                   productQuantity={this.state.moq}
-                  addToCart={this.handleAddToCart}
-              />
-
+                  addToCart={this.handleAddToCart}/>
             <Switch>
                 <Route exact path={'/'} render={ props => <Categories {...props} />}/>
                 <Route  path={'/cat_products'}  render={props => <ProductsWithTypes {...props}
