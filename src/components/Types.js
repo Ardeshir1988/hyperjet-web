@@ -4,6 +4,7 @@ import Type from "./Type";
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Category from "./Category";
+import Urls from "../utils/URLs";
 
 class Types extends Component{
 
@@ -24,9 +25,8 @@ class Types extends Component{
 
     componentDidMount() {
 
-        let url = "http://5.9.250.180/service/product/typebycat?catid="+this.props.catid;
-        let sz='Basic dXNlcjE6MXVzZXI=';
-        axios.get(url, {headers:{'Authorization': sz}})
+        let url = Urls.baseUrl()+"product/typebycat?catid="+this.props.catid;
+        axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const typesList=response.data;
                 this.setState({typesList});

@@ -7,6 +7,7 @@ import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Types from "./Types";
 import Urls from "../utils/URLs";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Type from "./Type";
 
 
 class ProductsWithTypes extends Component {
@@ -16,7 +17,7 @@ class ProductsWithTypes extends Component {
     state = {
         items: [],
         hasMore: true,
-
+        typesList: [],
         productList: [],
         page:0
     };
@@ -38,8 +39,18 @@ class ProductsWithTypes extends Component {
     };
 
     componentDidMount() {
+
         const values = queryString.parse(this.props.location.search);
         let url = Urls.baseUrl()+"product/productbycat?catid="+values.catid;
+
+        let typsUrl = Urls.baseUrl()+"product/typebycat?catid="+values.catid;
+        axios.get(typsUrl, {headers:{'Authorization': Urls.getAuthToken()}})
+            .then(response => {
+                const typesList=response.data;
+                this.setState({typesList});
+            });
+
+
         axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const productList=response.data;
@@ -62,6 +73,22 @@ class ProductsWithTypes extends Component {
             };
         }
 
+        let typesData=   this.state.typesList.map(type => {
+            return (
+                <div>
+                    <div>
+
+                    </div>
+                    <Type
+                        key={type.typeId}
+                        typeId={type.typeId}
+                        typeName={type.typeName}
+                        typePic={type.typePic}
+                        {...this.props}
+                    />
+                </div>
+            );
+        });
         productsData=
 
                 this.state.items.map((i, index) => (
@@ -114,7 +141,9 @@ class ProductsWithTypes extends Component {
                         component="div"
                         className="products"
                     >
-                        <Types         {...this.props} catid={this.state.catid}/>
+                        {/*<Types         {...this.props} catid={this.state.catid}/>*/}
+
+                        {typesData}
                         <InfiniteScroll
                             className="products"
                             dataLength={this.state.items.length}
