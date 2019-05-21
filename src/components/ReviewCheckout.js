@@ -33,9 +33,19 @@ const styles = theme => ({
 class ReviewCheckout extends React.Component {
 state={
     open: false,
+    orderStatus:false,
+    orderid:0,
     suburbs:[],
+    token:Dm.getUserData().token,
+    addressId:0,
     addressDetail:"",
-    mobile:Dm.getUserData().mobile
+    addressArea:1,
+    orderPhoneNumber:Dm.getUserData().mobile,
+    orderInstruction:'',
+    orderPaymentType:'',
+    productlist:[],
+    suburb: 1,
+    orderArrivalNoticeType:''
 };
     componentDidMount() {
 
@@ -52,15 +62,22 @@ state={
                             if (address.addressDetail !== undefined)
                                 this.setState({
                                     addressDetail:address.addressDetail,
-                                    suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId)
+                                    suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId),
+                                    addressId:address.addressId,
+                                    addressArea:address.addressArea
                                 })
                         }
                     );
             });
         let basket=Dm.getBasketData();
-        if (basket.length === 0)   this.setState({ open: true });
+        if (basket.length === 0)
+            this.setState({ open: true });
+        else {
+            let CartProduct;
+            let productlist=basket.map(s=> CartProduct={productId:s.id,quantity:s.quantity});
+            this.setState({productlist: productlist});
+        }
         this.handleBasketData(basket);
-
     }
     handleBasketData(cart){
         let total=0;
@@ -75,10 +92,55 @@ state={
         this.setState({ [name]: event.target.value });
     };
     backHome(){
-        window.location.replace("/")
+        window.location.replace("/");
     }
-    render() {
+    backHome(){
+        window.location.replace("/orderstatus");
+    }
+    sendOrder(){
 
+        //    private String token;
+        //     private List<CartProduct>productlist ;
+        //     private int addressId;
+        //     private String addressName;
+        //     private String addressCity;
+        //     private String addressArea;
+        //     private String addressDetail;
+        //     private String orderArrivalNoticeType;
+        //     private String orderPhoneNumber;
+        //     private String orderInstruction;
+        //     private String orderPaymentType;
+        //     private String orderSubTotal;
+        //     private int orderDeliveryCost;
+
+
+        console.log("====addressId="+this.state.addressId+"=====AddressArea="+this.state.suburb+
+            this.state.suburbs.filter(s=>s.tblsuburbId===parseInt(this.state.suburb))
+                .map(s=>s.tblsuburbName)+ "====AddressDetail==="+
+            this.state.addressDetail+"===orderInstruction==="+this.state.orderInstruction+
+            "====orderPaymentType===="+ this.state.orderPaymentType+"=====Arival==="+
+            this.state.orderArrivalNoticeType+"===token==="+this.state.token);
+
+        let order={token:this.state.token,productlist:this.state.productlist,
+            addressId:parseInt(this.state.addressId), addressCity:"تهران",addressArea:this.state.addressArea,
+            addressDetail:this.state.addressDetail,addressName:'',
+            orderArrivalNoticeType:this.state.orderArrivalNoticeType,orderPhoneNumber:this.state.orderPhoneNumber,
+            orderInstruction:this.state.orderInstruction,orderSubTotal:"",orderPaymentType:this.state.orderPaymentType,orderDeliveryCost:0
+        };
+
+        console.log(order);
+
+        axios.post(Urls.baseUrl()+"order/ordercheck",order,{headers:{'Authorization': Urls.getAuthToken()}})
+            .then(response=>{
+                    const orderResponse=response.data;
+                this.setState({orderid:orderResponse.orderId})
+                this.setState({orderStatus:true})
+                }
+            );
+
+
+    };
+    render() {
         const { classes } = this.props;
 
         return (
@@ -100,6 +162,23 @@ state={
                         </Button>
                     </DialogActions>
                 </Dialog>
+                <Dialog
+                    open={this.state.orderStatus}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title">{"سفارش شما ثبت شد"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            شماره سفارش{this.state.orderid}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+
+                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
+                            وضعیت سفارش
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
                 <Typography variant="h6" gutterBottom>
                     آدرس محل تحویل
@@ -116,7 +195,6 @@ state={
                         </Select>
                     </FormControl>
                         <FormControl className={classes.formControl}>
-
                             <Select
                                 value={this.state.suburb}
                                 onChange={this.handleChange('suburb')}
@@ -136,24 +214,20 @@ state={
                             value={this.state.addressDetail}
                             fullWidth />
                     </Grid>
-
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>
                             نحوه ی تحویل کالا
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} >
-
-                            <FormControlLabel
-                                control={<Checkbox color="secondary" name="saveAddress" value="yes"/>}
-                                label="تماس تلفنی"
-                            />
-                        <FormControlLabel
-                            control={<Checkbox color="secondary" name="saveAddress" value="yes"/>}
-                            label="زنگ در"
-                        />
+                    <Grid item xs={12}>
+                        <RadioGroup
+                            row
+                            name="orderArrivalNoticeType"
+                            aria-label="orderArrivalNoticeType">
+                            <FormControlLabel onChange={this.handleChange('orderArrivalNoticeType')} value="تماس تلفنی" control={<Radio />} label="تماس تلفنی" />
+                            <FormControlLabel onChange={this.handleChange('orderArrivalNoticeType')} value="زنگ در" control={<Radio />} label="زنگ در" />
+                        </RadioGroup>
                     </Grid>
-
                     <Grid item xs={12}>
                         <Typography variant="h6" gutterBottom>
                             نحوه ی پرداخت
@@ -162,10 +236,10 @@ state={
                     <Grid item xs={12} >
                         <RadioGroup
                             row
-                            name="onDelete"
-                            aria-label="onDelete">
-                            <FormControlLabel value="none" control={<Radio />} label="پرداخت آنلاین" />
-                            <FormControlLabel value="default" control={<Radio />} label="نقد یا کارت" />
+                            name="paymentType"
+                            aria-label="paymentType">
+                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="web-online" control={<Radio />} label="پرداخت آنلاین" />
+                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="web-cash-pos" control={<Radio />} label="نقد یا کارت" />
                         </RadioGroup>
                     </Grid>
                     <Grid item xs={12} >
@@ -174,8 +248,8 @@ state={
                             id="mobile"
                             name="mobile"
                             label="تلفن همراه"
-                            onChange= {this.handleChange('mobile')}
-                            value={this.state.mobile}
+                            onChange= {this.handleChange('orderPhoneNumber')}
+                            value={this.state.orderPhoneNumber}
                             fullWidth />
                     </Grid>
                     <Grid item xs={12} >
@@ -193,6 +267,8 @@ state={
                                 name="address"
                                 label="مانند نام تحویل گیرنده"
                                 fullWidth
+                                value={this.state.orderInstruction}
+                                onChange= {this.handleChange('orderInstruction')}
                             />
                         </Grid>
                     <Grid item xs={12} >
@@ -230,7 +306,7 @@ state={
                     <Grid item xs>
                     </Grid>
                     <Grid item xs={6} style={{textAlign:"center",paddingBottom:20}}>
-                        <Button  variant="contained" color="primary">خرید خود را نهایی کنید</Button>
+                        <Button onClick={()=>this.sendOrder()}  variant="contained" color="primary">خرید خود را نهایی کنید</Button>
                     </Grid>
                     <Grid item xs>
                     </Grid>
