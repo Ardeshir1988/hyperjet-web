@@ -102,7 +102,7 @@ class Product extends Component {
     }
 
     render() {
-        let image = 'http://maxproapp.com/files/'+this.props.productImage;
+        let image = 'https://maxproapp.com/files/'+this.props.productImage;
         let name = this.props.productName;
         let price = this.props.productPrice;
         let id = this.props.productId;

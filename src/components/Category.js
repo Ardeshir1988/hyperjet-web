@@ -18,7 +18,7 @@ class Category extends Component {
         return (
              <div>
                 <div>
-                    <img onClick={()=>this.redirectToTarget()} src={'http://maxproapp.com/files/'+categoryPic} alt={''}/>
+                    <img onClick={()=>this.redirectToTarget()} src={'https://maxproapp.com/files/'+categoryPic} alt={''}/>
                 </div>
                 <h4>{categoryName}</h4>
             </div>

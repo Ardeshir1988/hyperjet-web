@@ -1,6 +1,6 @@
 class URLs {
     static baseUrl(){
-        return "http://192.168.1.36:8080/service/";
+        return "https://maxproapp.com/service/";
     }
     static getAuthToken(){
         return 'Basic '+btoa('user1:1user');
