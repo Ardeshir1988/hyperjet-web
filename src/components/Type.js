@@ -8,7 +8,7 @@ class Type extends Component{
     };
 
     render() {
-        let image = 'http://maxproapp.com/files/'+this.props.typePic;
+        let image = 'https://maxproapp.com/files/'+this.props.typePic;
         let name = this.props.typeName;
         let id=this.props.typeId;
         return(      <div className="product" style={{maxHeight:"90px"}}>
