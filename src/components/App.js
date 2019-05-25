@@ -12,6 +12,7 @@ import Checkout from "./Checkout";
 import OrderStatus from "./OrderStatus"
 import Urls from "../utils/URLs";
 import axios from "axios/index";
+import UserAccount from "./UserAccount";
 
 class App extends React.Component {
 
@@ -187,6 +188,7 @@ class App extends React.Component {
              switch (path[2]) {
                  case "checkout":return (<Checkout/>);
                  case "orderstatus":return (<OrderStatus/>);
+                 case "account":return (<UserAccount/>);
                  default:return (<Checkout/>);
              }
          }

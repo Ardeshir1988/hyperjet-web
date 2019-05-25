@@ -8,9 +8,11 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AccountIcon from '@material-ui/icons/AccountCircle';
+import OrderStatusIcon from '@material-ui/icons/Restore';
 import IconButton from "@material-ui/core/IconButton";
+import PreviousOrderIcon from "@material-ui/icons/LibraryBooks";
+import ContactIcon from "@material-ui/icons/ContactPhone";
 
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -35,6 +37,9 @@ class SideMenu extends React.Component {
             status: status,
         });
     };
+    redirectTo(path){
+        window.location.href=(path);
+    }
 
     render() {
         const { classes } = this.props;
@@ -42,21 +47,39 @@ class SideMenu extends React.Component {
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    {/*{['حساب کاربری', 'وضعیت سفارش', 'خریدهای گذشته'].map((text, index) => (*/}
+                    {/*    <ListItem button key={text}>*/}
+                    {/*        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
+                    {/*        <ListItemText primary={text} />*/}
+                    {/*    </ListItem>*/}
+                    {/*))}*/}
+
+
+                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.redirectTo('/user/account')}>
+                        <ListItemText primary="حساب کاربری" />
+                        <ListItemIcon> <AccountIcon /> </ListItemIcon>
+
+                    </ListItem>
+
+                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.redirectTo('/user/orderstatus')}>
+                        <ListItemText primary="وضعیت سفارش" />
+                        <ListItemIcon> <OrderStatusIcon /> </ListItemIcon>
+
+                    </ListItem>
+
+                    <ListItem button style={{textAlign:"right"}} >
+                        <ListItemText primary="خریدهای گذشته" />
+                        <ListItemIcon> <PreviousOrderIcon /> </ListItemIcon>
+
+                    </ListItem>
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    <ListItem button style={{textAlign:"right"}}>
+                        <ListItemText primary="تماس با پشتیبانی" />
+                        <ListItemIcon> <ContactIcon /> </ListItemIcon>
+
+                    </ListItem>
                 </List>
             </div>
         );
