@@ -11,11 +11,13 @@ class Type extends Component{
         let image = 'https://maxproapp.com/files/'+this.props.typePic;
         let name = this.props.typeName;
         let id=this.props.typeId;
-        return(      <div className="product" style={{maxHeight:"90px"}}>
-            <div className="product-image" >
+
+        return(
+            <div className="type">
+            <div className="type-image" >
             <img onClick={()=>this.redirectToTarget()} src={image} alt={name}/>
             </div>
-            <h4 className="product-name">{name}</h4>
+            <h4 className="type-name">{name}</h4>
         </div>)
     }
 }

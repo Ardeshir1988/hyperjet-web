@@ -61,7 +61,7 @@ class Types extends Component{
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}
                     component="div"
-                    className="products">
+                    className="types">
                     {typesData}
                 </CSSTransitionGroup>
             );
