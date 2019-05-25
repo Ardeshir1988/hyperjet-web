@@ -144,7 +144,7 @@ class Product extends Component {
                             quantity
                         )}
                     >
-                        {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
+                        {!this.state.isAdded ? "ADD" : "✔ ADDED"}
                     </button>
                     {/*<IconButton color="default" aria-label="Add to shopping cart">*/}
                     {/*    <AddShoppingCart*/}
