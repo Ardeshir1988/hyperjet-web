@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -31,22 +30,22 @@ const styles = theme => ({
 });
 
 class ReviewCheckout extends React.Component {
-state={
-    open: false,
-    orderStatus:false,
-    orderid:0,
-    suburbs:[],
-    token:Dm.getUserData().token,
-    addressId:0,
-    addressDetail:"",
-    addressArea:1,
-    orderPhoneNumber:Dm.getUserData().mobile,
-    orderInstruction:'',
-    orderPaymentType:'',
-    productlist:[],
-    suburb: 1,
-    orderArrivalNoticeType:''
-};
+    state={
+        open: false,
+        orderStatus:false,
+        orderid:0,
+        suburbs:[],
+        token:Dm.getUserData().token,
+        addressId:0,
+        addressDetail:"",
+        addressArea:1,
+        orderPhoneNumber:Dm.getUserData().mobile,
+        orderInstruction:'',
+        orderPaymentType:'',
+        productlist:[],
+        suburb: 1,
+        orderArrivalNoticeType:''
+    };
     componentDidMount() {
 
         axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
@@ -100,7 +99,8 @@ state={
     sendOrder(){
 
         let order={token:this.state.token,productlist:this.state.productlist,
-            addressId:parseInt(this.state.addressId), addressCity:"تهران",addressArea:this.state.addressArea,
+            addressId:parseInt(this.state.addressId), addressCity:"تهران",
+            addressArea:this.state.suburbs.filter(s=>s.tblsuburbId===parseInt(this.state.suburb)).map(s=>s.tblsuburbName).toString(),
             addressDetail:this.state.addressDetail,addressName:'',
             orderArrivalNoticeType:this.state.orderArrivalNoticeType,orderPhoneNumber:this.state.orderPhoneNumber,
             orderInstruction:this.state.orderInstruction,orderSubTotal:"",orderPaymentType:this.state.orderPaymentType,orderDeliveryCost:0
@@ -111,10 +111,10 @@ state={
         axios.post(Urls.baseUrl()+"order/ordercheck",order,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response=>{
                     const orderResponse=response.data;
-                this.setState({orderid:orderResponse.orderId});
-                this.setState({orderStatus:true});
-                if (orderResponse.orderId !== 0)
-                Dm.setEmptyBasket();
+                    this.setState({orderid:orderResponse.orderId});
+                    this.setState({orderStatus:true});
+                    if (orderResponse.orderId !== 0)
+                        Dm.setEmptyBasket();
                 }
             );
 
@@ -132,7 +132,7 @@ state={
                     <DialogTitle id="alert-dialog-title">{"بررسی خرید بدون کالا"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                     سبد کالا شما خالی است
+                            سبد کالا شما خالی است
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -165,15 +165,15 @@ state={
                 </Typography>
                 <Grid container spacing={24}>
                     <Grid item xs={12} >
-                    <FormControl className={classes.formControl}>
+                        <FormControl className={classes.formControl}>
 
-                        <Select
-                            native
-                            value={10}>
+                            <Select
+                                native
+                                value={10}>
 
-                            <option value={10}>تهران</option>
-                        </Select>
-                    </FormControl>
+                                <option value={10}>تهران</option>
+                            </Select>
+                        </FormControl>
                         <FormControl className={classes.formControl}>
                             <Select
                                 value={this.state.suburb}
@@ -240,17 +240,17 @@ state={
 
                     </Grid>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="address"
-                                name="address"
-                                label="مانند نام تحویل گیرنده"
-                                fullWidth
-                                value={this.state.orderInstruction}
-                                onChange= {this.handleChange('orderInstruction')}
-                            />
-                        </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            id="address"
+                            name="address"
+                            label="مانند نام تحویل گیرنده"
+                            fullWidth
+                            value={this.state.orderInstruction}
+                            onChange= {this.handleChange('orderInstruction')}
+                        />
+                    </Grid>
                     <Grid item xs={12} >
 
                         <Typography variant="h6" gutterBottom>
@@ -283,13 +283,13 @@ state={
                         <Divider />
                     </Grid>
                     <Grid container spacing={24}>
-                    <Grid item xs>
-                    </Grid>
-                    <Grid item xs={6} style={{textAlign:"center",paddingBottom:20}}>
-                        <Button onClick={()=>this.sendOrder()}  variant="contained" color="primary">خرید خود را نهایی کنید</Button>
-                    </Grid>
-                    <Grid item xs>
-                    </Grid>
+                        <Grid item xs>
+                        </Grid>
+                        <Grid item xs={6} style={{textAlign:"center",paddingBottom:20}}>
+                            <Button onClick={()=>this.sendOrder()}  variant="contained" color="primary">خرید خود را نهایی کنید</Button>
+                        </Grid>
+                        <Grid item xs>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Paper>
