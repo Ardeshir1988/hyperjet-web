@@ -167,7 +167,7 @@ class Registration extends React.Component {
                                         مشتاقانه جهت خدمتگذاری آماده هستیم
                                     </Typography>
                                     <Button variant="contained" color="secondary" onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
-                                    <Button style={{marginLeft:10}} variant="contained" color="primary" onClick={()=>this.redirectTo('/checkout')}>بررسی خرید</Button>
+                                    <Button style={{marginLeft:10}} variant="contained" color="primary" onClick={()=>this.redirectTo('/user/checkout')}>بررسی خرید</Button>
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>
