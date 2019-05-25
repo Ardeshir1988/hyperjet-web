@@ -35,11 +35,11 @@ class UserAccount extends React.Component {
     state={
         open: false,
         suburbs:[],
-        token:Dm.getUserData().token,
+        token:'',
         addressId:0,
         addressDetail:"",
         addressArea:1,
-        mobile:Dm.getUserData().mobile,
+        mobile:'',
         tel:'',
         suburb: 1,
         username:'',
@@ -47,6 +47,11 @@ class UserAccount extends React.Component {
         email: ''
     };
     componentDidMount() {
+        if (Dm.getUserData()===undefined)
+            window.location.href='/user/registration';
+        else {
+            this.setState({token:Dm.getUserData().token,mobile:Dm.getUserData().mobile})
+        }
 
         axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {

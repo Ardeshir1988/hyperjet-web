@@ -13,7 +13,7 @@ import OrderStatusIcon from '@material-ui/icons/Restore';
 import IconButton from "@material-ui/core/IconButton";
 import PreviousOrderIcon from "@material-ui/icons/LibraryBooks";
 import ContactIcon from "@material-ui/icons/ContactPhone";
-
+import Dm from "../utils/DataManager";
 import MenuIcon from '@material-ui/icons/Menu';
 
 
@@ -27,8 +27,11 @@ const styles = {
 };
 
 class SideMenu extends React.Component {
+
     state = {
-        status:false
+        status:false,
+        menuname:'ثبت نام',
+        menupath:'/user/registration'
     };
 
 
@@ -36,28 +39,24 @@ class SideMenu extends React.Component {
         this.setState({
             status: status,
         });
+        if (Dm.getUserData() !== undefined)
+            this.setState({menuname:'حساب کاربری',menupath:'/user/account'});
+
     };
     redirectTo(path){
         window.location.href=(path);
     }
 
     render() {
+
         const { classes } = this.props;
 
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    {/*{['حساب کاربری', 'وضعیت سفارش', 'خریدهای گذشته'].map((text, index) => (*/}
-                    {/*    <ListItem button key={text}>*/}
-                    {/*        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                    {/*        <ListItemText primary={text} />*/}
-                    {/*    </ListItem>*/}
-                    {/*))}*/}
-
-
-                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.redirectTo('/user/account')}>
-                        <ListItemText primary="حساب کاربری" />
-                        <ListItemIcon> <AccountIcon /> </ListItemIcon>
+                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.redirectTo(this.state.menupath)}>
+                        <ListItemText  primary={ this.state.menuname} />
+                        <ListItemIcon><AccountIcon />  </ListItemIcon>
 
                     </ListItem>
 
