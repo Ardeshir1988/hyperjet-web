@@ -19,9 +19,13 @@ class Header extends Component {
 
     }
 
-    handleSubmit() {
-        if (this.state.keyword !== '' && this.state.keyword !== ' ')
-            window.location.href=(`/searched_products?keyword=`+this.state.keyword);
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log("before handele search");
+
+            window.location.href='/searched_products?keyword=' + this.state.keyword;
+            console.log("after handele search");
+
     }
     handleMobileSearch(e) {
         e.preventDefault();
@@ -160,7 +164,7 @@ class Header extends Component {
                             <input
                                 type="search"
                                 ref="searchBox"
-                                placeholder="Search for Vegetables and Fruits"
+                                placeholder="جستجو کالا"
                                 className="search-keyword"
                                 onChange= {this.handleChange('keyword')}
                                 value={this.state.keyword}
@@ -168,7 +172,7 @@ class Header extends Component {
                             <button
                                 className="search-button"
                                 type="submit"
-                                onClick={()=>this.handleSubmit()}
+                                onClick={this.handleSubmit.bind(this)}
                             />
                         </form>
                     </div>
