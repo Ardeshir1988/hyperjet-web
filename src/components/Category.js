@@ -16,11 +16,12 @@ class Category extends Component {
         let categoryPic = this.props.categoryPic;
 
         return (
-             <div>
-                <div>
+            <div className="category">
+
+                <div className="category-image">
                     <img onClick={()=>this.redirectToTarget()} src={'https://maxproapp.com/files/'+categoryPic} alt={''}/>
                 </div>
-                <h4>{categoryName}</h4>
+                <h4 className="category-name">{categoryName}</h4>
             </div>
         );
     }

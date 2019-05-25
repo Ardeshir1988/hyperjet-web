@@ -57,7 +57,7 @@ class Categories extends Component {
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}
                     component="div"
-                    className="products">
+                    className="categories">
                     {categoriesData}
                 </CSSTransitionGroup>
             );
