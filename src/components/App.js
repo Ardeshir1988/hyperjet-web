@@ -220,6 +220,12 @@ class App extends React.Component {
                                                                          productQuantity={this.state.quantity}
                                                                          updateQuantity={this.updateQuantity}
                                                                          openModal={this.openModal} />}  />
+                <Route path={'/searched_products'} render={props => <Products {...props}
+                                                                          searchTerm={this.state.term}
+                                                                          addToCart={this.handleAddToCart}
+                                                                          productQuantity={this.state.quantity}
+                                                                          updateQuantity={this.updateQuantity}
+                                                                          openModal={this.openModal} />}  />
             </Switch>
 
             <Footer/>

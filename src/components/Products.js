@@ -9,9 +9,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 class Products extends Component {
-
-
-
     state = {
         items: [],
         hasMore: true,
@@ -39,15 +36,30 @@ class Products extends Component {
     componentDidMount() {
         const values = queryString.parse(this.props.location.search);
         let typeid=values.typeid;
+        let keyword=values.keyword;
+        console.log('keyword======'+keyword);
         console.log('typeid======'+typeid);
-        let url = Urls.baseUrl()+"product/productbytype?typeid="+typeid;
-        axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
-            .then(response => {
-                const productList=response.data;
-                this.setState({productList});
-                this.setState({items:productList.slice(0,25)})
-            });
-        this.setState({typeid:typeid})
+        if(typeid!==undefined) {
+            let url = Urls.baseUrl() + "product/productbytype?typeid=" + typeid;
+            axios.get(url, {headers: {'Authorization': Urls.getAuthToken()}})
+                .then(response => {
+                    const productList = response.data;
+                    this.setState({productList});
+                    this.setState({items: productList.slice(0, 25)})
+                });
+            // this.setState({typeid: typeid})
+        }
+        if (keyword!==undefined) {
+            let url = Urls.baseUrl() + "product/searchname?pname=" + keyword;
+            axios.post(url,{} ,{headers: {'Authorization': Urls.getAuthToken()}})
+                .then(response => {
+                    const productList = response.data;
+                    this.setState({productList});
+                    this.setState({items: productList.slice(0, 25)})
+                });
+            // this.setState({typeid: typeid})
+        }
+
     }
 
 

@@ -2,28 +2,26 @@ import React, { Component } from "react";
 
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-
 import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';
-
 import Basket from "./Basket";
-import Product from "./Product";
-import axios from "axios";
-import Urls from "../utils/URLs";
+
 class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showCart: false,
             cart: this.props.cartItems,
-            mobileSearch: false
+            mobileSearch: false,
+            keyword:''
         };
 
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit() {
+        if (this.state.keyword !== '' && this.state.keyword !== ' ')
+            window.location.href=(`/searched_products?keyword=`+this.state.keyword);
     }
     handleMobileSearch(e) {
         e.preventDefault();
@@ -76,6 +74,9 @@ class Header extends Component {
             if (Dm.getBasketData().length > this.state.cart)
                 this.setState( {cart:Dm.getBasketData()});
     }
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.value });
+    };
     render() {
 
         this.updateBasket();
@@ -161,71 +162,17 @@ class Header extends Component {
                                 ref="searchBox"
                                 placeholder="Search for Vegetables and Fruits"
                                 className="search-keyword"
-                                onChange={this.props.handleSearch}
+                                onChange= {this.handleChange('keyword')}
+                                value={this.state.keyword}
                             />
                             <button
                                 className="search-button"
                                 type="submit"
-                                onClick={this.handleSubmit.bind(this)}
+                                onClick={()=>this.handleSubmit()}
                             />
                         </form>
                     </div>
 
-                    {/*<div className="cart">*/}
-                    {/*    <div className="cart-info">*/}
-                    {/*        <table>*/}
-                    {/*            <tbody>*/}
-                    {/*            <tr>*/}
-                    {/*                <td>No. of items</td>*/}
-                    {/*                <td>:</td>*/}
-                    {/*                <td>*/}
-                    {/*                    <strong>{this.props.totalItems}</strong>*/}
-                    {/*                </td>*/}
-                    {/*            </tr>*/}
-                    {/*            <tr>*/}
-                    {/*                <td>Sub Total</td>*/}
-                    {/*                <td>:</td>*/}
-                    {/*                <td>*/}
-                    {/*                    <strong>{this.props.total}</strong>*/}
-                    {/*                </td>*/}
-                    {/*            </tr>*/}
-                    {/*            </tbody>*/}
-                    {/*        </table>*/}
-                    {/*    </div>*/}
-                    {/*    <a*/}
-                    {/*        className="cart-icon"*/}
-                    {/*        href="#"*/}
-                    {/*        onClick={this.handleCart.bind(this)}*/}
-                    {/*        ref="cartButton"*/}
-                    {/*    >*/}
-                    {/*        <img*/}
-                    {/*            className={this.props.cartBounce ? "tada" : " "}*/}
-                    {/*            src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"*/}
-                    {/*            alt="Cart"*/}
-                    {/*        />*/}
-                    {/*        {this.props.totalItems ? (*/}
-                    {/*            <span className="cart-count">{this.props.totalItems}</span>*/}
-                    {/*        ) : (*/}
-                    {/*            ""*/}
-                    {/*        )}*/}
-                    {/*    </a>*/}
-                    {/*    <div*/}
-                    {/*        className={*/}
-                    {/*            this.state.showCart ? "cart-preview active" : "cart-preview"*/}
-                    {/*        }*/}
-                    {/*        ref="cartPreview"*/}
-                    {/*    >*/}
-                    {/*        <CartScrollBar>{view}</CartScrollBar>*/}
-                    {/*        <div className="action-block">*/}
-                    {/*            <button*/}
-                    {/*                type="button"*/}
-                    {/*                className={this.state.cart.length > 0 ? " " : "disabled"}*/}
-                    {/*            >*/}
-                    {/*                PROCEED TO CHECKOUT*/}
-                    {/*            </button>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                     <RightSideMenu />
                 </div>
             </header>
