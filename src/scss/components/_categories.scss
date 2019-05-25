@@ -33,14 +33,14 @@
     @media (max-width: 480px) {
       flex-basis: calc(31% - 3px);
       -webkit-flex-basis: calc(31% - 3px);
-      min-height: 150px;
+      min-height: 110px;
       .category-image{
-        max-width: 102px;
-        max-height: 105px;
+        max-width: 114px;
+        max-height: 114px;
       }
       .category-name {
-        text-align: center;
-        height: 20px;
+        font-size: 12px;
+        font-weight: bold;
       }
       .category-action {
         padding: 16px 8px;
