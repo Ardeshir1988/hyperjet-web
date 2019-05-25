@@ -6,6 +6,8 @@ import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';
 import Basket from "./Basket";
+import SearchIcon from "../assets/search-24dp.png";
+import BackIcon from "../assets/back-24dp.png";
 
 class Header extends Component {
     constructor(props) {
@@ -137,12 +139,13 @@ class Header extends Component {
                         <a
                             className="mobile-search"
                             href="#"
-                            onClick={this.handleMobileSearch.bind(this)}
-                        >
+                            onClick={this.handleMobileSearch.bind(this)}>
+                            <div style={{marginTop:12}}>
                             <img
-                                src="https://res.cloudinary.com/sivadass/image/upload/v1494756966/icons/search-green.png"
+                                src={SearchIcon}
                                 alt="search"
                             />
+                            </div>
                         </a>
                         <form
                             action="#"
@@ -156,10 +159,12 @@ class Header extends Component {
                                 href="#"
                                 onClick={this.handleSearchNav.bind(this)}
                             >
+                                <div style={{marginTop:5}}>
                                 <img
-                                    src="https://res.cloudinary.com/sivadass/image/upload/v1494756030/icons/back.png"
+                                    src={BackIcon}
                                     alt="back"
                                 />
+                                </div>
                             </a>
                             <input
                                 type="search"
