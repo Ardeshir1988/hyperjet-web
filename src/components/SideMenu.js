@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -66,7 +66,7 @@ class SideMenu extends React.Component {
 
                     </ListItem>
 
-                    <ListItem button style={{textAlign:"right"}} >
+                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.redirectTo('/user/orders')} >
                         <ListItemText primary="خریدهای گذشته" />
                         <ListItemIcon> <PreviousOrderIcon /> </ListItemIcon>
 

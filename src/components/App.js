@@ -14,6 +14,7 @@ import Urls from "../utils/URLs";
 import axios from "axios/index";
 import UserAccount from "./UserAccount";
 import Registration from "./Registration";
+import PreviousOrders from "./PreviousOrders";
 
 class App extends React.Component {
 
@@ -191,6 +192,7 @@ class App extends React.Component {
                  case "orderstatus":return (<OrderStatus/>);
                  case "account":return (<UserAccount/>);
                  case "registration":return (<Registration />);
+                 case "orders":return (<PreviousOrders />);
                  default:return (<Checkout/>);
              }
          }
