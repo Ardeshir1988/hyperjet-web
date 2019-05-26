@@ -33,6 +33,9 @@ const styles = {
         margin: '0 2px',
         transform: 'scale(0.8)',
     },
+    grid:{
+        marginBottom:"20px"
+    },
     title: {
         fontSize: 14,
     },
@@ -45,16 +48,72 @@ const styles = {
 class PreviousOrderCart extends React.Component {
 
 
-    state={step1:'   12:20 25/2/1398',step2:'   12:20 25/2/1398',step3:'',step4:''};
-    //this.state({step1:'',step2:'',step3:'',step4:''});
     render() {
 
         const { classes } = this.props;
         return (
             <Card className={classes.card}>
-                        <div>
-                            {this.props.order.orderRegTime}
-                        </div>
+                <ListItem button>
+
+                    <Grid container spacing={24}>
+
+                        <Grid item xs={6}>
+                            <div style={{textAlign: "left"}} >
+                                {this.props.order.orderId}
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={6} className={classes.grid} >
+                            <div style={{textAlign: "right"}}>
+                                شماره سفارش
+                            </div>
+                        </Grid>
+                        <Grid item xs={6} >
+                            <div style={{textAlign: "left"}}>
+                                {this.props.order.orderRegTime}
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}  className={classes.grid}>
+                            <div style={{textAlign: "right"}}>
+                                تاریخ سفارش
+                            </div>
+                        </Grid>
+
+
+                        <Grid item xs={6} >
+                            <div style={{textAlign: "left"}}>
+                                {this.props.order.orderTotalAmount-this.props.order.orderTotalDiscount}
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={6}  className={classes.grid}>
+                            <div style={{textAlign: "right"}}>
+                                تخفیف
+                            </div>
+                        </Grid>
+                        <Grid item xs={6} >
+                            <div style={{textAlign: "left"}}>
+                                {this.props.order.orderTotalDiscount+this.props.order.deliveryFee}
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}  className={classes.grid}>
+                            <div style={{textAlign: "right"}}>
+                                مبلغ قابل پرداخت
+                            </div>
+                        </Grid>
+                        <Grid item xs={6} >
+                            <div style={{textAlign: "left"}}>
+                                {this.props.order.debt_amount}
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}  className={classes.grid}>
+                            <div style={{textAlign: "right"}}>
+                                مبلغ باقیمانده
+                            </div>
+                        </Grid>
+
+                    </Grid>
+                </ListItem>
             </Card>
         );
     }
