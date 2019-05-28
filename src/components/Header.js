@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-
-import EmptyCart from "../empty-states/EmptyCart";
-import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';

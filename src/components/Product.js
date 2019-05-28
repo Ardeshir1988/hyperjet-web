@@ -1,49 +1,7 @@
-
 import React, { Component } from "react";
-import Counter from "./Counter";
 import { CartContext } from "./CartContext";
-import Dm from "../utils/DataManager";
 
 class Product extends Component {
-
-    // state = {
-    //     redirect: false
-    // };
-    //
-    // setRedirect = () => {
-    //     this.setState({
-    //         redirect: true
-    //     })
-    // };
-    //
-    // renderRedirect = () => {
-    //     if (this.state.redirect) {
-    //         return <Redirect to='/products' />
-    //     }
-    // };
-
-    // {
-    //         "productId": 4420,
-    //         "productName": "کراکر کراکس سبزیجات و پنیرشیرین عسل",
-    //         "productDetails": "",
-    //         "productParentTypeId": 0,
-    //         "measure": "70 گرمی",
-    //         "productTypeName": "کیک و بیسکوئیت",
-    //         "productCatName": "بستنی و تنقلات",
-    //         "product_pic1": "shirinasal-6261149014110.png",
-    //         "product_pic2": null,
-    //         "product_pic3": null,
-    //         "product_price": 700,
-    //         "product_price_discount": 700,
-    //         "productBrand": "شیرین عسل",
-    //         "priceid": 700,
-    //         "productPosition": 0,
-    //         "productStatus": "t",
-    //         "product_min_quantity": null,
-    //         "product_max_quantity": null,
-    //         "product_priority": null,
-    //         "productStepDiscount": 0
-    //     }
 
     constructor(props) {
         super(props);
@@ -53,37 +11,6 @@ class Product extends Component {
             isAdded: false
         };
     }
-
-    // addToCart(image, name, price, id, quantity) {
-    //     Dm.saveProductToBasket(id,name,image,price);
-    //     this.setState(
-    //         {
-    //             selectedProduct: {
-    //                 image: image,
-    //                 name: name,
-    //                 price: price,
-    //                 id: id,
-    //                 quantity: quantity
-    //             }
-    //         },
-    //         function() {
-    //             this.props.addToCart(this.state.selectedProduct);
-    //         }
-    //     );
-    //     this.setState(
-    //         {
-    //             isAdded: true
-    //         },
-    //         function() {
-    //             setTimeout(() => {
-    //                 this.setState({
-    //                     isAdded: false,
-    //                     selectedProduct: {}
-    //                 });
-    //             }, 3500);
-    //         }
-    //     );
-    // }
 
     quickView(image, name, price, id) {
         this.setState(

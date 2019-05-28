@@ -183,18 +183,7 @@ class App extends React.Component {
         }else
         return [];
         }
-     intialAmount(){
-            if (Dm.getBasketData()) {
-                let cart= Dm.getBasketData();
-                let total = 0;
 
-                for (var i = 0; i < cart.length; i++) {
-                    total += cart[i].price * parseInt(cart[i].quantity);
-                }
-                return total;
-            }else
-                return 0;
-        }
     render() {
         if (window.location.pathname.startsWith('/user')) {
             let path = window.location.pathname.split('/');
@@ -269,11 +258,6 @@ class App extends React.Component {
             );
         }
     }
-}                 {/*{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
-                    {/*    <ListItem button key={text}>*/}
-                    {/*        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}
-                    {/*        <ListItemText primary={text} />*/}
-                    {/*    </ListItem>*/}
-                    {/*))}*/}
+}
 
 export default App;

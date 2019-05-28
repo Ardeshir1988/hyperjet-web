@@ -1,8 +1,7 @@
-import React , { useState } from "react";
+import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
-import Dm from "../utils/DataManager";
 import {CartContext} from "./CartContext";
 
 
