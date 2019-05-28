@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import Counter from "./Counter";
-
+import { CartContext } from "./CartContext";
 import Dm from "../utils/DataManager";
 
 class Product extends Component {
@@ -54,36 +54,36 @@ class Product extends Component {
         };
     }
 
-    addToCart(image, name, price, id, quantity) {
-        Dm.saveProductToBasket(id,name,image,price);
-        this.setState(
-            {
-                selectedProduct: {
-                    image: image,
-                    name: name,
-                    price: price,
-                    id: id,
-                    quantity: quantity
-                }
-            },
-            function() {
-                this.props.addToCart(this.state.selectedProduct);
-            }
-        );
-        this.setState(
-            {
-                isAdded: true
-            },
-            function() {
-                setTimeout(() => {
-                    this.setState({
-                        isAdded: false,
-                        selectedProduct: {}
-                    });
-                }, 3500);
-            }
-        );
-    }
+    // addToCart(image, name, price, id, quantity) {
+    //     Dm.saveProductToBasket(id,name,image,price);
+    //     this.setState(
+    //         {
+    //             selectedProduct: {
+    //                 image: image,
+    //                 name: name,
+    //                 price: price,
+    //                 id: id,
+    //                 quantity: quantity
+    //             }
+    //         },
+    //         function() {
+    //             this.props.addToCart(this.state.selectedProduct);
+    //         }
+    //     );
+    //     this.setState(
+    //         {
+    //             isAdded: true
+    //         },
+    //         function() {
+    //             setTimeout(() => {
+    //                 this.setState({
+    //                     isAdded: false,
+    //                     selectedProduct: {}
+    //                 });
+    //             }, 3500);
+    //         }
+    //     );
+    // }
 
     quickView(image, name, price, id) {
         this.setState(
@@ -108,61 +108,55 @@ class Product extends Component {
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
         return (
-            <div className="product">
+            <CartContext.Consumer>
+                {cart=>(
+                    <div className="product">
 
-                <div className="product-image">
-                <img
-                    src={image}
-                    alt={name}
-                    onClick={this.quickView.bind(
-                        this,
-                        image,
-                        name,
-                        price,
-                        id,
-                        quantity
+                        <div className="product-image">
+                            <img
+                                src={image}
+                                alt={name}
+                                onClick={this.quickView.bind(
+                                    this,
+                                    image,
+                                    name,
+                                    price,
+                                    id,
+                                    quantity
+                                )}
+                            />
+                        </div>
+                        <h4 className="product-name">{name}</h4>
+                        <h2 className="product-price">{price}</h2>
+                        <h2 className="product-price">{cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</h2>
+                        <div className="product-action">
+                            {/*<Counter*/}
+                            {/*    productQuantity={quantity}*/}
+                            {/*    updateQuantity={this.props.updateQuantity}*/}
+                            {/*    resetQuantity={this.resetQuantity}*/}
+                            {/*/>*/}
+                            <button
+                                className={!this.state.isAdded ? "" : "added"}
+                                type="button"
+                                onClick={()=>cart.addToCart(
+                                    {
+                                        image,
+                                        name,
+                                        price,
+                                        id,
+                                        quantity
+                                    }
+                                )}
+                            >
+                                {!this.state.isAdded ? "ADD" : "✔ ADDED"}
+                            </button>
+
+
+                        </div>
+
+                    </div>
                     )}
-                />
-                </div>
-                <h4 className="product-name">{name}</h4>
-                <h2 className="product-price">{price}</h2>
-                <div className="product-action">
-                    {/*<Counter*/}
-                    {/*    productQuantity={quantity}*/}
-                    {/*    updateQuantity={this.props.updateQuantity}*/}
-                    {/*    resetQuantity={this.resetQuantity}*/}
-                    {/*/>*/}
-                    <button
-                        className={!this.state.isAdded ? "" : "added"}
-                        type="button"
-                        onClick={this.addToCart.bind(
-                            this,
-                            image,
-                            name,
-                            price,
-                            id,
-                            quantity
-                        )}
-                    >
-                        {!this.state.isAdded ? "ADD" : "✔ ADDED"}
-                    </button>
-                    {/*<IconButton color="default" aria-label="Add to shopping cart">*/}
-                    {/*    <AddShoppingCart*/}
-                    {/*        onClick={this.addToCart.bind(*/}
-                    {/*                this,*/}
-                    {/*                image,*/}
-                    {/*                name,*/}
-                    {/*                price,*/}
-                    {/*                id,*/}
-                    {/*                quantity*/}
-                    {/*            )}*/}
-
-                    {/*    />*/}
-                    {/*</IconButton>*/}
-
-                </div>
-
-            </div>
+            </CartContext.Consumer>
         );
     }
 }

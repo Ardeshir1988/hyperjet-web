@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 import Dm from "../utils/DataManager";
+import {CartContext} from "./CartContext";
 
 
 class BasketProduct extends React.Component{
@@ -16,64 +17,26 @@ class BasketProduct extends React.Component{
 
     }
 
-    addToCart(image, name, price, id, quantity) {
-        Dm.saveProductToBasket(id,name,image,price);
-        this.props.handleBasketData(Dm.getBasketData());
-        this.setState({ count: this.state.count + 1 });
-        this.setState(
-            {
-                selectedProduct: {
-                    image: image,
-                    name: name,
-                    price: price,
-                    id: id,
-                    quantity: 1
-                }
-            },
-            function() {
-                this.props.addToCart(this.state.selectedProduct);
-            }
-        );
-        this.setState(
-            {
-                isAdded: true
-            },
-            function() {
-                setTimeout(() => {
-                    this.setState({
-                        isAdded: false,
-                        selectedProduct: {}
-                    });
-                }, 3500);
-            }
-        );
-    }
-    //
-    // addCount(id){
-    //     this.setState({ count: this.state.count + 1 });
-    //     Dm.saveProductToBasket(id,'','','');
-    // }
-    removeCount(e,id){
-        if (this.state.count === 1)
-        {
-            this.state.remove(id)
-        }else {
-            this.setState({count: this.state.count - 1});
-            Dm.decreaseQuantity(id);
-        }
-        this.props.handleBasketData(Dm.getBasketData());
-    }
+
+
     render() {
 
+        let price=this.props.price;
+        let name=this.props.name;
+        let id=this.props.id;
+        let image=this.props.image;
+        let quantity=1;
 
 
         return(
+            <CartContext.Consumer>
+                {cart=>(
             <div className="cart-item" >
 
 
                 <div className="product-total">
                     <p className="quantity">
-                        {this.state.count}
+                        {cart.items.filter(item=>item.id===id).map(item=>item.quantity)}
                     </p>
                     <p className="amount">{this.props.price}</p>
                 </div>
@@ -84,22 +47,25 @@ class BasketProduct extends React.Component{
                 <img className="product-image" src={this.props.image} />
                 <div>
                     <IconButton color="primary" aria-label="Add to shopping cart">
-                        <AddIcon onClick= {this.addToCart.bind(
-                            this,
-                            this.props.image,
-                            this.props.name,
-                            this.props.price,
-                            this.props.id,
-                            this.state.count
+                        <AddIcon onClick= {()=>cart.addToCart(
+                            {
+                                image,
+                                name,
+                                price,
+                                id,
+                                quantity
+                            }
                         )} />
 
                     </IconButton>
 
                     <IconButton color="primary" aria-label="Add to shopping cart">
-                    <RemoveIcon onClick={() =>this.removeCount(this,this.props.id)}/>
+                    <RemoveIcon onClick={() =>cart.removeProduct(id)}/>
                     </IconButton>
                 </div>
             </div>
+         )}
+            </CartContext.Consumer>
         );
     }
 }

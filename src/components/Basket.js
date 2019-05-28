@@ -1,8 +1,6 @@
 import React from 'react';
-
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,9 +9,8 @@ import IconButton from "@material-ui/core/IconButton";
 import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
-import Dm from "../utils/DataManager";
-import axios from "axios";
-import Urls from "../utils/URLs";
+import Badge from '@material-ui/core/Badge';
+import {CartContext} from "./CartContext";
 
 
 const styles = {
@@ -22,7 +19,7 @@ const styles = {
     },
     fullList: {
         width: 'auto',
-    },
+    }
 };
 
 class Basket extends React.Component {
@@ -32,50 +29,24 @@ class Basket extends React.Component {
         super(props);
         this.state = {
             status:false,
-            cart: this.props.cart,
-            totalCount:this.props.cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0),
-            totalAmount:this.props.total,
-            setting:{"cost":0,"threshold":0}
         };
-        this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
-        this.handleBasketData=this.handleBasketData.bind(this);
+
     }
     toggleDrawer = (status) => () => {
         this.setState({
             status: status,
         });
-        let cart=Dm.getBasketData();
-        this.setState({cart:cart});
-        this.setState({setting:Dm.getDeliveryThreshold()});
-        this.handleBasketData(cart);
+
     };
 
-    handleBasketData(cart){
-        this.setState({totalCount:cart.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)});
-        let total=0;
-        for (var i = 0; i < cart.length; i++) {
-            total += cart[i].price * parseInt(cart[i].quantity);
-        }
-        this.setState({
-            totalAmount: total
-        });
-    }
-    handleRemoveProduct(id) {
-        let cart = this.state.cart;
-        let index = cart.findIndex(x => x.id === id);
-        cart.splice(index, 1);
-        this.setState({
-            cart: cart
-        });
-        Dm.removeProductFromBasket(id);
-    }
 
     redirectTo(path){
         window.location.href=(path);
     }
 
-    render() {
 
+    render() {
+        console.log("=======RenderBasket");
         const quantity='تعداد';
         const totalAmount='مجموع خرید';
         const deliveryFee='هزینه تحویل';
@@ -84,59 +55,17 @@ class Basket extends React.Component {
 
         const { classes } = this.props;
 
-        const sideList = (
-            <div className={classes.list}>
-                <List>
-                    {this.state.cart.map(p=> {
-                        return (<BasketProduct
-                            addToCart={this.props.addToCart}
-                            removeProduct={this.handleRemoveProduct}
-                            handleBasketData={this.handleBasketData}
-                        id={p.id}
-                        name={p.name}
-                        price={p.price}
-                        quantity={p.quantity}
-                        image={p.image}/>);
-                        }
-                    )}
-                </List>
-                <Divider />
-                <List>
-
-                        <ListItem>
-                            <ListItemText primary={this.state.totalCount} />
-                            <ListItemText primary={quantity} />
-
-                        </ListItem>
-
-                    <ListItem>
-                        <ListItemText primary={this.state.totalAmount} />
-                        <ListItemText primary={totalAmount} />
-
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText>{(this.state.totalAmount>=this.state.setting.threshold) ? 0 : this.state.setting.cost} </ListItemText>
-                        <ListItemText primary={deliveryFee} />
-                    </ListItem>
-                    <ListItem>
-
-                            <ListItemText primary={(this.state.totalAmount>=this.state.setting.threshold) ?
-                                this.state.totalAmount :this.state.totalAmount+this.state.setting.cost } />
-
-                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>this.redirectTo("/user/checkout")}>
-                        {checkout}
-                    </Button>
-                    </ListItem>
-                </List>
-            </div>
-        );
 
 
 
         return (
+            <CartContext.Consumer>
+                {cart=>(
             <div>
                 <IconButton  color="default" aria-label="Open drawer">
+                    <Badge badgeContent={cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} color="secondary" >
                     <ShoppingCartIcon onClick={this.toggleDrawer(true)}/>
+                    </Badge>
                 </IconButton>
 
                 <Drawer anchor="left" open={this.state.status} onClose={this.toggleDrawer( false)}>
@@ -145,11 +74,54 @@ class Basket extends React.Component {
                         role="button"
                         // onClick={this.toggleDrawer( false)}
                         // onKeyDown={this.toggleDrawer( false)}
-                    >
-                        {sideList}
+                         >
+                        <div className={classes.list}>
+                            <List>
+                                {cart.items.map(p=> {
+                                    return (
+                                        <BasketProduct
+                                        id={p.id}
+                                        name={p.name}
+                                        price={p.price}
+                                        quantity={p.quantity}
+                                        image={p.image}/>);
+                                })
+                                }
+                            </List>
+                            <Divider />
+                            <List>
+
+                                <ListItem>
+                                    <ListItemText primary={cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} />
+                                    <ListItemText primary={quantity} />
+
+                                </ListItem>
+
+                                <ListItem>
+                                    <ListItemText primary={cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)} />
+                                    <ListItemText primary={totalAmount} />
+
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText>{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ? 0 : cart.deliveryCost} </ListItemText>
+                                    <ListItemText primary={deliveryFee} />
+                                </ListItem>
+                                <ListItem>
+
+                                    <ListItemText primary={(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
+                                        cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost } />
+
+                                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>this.redirectTo("/user/checkout")}>
+                                        {checkout}
+                                    </Button>
+                                </ListItem>
+                            </List>
+                        </div>
                     </div>
                 </Drawer>
             </div>
+                )}
+            </CartContext.Consumer>
         );
     }
 }

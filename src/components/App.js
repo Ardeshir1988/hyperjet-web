@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from '../logo.svg';
 import {BrowserRouter,Switch,Route} from 'react-router-dom'
 import Header from "./Header";
 import Footer from "./Footer";
@@ -15,6 +14,7 @@ import axios from "axios/index";
 import UserAccount from "./UserAccount";
 import Registration from "./Registration";
 import PreviousOrders from "./PreviousOrders";
+import { CartContext } from "./CartContext";
 
 class App extends React.Component {
 
@@ -23,8 +23,7 @@ class App extends React.Component {
         this.state = {
             products: [],
             cart: this.initialBasket(),
-            totalItems: this.initialBasket().length,
-            totalAmount: this.intialAmount(),
+
             term: "",
             category: "",
             cartBounce: false,
@@ -36,9 +35,8 @@ class App extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleMobileSearch = this.handleMobileSearch.bind(this);
         this.handleCategory = this.handleCategory.bind(this);
-        this.handleAddToCart = this.handleAddToCart.bind(this);
-        this.sumTotalItems = this.sumTotalItems.bind(this);
-        this.sumTotalAmount = this.sumTotalAmount.bind(this);
+
+
         this.checkProduct = this.checkProduct.bind(this);
         this.updateQuantity = this.updateQuantity.bind(this);
         this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
@@ -50,7 +48,7 @@ class App extends React.Component {
         axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const setting=response.data;
-                Dm.setDeliveryThreshold(setting.deliveryCost,setting.threshold)
+                this.setState({deliveryCost:setting.deliveryCost,threshold:setting.threshold})
             });
     }
 
@@ -68,10 +66,16 @@ class App extends React.Component {
         console.log(this.state.category);
     }
     // Add to Cart
+    handleAddToCart = this.handleAddToCart.bind(this);
     handleAddToCart(selectedProducts) {
+        console.log("====="+selectedProducts.name+"=====");
+        Dm.saveProductToBasket(selectedProducts.id,
+            selectedProducts.name,selectedProducts.image,
+            selectedProducts.price);
         let cartItem = this.state.cart;
         let productID = selectedProducts.id;
         let productQty = selectedProducts.quantity;
+        console.log(selectedProducts);
         if (this.checkProduct(productID)) {
 
             let index = cartItem.findIndex(x => x.id === productID);
@@ -98,9 +102,35 @@ class App extends React.Component {
             }.bind(this),
             1000
         );
-        this.sumTotalItems(this.state.cart);
-        this.sumTotalAmount(this.state.cart);
+
     }
+    handleDecreaseProduct = this.handleDecreaseProduct.bind(this);
+    handleDecreaseProduct(productId) {
+
+        let cartItems = this.state.cart;
+
+        console.log(cartItems);
+        if (this.checkProduct(productId)) {
+
+            let index = cartItems.findIndex(x => x.id === productId);
+            if (cartItems[index].quantity === 1) {
+                cartItems.splice(index, 1);
+                this.setState({
+                    cart: cartItems
+                });
+            } else {
+                cartItems[index].quantity =
+                    Number(cartItems[index].quantity) - 1;
+                this.setState({
+                    cart: cartItems
+                });
+
+            }
+            Dm.decreaseQuantity(productId);
+
+        }
+    }
+
     handleRemoveProduct(id, e) {
         let cart = this.state.cart;
         let index = cart.findIndex(x => x.id === id);
@@ -109,8 +139,7 @@ class App extends React.Component {
             cart: cart
         });
         Dm.removeProductFromBasket(id);
-        this.sumTotalItems(this.state.cart);
-        this.sumTotalAmount(this.state.cart);
+
         e.preventDefault();
     }
     checkProduct(productID) {
@@ -119,24 +148,7 @@ class App extends React.Component {
             return item.id === productID;
         });
     }
-    sumTotalItems() {
-        let total = 0;
-        let cart = this.state.cart;
-        total = cart.length;
-        this.setState({
-            totalItems: total
-        });
-    }
-    sumTotalAmount() {
-        let total = 0;
-        let cart = this.state.cart;
-        for (var i = 0; i < cart.length; i++) {
-            total += cart[i].price * parseInt(cart[i].quantity);
-        }
-        this.setState({
-            totalAmount: total
-        });
-    }
+
 
     //Reset Quantity
     updateQuantity(qty) {
@@ -184,65 +196,79 @@ class App extends React.Component {
                 return 0;
         }
     render() {
-    this.updateBasket();
-         if(window.location.pathname.startsWith('/user')) {
-             let path=window.location.pathname.split('/');
-             switch (path[2]) {
-                 case "checkout":return (<Checkout/>);
-                 case "orderstatus":return (<OrderStatus/>);
-                 case "account":return (<UserAccount/>);
-                 case "registration":return (<Registration />);
-                 case "orders":return (<PreviousOrders />);
-                 default:return (<Checkout/>);
-             }
-         }
-         else
-             return (
-             <div className="container">
-              <Header
-                  cartBounce={this.state.cartBounce}
-                  total={this.state.totalAmount}
-                  totalItems={this.state.totalItems}
-                  cartItems={this.state.cart}
-                  removeProduct={this.handleRemoveProduct}
-                  handleSearch={this.handleSearch}
-                  handleMobileSearch={this.handleMobileSearch}
-                  handleCategory={this.handleCategory}
-                  categoryTerm={this.state.category}
-                  updateQuantity={this.updateQuantity}
-                  productQuantity={this.state.moq}
-                  addToCart={this.handleAddToCart}/>
-            <Switch>
-                <Route exact path={'/'} render={ props => <Categories {...props} />}/>
-                <Route  path={'/cat_products'}  render={props => <ProductsWithTypes {...props}
-                                                                       searchTerm={this.state.term}
-                                                                       addToCart={this.handleAddToCart}
-                                                                       productQuantity={this.state.quantity}
-                                                                       updateQuantity={this.updateQuantity}
-                                                                       openModal={this.openModal} />} />
-                 <Route path={'/type_products'} render={props => <Products {...props}
-                                                                         searchTerm={this.state.term}
-                                                                         addToCart={this.handleAddToCart}
-                                                                         productQuantity={this.state.quantity}
-                                                                         updateQuantity={this.updateQuantity}
-                                                                         openModal={this.openModal} />}  />
-                <Route path={'/searched_products'} render={props => <Products {...props}
-                                                                          searchTerm={this.state.term}
-                                                                          addToCart={this.handleAddToCart}
-                                                                          productQuantity={this.state.quantity}
-                                                                          updateQuantity={this.updateQuantity}
-                                                                          openModal={this.openModal} />}  />
-            </Switch>
+        if (window.location.pathname.startsWith('/user')) {
+            let path = window.location.pathname.split('/');
+            switch (path[2]) {
+                case "checkout":
+                    return (<Checkout/>);
+                case "orderstatus":
+                    return (<OrderStatus/>);
+                case "account":
+                    return (<UserAccount/>);
+                case "registration":
+                    return (<Registration/>);
+                case "orders":
+                    return (<PreviousOrders/>);
+                default:
+                    return (<Checkout/>);
+            }
+        } else {
+            this.updateBasket();
+            return (
+                <CartContext.Provider
+                value={{
+                    items:this.state.cart,
+                    addToCart:this.handleAddToCart,
+                    removeProduct:this.handleDecreaseProduct,
+                    deliveryCost: this.state.deliveryCost,
+                    threshold: this.state.threshold
+                }}
+                >
+                <div className="container">
+                    <Header
+                        cartBounce={this.state.cartBounce}
+                        cartItems={this.state.cart}
+                        removeProduct={this.handleRemoveProduct}
+                        handleSearch={this.handleSearch}
+                        handleMobileSearch={this.handleMobileSearch}
+                        handleCategory={this.handleCategory}
+                        categoryTerm={this.state.category}
+                        updateQuantity={this.updateQuantity}
+                        productQuantity={this.state.moq}
+                        addToCart={this.handleAddToCart}/>
+                    <Switch>
+                        <Route exact path={'/'} render={props => <Categories {...props} />}/>
+                        <Route path={'/cat_products'} render={props => <ProductsWithTypes {...props}
+                                                                                          searchTerm={this.state.term}
+                                                                                          addToCart={this.handleAddToCart}
+                                                                                          productQuantity={this.state.quantity}
+                                                                                          updateQuantity={this.updateQuantity}
+                                                                                          openModal={this.openModal}/>}/>
+                        <Route path={'/type_products'} render={props => <Products {...props}
+                                                                                  searchTerm={this.state.term}
+                                                                                  addToCart={this.handleAddToCart}
+                                                                                  productQuantity={this.state.quantity}
+                                                                                  updateQuantity={this.updateQuantity}
+                                                                                  openModal={this.openModal}/>}/>
+                        <Route path={'/searched_products'} render={props => <Products {...props}
+                                                                                      searchTerm={this.state.term}
+                                                                                      addToCart={this.handleAddToCart}
+                                                                                      productQuantity={this.state.quantity}
+                                                                                      updateQuantity={this.updateQuantity}
+                                                                                      openModal={this.openModal}/>}/>
+                    </Switch>
 
-            <Footer/>
-           <QuickView
-               product={this.state.quickViewProduct}
-               openModal={this.state.modalActive}
-               closeModal={this.closeModal}
-           />
-          </div>
-    );
-  }
+                    <Footer/>
+                    <QuickView
+                        product={this.state.quickViewProduct}
+                        openModal={this.state.modalActive}
+                        closeModal={this.closeModal}
+                    />
+                </div>
+                </CartContext.Provider>
+            );
+        }
+    }
 }                 {/*{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (*/}
                     {/*    <ListItem button key={text}>*/}
                     {/*        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>*/}

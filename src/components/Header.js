@@ -14,7 +14,6 @@ class Header extends Component {
         super(props);
         this.state = {
             showCart: false,
-            cart: this.props.cartItems,
             mobileSearch: false,
             keyword:''
         };
@@ -47,34 +46,9 @@ class Header extends Component {
             }
         );
     }
-    // handleClickOutside(event) {
-    //     const cartNode = findDOMNode(this.refs.cartPreview);
-    //     const buttonNode = findDOMNode(this.refs.cartButton);
-    //     if (cartNode.classList.contains("active")) {
-    //         if (!cartNode || !cartNode.contains(event.target)) {
-    //             this.setState({
-    //                 showCart: false
-    //             });
-    //             event.stopPropagation();
-    //         }
-    //     }
-    // }
-    componentDidMount() {
-        // document.addEventListener(
-        //     "click",
-        //     this.handleClickOutside.bind(this),
-        //     true
-        // );
 
 
-    }
-    componentWillUnmount() {
-        // document.removeEventListener(
-        //     "click",
-        //     this.handleClickOutside.bind(this),
-        //     true
-        // );
-    }
+
     updateBasket(){
         if (Dm.getBasketData())
             if (Dm.getBasketData().length > this.state.cart)
@@ -86,54 +60,12 @@ class Header extends Component {
     render() {
 
         this.updateBasket();
-        let cartItems;
-        cartItems = this.state.cart.map(product => {
-            return (
-
-                <li className="cart-item" key={product.name}>
-                    <img className="product-image" src={product.image} />
-                    <div className="product-info">
-                        <p className="product-name">{product.name}</p>
-                        <p className="product-price">{product.price}</p>
-                    </div>
-                    <div className="product-total">
-                        <p className="quantity">
-                            {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
-                        </p>
-                        <p className="amount">{product.quantity * product.price}</p>
-                    </div>
-                    <a
-                        className="product-remove"
-                        href="#"
-                        onClick={this.props.removeProduct.bind(this, product.id)}
-                    >
-                        ×
-                    </a>
-                </li>
-            );
-        });
-        let view;
-        if (cartItems.length <= 0) {
-            view = <EmptyCart />;
-        } else {
-            view = (
-                <CSSTransitionGroup
-                    transitionName="fadeIn"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}
-                    component="ul"
-                    className="cart-items"
-                >
-                    {cartItems}
-                </CSSTransitionGroup>
-            );
-        }
         return (
 
             <header>
 
                 <div className="container">
-           <Basket     addToCart={this.props.addToCart}   cart={this.state.cart} total={this.props.total} removeProductFromCart={this.props.removeProductFromCart}/>
+           <Basket     />
 
                     <div className="search">
                         <a
