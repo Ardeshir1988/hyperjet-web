@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { CartContext } from "./CartContext";
-
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/AddCircleOutline";
+import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
 class Product extends Component {
 
     constructor(props) {
@@ -37,7 +39,7 @@ class Product extends Component {
         return (
             <CartContext.Consumer>
                 {cart=>(
-                    <div className="product">
+                    <div className={(cart.items.filter(item=>item.id===id).map(item=>item.quantity)<1) ? "product" : "product-selected"}>
 
                         <div className="product-image">
                             <img
@@ -55,30 +57,45 @@ class Product extends Component {
                         </div>
                         <h4 className="product-name">{name}</h4>
                         <h2 className="product-price">{price}</h2>
-                        <h2 className="product-price">{cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</h2>
                         <div className="product-action">
-                            {/*<Counter*/}
-                            {/*    productQuantity={quantity}*/}
-                            {/*    updateQuantity={this.props.updateQuantity}*/}
-                            {/*    resetQuantity={this.resetQuantity}*/}
-                            {/*/>*/}
-                            <button
-                                className={!this.state.isAdded ? "" : "added"}
-                                type="button"
-                                onClick={()=>cart.addToCart(
-                                    {
-                                        image,
-                                        name,
-                                        price,
-                                        id,
-                                        quantity
-                                    }
-                                )}
-                            >
-                                {!this.state.isAdded ? "ADD" : "✔ ADDED"}
-                            </button>
+                            {(cart.items.filter(item=>item.id===id).map(item=>item.quantity)<1)?
+                                ( <button
+                                    type="button"
+                                    onClick={() => cart.addToCart(
+                                        {
+                                            image,
+                                            name,
+                                            price,
+                                            id,
+                                            quantity
+                                        }
+                                    )}
+                                >
+                                    {"ADD"}
+                                </button>):(
+
+                                    <div className="stepper-input">
+                                        <IconButton color="primary" aria-label="Add to shopping cart">
+                                            <RemoveIcon onClick={() =>cart.removeProduct(id)}/>
+                                        </IconButton>
+                                        <h2 className="quantity">{cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</h2>
+                                        <IconButton color="primary" aria-label="Add to shopping cart">
+                                            <AddIcon onClick= {()=>cart.addToCart(
+                                                {
+                                                    image,
+                                                    name,
+                                                    price,
+                                                    id,
+                                                    quantity
+                                                }
+                                            )} />
+
+                                        </IconButton>
 
 
+                                    </div>
+                                )
+                            }
                         </div>
 
                     </div>
