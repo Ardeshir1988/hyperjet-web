@@ -6,6 +6,7 @@ import Urls from "../utils/URLs";
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import InfiniteScroll from "react-infinite-scroll-component";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 class Products extends Component {
@@ -132,11 +133,15 @@ class Products extends Component {
                         dataLength={this.state.items.length}
                         next={this.fetchMoreData}
                         hasMore={this.state.hasMore}
-                        loader={<h4>Loading...</h4>}
+                        loader={
+                            <div className="loader-end">
+                            <CircularProgress color="secondary"  />
+                            </div>
+                        }
                         endMessage={
-                            <p style={{ textAlign: "center" }}>
-                                <b>Yay! You have seen it all</b>
-                            </p>
+                            <div className="loader-end">
+                                <b >پایان محصولات این بخش</b>
+                            </div>
                         }
                     >
                         {productsData}
