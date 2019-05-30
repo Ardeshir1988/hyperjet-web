@@ -4,11 +4,18 @@ import axios from "axios";
 import queryString from 'query-string';
 import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import Types from "./Types";
+
 import Urls from "../utils/URLs";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Type from "./Type";
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
+const useStyles = makeStyles(theme => ({
+    progress: {
+        margin: theme.spacing(2),
+    },
+}));
 
 class ProductsWithTypes extends Component {
 
@@ -21,6 +28,7 @@ class ProductsWithTypes extends Component {
         productList: [],
         page:0
     };
+
 
     fetchMoreData = () => {
         if (this.state.items.length >= this.state.productList.length) {
@@ -65,13 +73,8 @@ class ProductsWithTypes extends Component {
         console.log("=====ProductsRender=====");
         let productsData;
         let term = this.props.searchTerm;
-        let x;
+        const { classes } = this.props;
 
-        function searchingFor(term) {
-            return function(x) {
-                return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
-            };
-        }
 
         let typesData=   this.state.typesList.map(type => {
             return (
@@ -105,26 +108,6 @@ class ProductsWithTypes extends Component {
                             />
                 ));
 
-
-        //     this.state.productList.map(product => {
-        //     //        "categoryId": 23,
-        //     //         "categoryName": "محصولات جدید",
-        //     //         "categoryPic": "new-product-category.png",
-        //     //         "position": 1
-        //     return (
-        //         <Product
-        //             key={product.productId}
-        //             productName={product.productName}
-        //             productImage={product.product_pic1}
-        //             productPrice={product.product_price}
-        //             productId={product.productId}
-        //             addToCart={this.props.addToCart}
-        //             productQuantity={this.props.productQuantity}
-        //             updateQuantity={this.props.updateQuantity}
-        //             openModal={this.props.openModal}
-        //         />
-        //     );
-        // });
         let view;
         if (productsData.length <= 0 && !term) {
 
@@ -141,19 +124,21 @@ class ProductsWithTypes extends Component {
                         component="div"
                         className="products"
                     >
-                        {/*<Types         {...this.props} catid={this.state.catid}/>*/}
-
                         {typesData}
                         <InfiniteScroll
                             className="products"
                             dataLength={this.state.items.length}
                             next={this.fetchMoreData}
                             hasMore={this.state.hasMore}
-                            loader={<h4>Loading...</h4>}
+                            loader={
+                                <div className="loader-end">
+                                <CircularProgress color="secondary"  />
+                                </div>
+                            }
                             endMessage={
-                                <p style={{ textAlign: "center" }}>
-                                    <b>Yay! You have seen it all</b>
-                                </p>
+                                <div className="loader-end">
+                                    <b >پایان محصولات این بخش</b>
+                                </div>
                             }
                         >
                         {productsData}
