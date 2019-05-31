@@ -14,26 +14,26 @@
   display: -webkit-flex;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
-  padding-top: 16px;
+  padding: 6px;
   max-width: 960px;
   margin: 0 auto;
   @media (max-width: 768px) {
     padding: 1px;
   }
   .product {
-    width: 18%;
+
+    flex-basis: 19%;
+    -webkit-flex-basis: 19%;
     @media (max-width: 768px) {
-      width: 32%;
-      margin: .6%;
+      min-width: 31.5%;
+      max-width: 31.5%;
     }
     @media (max-width: 480px) {
-      width: 32%;
-      margin: .6%;
+        min-height: 20vh;
+        min-width: 31.5%;
+      max-width: 31.5%;
 
-      //.product-name {
-      //  height: 20px;
-      //  overflow: hidden;
-      //}
+
       //.product-action {
       //  padding: 16px 8px;
       //}
@@ -44,22 +44,19 @@
     }
   }
   .product-selected {
-    width: 20%;
+
+    flex-basis: 19%;
+    -webkit-flex-basis: 19%;
     @media (max-width: 768px) {
-      width: 32%;
-      margin: .6%;
+      min-width: 31.5%;
+      max-width: 31.5%;
     }
     @media (max-width: 480px) {
-      width: 32%;
-      margin: .6%;
-      //.product-image{
-      //  max-width: 100%;
-      //  max-height: 60%;
-      //}
-      //.product-name {
-      //  height: 20px;
-      //  overflow: hidden;
-      //}
+      min-height: 20vh;
+      min-width: 31.5%;
+      max-width: 31.5%;
+
+
       //.product-action {
       //  padding: 16px 8px;
       //}
@@ -126,7 +123,44 @@
   transition-delay: 2200ms;
 }
 
-
+// Loading
+.product.loading {
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: contentLoader;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 104px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  .product-image {
+    height: 168px;
+    width: 168px;
+    margin: 16px;
+    background: rgba(255, 255, 255, 0.25);
+    @media (max-width: 768px) {
+      width: auto;
+    }
+  }
+  .product-text,
+  .product-button {
+    margin: 12px 16px;
+    max-height: 16px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .product-button {
+    position: absolute;
+    bottom: 8px;
+    width: 168px;
+    height: 36px;
+    @media (max-width: 768px) {
+      width: auto;
+    }
+  }
+}
 @keyframes contentLoader {
   0% {
     background-position: -420px 0;

@@ -3,6 +3,8 @@ import { CartContext } from "./CartContext";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
+import AddtoCart from "@material-ui/icons/AddShoppingCart";
+import AddtoCartIcon from "../assets/addToCart.png";
 class Product extends Component {
 
     constructor(props) {
@@ -44,7 +46,6 @@ class Product extends Component {
                         <div className="product-image">
                             <img
                                 src={image}
-                                alt={name}
                                 onClick={this.quickView.bind(
                                     this,
                                     image,
@@ -56,11 +57,11 @@ class Product extends Component {
                             />
                         </div>
                         <h4 className="product-name">{name}</h4>
-                        <h2 className="product-price">{price}</h2>
+                        <h2 className="product-price">{price + ' تومان'}</h2>
                         <div className="product-action">
                             {(cart.items.filter(item=>item.id===id).map(item=>item.quantity)<1)?
-                                ( <button
-                                    type="button"
+                                ( <div className="add-to-cart"
+
                                     onClick={() => cart.addToCart(
                                         {
                                             image,
@@ -71,28 +72,29 @@ class Product extends Component {
                                         }
                                     )}
                                 >
-                                    {"ADD"}
-                                </button>):(
 
-                                    <div className="stepper-input">
-                                        <IconButton color="primary" aria-label="Add to shopping cart">
-                                            <RemoveIcon onClick={() =>cart.removeProduct(id)}/>
+                                    <IconButton color="secondary" aria-label="Add to shopping cart">
+                                        <AddtoCart />
+                                    </IconButton>
+                                </div>):(
+
+                                    <div className="cart-operation">
+                                        <IconButton className="minus" color="inherit"  onClick={() =>cart.removeProduct(id)}>
+                                            <RemoveIcon />
                                         </IconButton>
-                                        <h2 className="quantity">{cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</h2>
-                                        <IconButton color="primary" aria-label="Add to shopping cart">
-                                            <AddIcon onClick= {()=>cart.addToCart(
-                                                {
-                                                    image,
-                                                    name,
-                                                    price,
-                                                    id,
-                                                    quantity
-                                                }
-                                            )} />
+                                        <h3 className="cart-quantity">{cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</h3>
+                                        <IconButton className="plus" color="inherit" onClick= {()=>cart.addToCart(
+                                            {
+                                                image,
+                                                name,
+                                                price,
+                                                id,
+                                                quantity
+                                            }
+                                        )}>
+                                            <AddIcon  />
 
                                         </IconButton>
-
-
                                     </div>
                                 )
                             }
