@@ -49,14 +49,15 @@
   .product-action {
     border-top: 1px solid #d7d7d7;
     text-align: center;
+    background: #b81aec;
     .add-to-cart{
-      transition: all 300ms ease-in;
-
+      height: 4vh;
+      margin-top: 1.1vh;
       img{
-        height: 32px;
+        height: 24px;
       }
     }  &:hover {
-         background: lighten($primary-purple, 42%);
+         background: lighten(#b81aec, 12%);
        }
 
 
@@ -163,22 +164,28 @@
 
 .cart-operation{
 
+
   color: white;
-  background:$primary-purple ;
+  background:#b81aec ;
   display: flex;
+  height: 4.4vh;
+
+  img{
+    height: 24px;
+  }
 
 }
     .plus{
-      margin: 0;
+      margin: auto;
       flex: 1;
 
     }
     .minus{
-      margin: 0;
+      margin: auto;
       flex: 1;
     }
     .cart-quantity{
-
+      margin: auto;
       flex: 1;
 
     }

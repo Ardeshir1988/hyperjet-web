@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { CartContext } from "./CartContext";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/AddCircleOutline";
-import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
-import AddtoCart from "@material-ui/icons/AddShoppingCart";
-import AddtoCartIcon from "../assets/addToCart.png";
+
+import AddIcon from "../assets/add-button.svg";
+import RemoveIcon from "../assets/remove-button.svg";
+import AddtoCart from "../assets/add_shopping_cart.svg";
+
 class Product extends Component {
 
     constructor(props) {
@@ -73,17 +73,18 @@ class Product extends Component {
                                     )}
                                 >
 
-                                    <IconButton color="secondary" aria-label="Add to shopping cart">
-                                        <AddtoCart />
-                                    </IconButton>
+
+                                    <img src={AddtoCart}/>
+
                                 </div>):(
 
                                     <div className="cart-operation">
-                                        <IconButton className="minus" color="inherit"  onClick={() =>cart.removeProduct(id)}>
-                                            <RemoveIcon />
-                                        </IconButton>
+                                        <div className="minus" color="inherit"  onClick={() =>cart.removeProduct(id)} >
+                                            <img src={RemoveIcon}/>
+                                        </div>
+
                                         <h3 className="cart-quantity">{cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</h3>
-                                        <IconButton className="plus" color="inherit" onClick= {()=>cart.addToCart(
+                                        <div className="plus" color="inherit" onClick= {()=>cart.addToCart(
                                             {
                                                 image,
                                                 name,
@@ -91,10 +92,10 @@ class Product extends Component {
                                                 id,
                                                 quantity
                                             }
-                                        )}>
-                                            <AddIcon  />
+                                        )} >
+                                            <img src={AddIcon}/>
+                                        </div>
 
-                                        </IconButton>
                                     </div>
                                 )
                             }
