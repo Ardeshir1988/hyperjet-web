@@ -286,9 +286,6 @@ header {
     .product-price {
       color: $gray-light;
       font-weight: 700;
-      &:before {
-        content: "₹ ";
-      }
     }
   }
   .product-total {
@@ -308,22 +305,9 @@ header {
       }
     }
   }
-  .product-remove {
-    margin-left: 24px;
-    height: 24px;
-    line-height: 24px;
-    width: 24px;
-    font-size: 22px;
-    color: $gray-eighty;
-    text-align: center;
-    &:hover {
-      color: $red;
-    }
-  }
-  &:hover {
-    background: $green-light-bg;
-  }
+
 }
+
 
 @keyframes tada {
   from {

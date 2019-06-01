@@ -1,7 +1,7 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/AddCircleOutline";
-import RemoveIcon from "@material-ui/icons/RemoveCircleOutline";
+
+import AddIcon from "../assets/add-button-purple.svg";
+import RemoveIcon from "../assets/remove-button-purple.svg";
 import {CartContext} from "./CartContext";
 
 
@@ -31,22 +31,18 @@ class BasketProduct extends React.Component{
             <CartContext.Consumer>
                 {cart=>(
             <div className="cart-item" >
-
-
-                <div className="product-total">
-                    <p className="quantity">
-                        {cart.items.filter(item=>item.id===id).map(item=>item.quantity)}
-                    </p>
-                    <p className="amount">{this.props.price}</p>
-                </div>
                 <div className="product-info">
                     <p className="product-name">{this.props.name}</p>
                     <p className="product-price">{this.props.price}</p>
+                    <p className="product-price">{this.props.price*cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</p>
+
+                </div>
+                <div className="product-info">
+                    <p className="product-name">{this.props.price}</p>
                 </div>
                 <img className="product-image" src={this.props.image} />
                 <div>
-                    <IconButton color="primary" aria-label="Add to shopping cart">
-                        <AddIcon onClick= {()=>cart.addToCart(
+                        <div onClick= {()=>cart.addToCart(
                             {
                                 image,
                                 name,
@@ -54,13 +50,15 @@ class BasketProduct extends React.Component{
                                 id,
                                 quantity
                             }
-                        )} />
-
-                    </IconButton>
-
-                    <IconButton color="primary" aria-label="Add to shopping cart">
-                    <RemoveIcon onClick={() =>cart.removeProduct(id)}/>
-                    </IconButton>
+                        )} >
+                            <img src={AddIcon}/>
+                        </div>
+                    <p>
+                        {cart.items.filter(item=>item.id===id).map(item=>item.quantity)}
+                    </p>
+                    <div onClick={() =>cart.removeProduct(id)}>
+                        <img src={RemoveIcon}/>
+                    </div>
                 </div>
             </div>
          )}
