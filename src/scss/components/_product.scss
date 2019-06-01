@@ -179,6 +179,24 @@
     text-align: center;
     direction: rtl;
   }
+  .product-price-bf-discount{
+    color: $gray-medium;
+    text-align: center;
+    direction: rtl;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-decoration: line-through;
+    margin-bottom: 8px;}
+  .product-price-af-discount{
+    color: red;
+    text-align: center;
+    direction: rtl;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    margin-bottom: 12px;
+  }
   .product-action {
 
     text-align: center;
