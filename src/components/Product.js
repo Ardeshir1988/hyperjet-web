@@ -36,8 +36,10 @@ class Product extends Component {
         let image = 'https://maxproapp.com/files/'+this.props.productImage;
         let name = this.props.productName;
         let price = this.props.productPrice;
+        let priceDiscount = this.props.productDiscountPrice;
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
+
         return (
             <CartContext.Consumer>
                 {cart=>(
@@ -57,7 +59,14 @@ class Product extends Component {
                             />
                         </div>
                         <h4 className="product-name">{name}</h4>
-                        <h2 className="product-price">{price + ' تومان'}</h2>
+                        {(priceDiscount!==price)?
+                            ( <div>
+                                <h2 className="product-price-bf-discount">{price + ' تومان'}</h2>
+                                <h2 className="product-price-af-discount">{priceDiscount + ' تومان'}</h2>
+                            </div>):(
+                                 <h2 className="product-price">{price + ' تومان'}</h2>)
+
+                            }
                         <div className="product-action">
                             {(cart.items.filter(item=>item.id===id).map(item=>item.quantity)<1)?
                                 ( <div className="add-to-cart"

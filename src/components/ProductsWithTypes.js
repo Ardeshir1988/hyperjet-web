@@ -101,6 +101,8 @@ class ProductsWithTypes extends Component {
                                 productImage={i.product_pic1}
                                 productPrice={i.product_price}
                                 productId={i.productId}
+                                productDiscountPrice={i.product_price_discount}
+                                productStepDiscount={i.productStepDiscount}
                                 addToCart={this.props.addToCart}
                                 productQuantity={this.props.productQuantity}
                                 updateQuantity={this.props.updateQuantity}

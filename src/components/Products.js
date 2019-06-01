@@ -79,39 +79,23 @@ class Products extends Component {
         productsData=
 
             this.state.items.map((i, index) => (
+
                 <Product
                     key={i.productId}
                     productName={i.productName}
                     productImage={i.product_pic1}
                     productPrice={i.product_price}
+                    productDiscountPrice={i.product_price_discount}
+                    productStepDiscount={i.productStepDiscount}
                     productId={i.productId}
                     addToCart={this.props.addToCart}
                     productQuantity={this.props.productQuantity}
                     updateQuantity={this.props.updateQuantity}
                     openModal={this.props.openModal}
                 />
+
             ));
 
-
-        //     this.state.productList.map(product => {
-        //     //        "categoryId": 23,
-        //     //         "categoryName": "محصولات جدید",
-        //     //         "categoryPic": "new-product-category.png",
-        //     //         "position": 1
-        //     return (
-        //         <Product
-        //             key={product.productId}
-        //             productName={product.productName}
-        //             productImage={product.product_pic1}
-        //             productPrice={product.product_price}
-        //             productId={product.productId}
-        //             addToCart={this.props.addToCart}
-        //             productQuantity={this.props.productQuantity}
-        //             updateQuantity={this.props.updateQuantity}
-        //             openModal={this.props.openModal}
-        //         />
-        //     );
-        // });
         let view;
         if (productsData.length <= 0 && !term) {
 
