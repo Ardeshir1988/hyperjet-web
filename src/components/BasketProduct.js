@@ -32,7 +32,7 @@ class BasketProduct extends React.Component{
             <CartContext.Consumer>
                 {cart=>(
                     <div>
-                        <p className="product-name">{this.props.name}</p>
+                        <p className="product-name-basket">{this.props.name}</p>
             <div className="cart-item" >
                 <div className="product-info">
 
