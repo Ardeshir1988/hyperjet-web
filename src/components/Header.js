@@ -3,8 +3,10 @@ import "../scss/style.scss";
 import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';
 import Basket from "./Basket";
-import SearchIcon from "../assets/search-24dp.png";
+import Search from '@material-ui/icons/Search';
 import BackIcon from "../assets/back-24dp.png";
+import {Typography} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 class Header extends Component {
     constructor(props) {
@@ -62,19 +64,16 @@ class Header extends Component {
             <header>
 
                 <div className="container">
-           <Basket     />
+
+                <Basket/>
 
                     <div className="search">
                         <a
                             className="mobile-search"
                             href="#"
                             onClick={this.handleMobileSearch.bind(this)}>
-                            <div style={{marginTop:12}}>
-                            <img
-                                src={SearchIcon}
-                                alt="search"
-                            />
-                            </div>
+
+                            <Search style={{color:"white"}} />
                         </a>
                         <form
                             action="#"
@@ -111,7 +110,11 @@ class Header extends Component {
                         </form>
                     </div>
 
+                    <h4   className="companyName">
+                        هایپرجت
+                    </h4>
                     <RightSideMenu />
+
                 </div>
             </header>
 

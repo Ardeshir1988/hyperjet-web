@@ -62,11 +62,11 @@ class Basket extends React.Component {
             <CartContext.Consumer>
                 {cart=>(
             <div>
-                <IconButton  color="default" aria-label="Open drawer">
+
                     <Badge badgeContent={cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} color="secondary" >
-                    <ShoppingCartIcon onClick={this.toggleDrawer(true)}/>
+                    <ShoppingCartIcon style={{color:"white"}} onClick={this.toggleDrawer(true)}/>
                     </Badge>
-                </IconButton>
+
 
                 <Drawer anchor="left" open={this.state.status} onClose={this.toggleDrawer( false)}>
                     <div
