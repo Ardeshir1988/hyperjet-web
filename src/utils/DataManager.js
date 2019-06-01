@@ -36,7 +36,7 @@ class DataManager {
     static getConfirmCode(){
         return store.get('confirmcode');
     }
-    static saveProductToBasket(id,name,img,price){
+    static saveProductToBasket(id,name,img,price,priceDiscount,stepDiscount){
 
         let storedBasket =store.get('basket');
         if (storedBasket) {
@@ -47,14 +47,14 @@ class DataManager {
                 storedBasket[productIndex].quantity+=1;
                 store.set('basket',storedBasket);
             }else {
-                let product = {id: id, name: name, image: img, price: price, quantity: 1};
+                let product = {id: id, name: name, image: img, price: price, quantity: 1,priceDiscount:priceDiscount,stepDiscount:stepDiscount};
                 storedBasket.push(product);
                 store.set('basket', storedBasket);
             }
         }
         else {
                 let basket = [];
-                let product = {id: id, name: name, image: img, price: price, quantity: 1};
+                let product = {id: id, name: name, image: img, price: price, quantity: 1,priceDiscount:priceDiscount,stepDiscount:stepDiscount};
                 basket.push(product);
                 store.set('basket', basket);
             }

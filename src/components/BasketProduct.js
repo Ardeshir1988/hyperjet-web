@@ -33,12 +33,20 @@ class BasketProduct extends React.Component{
             <div className="cart-item" >
                 <div className="product-info">
                     <p className="product-name">{this.props.name}</p>
-                    <p className="product-price">{this.props.price}</p>
-                    <p className="product-price">{this.props.price*cart.items.filter(item=>item.id===id).map(item=>item.quantity)}</p>
+                    <p className={(this.props.price!==this.props.priceDiscount)?
+                        "product-price-af-discount":
+                        "product-price"}>
+                        {this.props.priceDiscount}
+                    </p>
+                    <p className="product-price">
+                        {this.props.priceDiscount*cart.items
+                            .filter(item=>item.id===id)
+                            .map(item=>item.quantity)}
+                    </p>
 
                 </div>
                 <div className="product-info">
-                    <p className="product-name">{this.props.price}</p>
+                    {(this.props.price!==this.props.priceDiscount)?<p className="product-price-bf-discount">{this.props.price}</p>:<p />}
                 </div>
                 <img className="product-image" src={this.props.image} />
                 <div>

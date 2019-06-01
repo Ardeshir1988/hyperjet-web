@@ -67,17 +67,16 @@ class App extends React.Component {
     }
     // Add to Cart
     handleAddToCart = this.handleAddToCart.bind(this);
-    handleAddToCart(selectedProducts) {
-        console.log("====="+selectedProducts.name+"=====");
-        Dm.saveProductToBasket(selectedProducts.id,
-            selectedProducts.name,selectedProducts.image,
-            selectedProducts.price);
+    handleAddToCart(selectedProduct) {
+        console.log("====="+selectedProduct.name+"=====");
+        Dm.saveProductToBasket(selectedProduct.id,
+            selectedProduct.name,selectedProduct.image,
+            selectedProduct.price,selectedProduct.priceDiscount,selectedProduct.stepDiscount);
         let cartItem = this.state.cart;
-        let productID = selectedProducts.id;
-        let productQty = selectedProducts.quantity;
-        console.log(selectedProducts);
+        let productID = selectedProduct.id;
+        let productQty = selectedProduct.quantity;
+        console.log(selectedProduct);
         if (this.checkProduct(productID)) {
-
             let index = cartItem.findIndex(x => x.id === productID);
             cartItem[index].quantity =
                 Number(cartItem[index].quantity) + Number(productQty);
@@ -85,7 +84,7 @@ class App extends React.Component {
                 cart: cartItem
             });
         } else {
-            cartItem.push(selectedProducts);
+            cartItem.push(selectedProduct);
         }
         this.setState({
             cart: cartItem,
@@ -97,8 +96,6 @@ class App extends React.Component {
                     cartBounce: false,
                     quantity: 1
                 });
-                console.log(this.state.quantity);
-                console.log(this.state.cart);
             }.bind(this),
             1000
         );
@@ -109,7 +106,6 @@ class App extends React.Component {
 
         let cartItems = this.state.cart;
 
-        console.log(cartItems);
         if (this.checkProduct(productId)) {
 
             let index = cartItems.findIndex(x => x.id === productId);
@@ -171,12 +167,12 @@ class App extends React.Component {
         });
     }
 
-    updateBasket(){
-            if (Dm.getBasketData()) {
-                if (Dm.getBasketData().length > this.state.cart)
-                    this.setState({cart: Dm.getBasketData()});
-            }else Dm.setEmptyBasket();
-        }
+    // updateBasket(){
+    //         if (Dm.getBasketData()) {
+    //             if (Dm.getBasketData().length > this.state.cart)
+    //                 this.setState({cart: Dm.getBasketData()});
+    //         }else Dm.setEmptyBasket();
+    //     }
     initialBasket(){
         if (Dm.getBasketData()) {
             return Dm.getBasketData();
@@ -202,7 +198,7 @@ class App extends React.Component {
                     return (<Checkout/>);
             }
         } else {
-            this.updateBasket();
+            // this.updateBasket();
             return (
                 <CartContext.Provider
                 value={{

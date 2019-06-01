@@ -5,7 +5,6 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from "@material-ui/core/IconButton";
 import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
@@ -30,7 +29,6 @@ class Basket extends React.Component {
         this.state = {
             status:false,
         };
-
     }
     toggleDrawer = (status) => () => {
         this.setState({
@@ -38,7 +36,6 @@ class Basket extends React.Component {
         });
 
     };
-
 
     redirectTo(path){
         window.location.href=(path);
@@ -52,29 +49,19 @@ class Basket extends React.Component {
         const deliveryFee='هزینه تحویل';
         const checkout='خرید';
         const toman='تومان';
-
         const { classes } = this.props;
-
-
-
 
         return (
             <CartContext.Consumer>
                 {cart=>(
             <div>
-
                     <Badge badgeContent={cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} color="secondary" >
                     <ShoppingCartIcon style={{color:"white"}} onClick={this.toggleDrawer(true)}/>
                     </Badge>
-
-
                 <Drawer anchor="left" open={this.state.status} onClose={this.toggleDrawer( false)}>
                     <div
                         tabIndex={0}
-                        role="button"
-                        // onClick={this.toggleDrawer( false)}
-                        // onKeyDown={this.toggleDrawer( false)}
-                         >
+                        role="button">
                         <div className={classes.list}>
                             <List>
                                 {cart.items.map(p=> {
@@ -84,7 +71,10 @@ class Basket extends React.Component {
                                         name={p.name}
                                         price={p.price}
                                         quantity={p.quantity}
-                                        image={p.image}/>);
+                                        image={p.image}
+                                        priceDiscount={p.priceDiscount}
+                                        stepDiscount={p.stepDiscount}
+                                        />);
                                 })
                                 }
                             </List>

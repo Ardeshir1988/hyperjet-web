@@ -37,6 +37,7 @@ class Product extends Component {
         let name = this.props.productName;
         let price = this.props.productPrice;
         let priceDiscount = this.props.productDiscountPrice;
+        let stepDiscount=this.props.productStepDiscount;
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
 
@@ -77,7 +78,9 @@ class Product extends Component {
                                             name,
                                             price,
                                             id,
-                                            quantity
+                                            quantity,
+                                            priceDiscount,
+                                            stepDiscount
                                         }
                                     )}
                                 >

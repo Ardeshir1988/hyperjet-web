@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import "../scss/style.scss";
-import Dm from "../utils/DataManager";
 import RightSideMenu from './SideMenu';
 import Basket from "./Basket";
 import Search from '@material-ui/icons/Search';
 import BackIcon from "../assets/back-24dp.png";
-import {Typography} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
 
 class Header extends Component {
     constructor(props) {
@@ -46,19 +43,12 @@ class Header extends Component {
         );
     }
 
-
-
-    updateBasket(){
-        if (Dm.getBasketData())
-            if (Dm.getBasketData().length > this.state.cart)
-                this.setState( {cart:Dm.getBasketData()});
-    }
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
     };
     render() {
 
-        this.updateBasket();
+
         return (
 
             <header>
