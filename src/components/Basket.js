@@ -3,8 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Paper from '@material-ui/core/Paper';
 import BasketProduct from "./BasketProduct";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Button from '@material-ui/core/Button';
@@ -47,8 +46,8 @@ class Basket extends React.Component {
         const quantity='تعداد';
         const totalAmount='مجموع خرید';
         const deliveryFee='هزینه تحویل';
-        const checkout='خرید';
-        const toman='تومان';
+        const checkout='ادامه خرید';
+        const finalAmount='مبلغ قابل پرداخت';
         const { classes } = this.props;
 
         return (
@@ -79,33 +78,38 @@ class Basket extends React.Component {
                                 }
                             </List>
                             <Divider />
-                            <List>
 
-                                <ListItem>
-                                    <ListItemText primary={cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} />
-                                    <ListItemText primary={quantity} />
+                            <div className="basketListDetail">
 
-                                </ListItem>
+                                <div className="basketDetail">
+                                    <div className="data">{cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} </div>
+                                    <div className="title"> {quantity}</div>
+                                </div>
 
-                                <ListItem>
-                                    <ListItemText primary={cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)} />
-                                    <ListItemText primary={totalAmount} />
+                                <div className="basketDetail">
+                                    <div className="data">{cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)}</div>
+                                    <div className="title">{totalAmount}</div>
+                                </div>
 
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemText>{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ? 0 : cart.deliveryCost} </ListItemText>
-                                    <ListItemText primary={deliveryFee} />
-                                </ListItem>
-                                <ListItem>
+                                <div className="basketDetail">
+                                    <div className="data">{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ? 0 : cart.deliveryCost} </div>
+                                    <div className="title">{deliveryFee}</div>
+                                </div>
 
-                                    <ListItemText primary={(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
-                                        cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost } />
+                                <div className="basketDetail">
+                                    <div className="data">{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
+                                        cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost }</div>
+                                    <div className="title">{finalAmount}</div>
+                                </div>
 
-                                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>this.redirectTo("/user/checkout")}>
-                                        {checkout}
-                                    </Button>
-                                </ListItem>
-                            </List>
+                            </div>
+
+                            <button style={{background:"#b81aec",color:"white",marginTop:"2vh",minWidth:"100%"}}  onClick={()=>this.redirectTo("/user/checkout")}>
+                                <h5>{checkout}</h5>
+                            </button>
+
+
+                        {/*  end list  */}
                         </div>
                     </div>
                 </Drawer>
