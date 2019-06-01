@@ -77,7 +77,7 @@ class Basket extends React.Component {
                                 })
                                 }
                             </List>
-                            <Divider />
+
 
                             <div className="basketListDetail">
 

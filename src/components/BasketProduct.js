@@ -3,6 +3,7 @@ import React from "react";
 import AddIcon from "../assets/add-button-purple.svg";
 import RemoveIcon from "../assets/remove-button-purple.svg";
 import {CartContext} from "./CartContext";
+import Divider from "@material-ui/core/Divider";
 
 
 class BasketProduct extends React.Component{
@@ -30,9 +31,11 @@ class BasketProduct extends React.Component{
         return(
             <CartContext.Consumer>
                 {cart=>(
+                    <div>
+                        <p className="product-name">{this.props.name}</p>
             <div className="cart-item" >
                 <div className="product-info">
-                    <p className="product-name">{this.props.name}</p>
+
                     <p className={(this.props.price!==this.props.priceDiscount)?
                         "product-price-af-discount":
                         "product-price"}>
@@ -48,9 +51,12 @@ class BasketProduct extends React.Component{
                 <div className="product-info">
                     {(this.props.price!==this.props.priceDiscount)?<p className="product-price-bf-discount">{this.props.price}</p>:<p />}
                 </div>
+
                 <img className="product-image" src={this.props.image} />
-                <div>
-                        <div onClick= {()=>cart.addToCart(
+
+                <div className="basketProductOperations">
+
+                        <div className="operand" onClick= {()=>cart.addToCart(
                             {
                                 image,
                                 name,
@@ -61,14 +67,21 @@ class BasketProduct extends React.Component{
                         )} >
                             <img src={AddIcon}/>
                         </div>
+                    <div className="counter">
                     <p>
                         {cart.items.filter(item=>item.id===id).map(item=>item.quantity)}
                     </p>
-                    <div onClick={() =>cart.removeProduct(id)}>
+                </div>
+                    <div className="operand" onClick={() =>cart.removeProduct(id)}>
                         <img src={RemoveIcon}/>
                     </div>
+
                 </div>
+
             </div>
+                        <Divider />
+                    </div>
+
          )}
             </CartContext.Consumer>
         );
