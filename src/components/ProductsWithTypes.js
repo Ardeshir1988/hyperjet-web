@@ -78,10 +78,6 @@ class ProductsWithTypes extends Component {
 
         let typesData=   this.state.typesList.map(type => {
             return (
-                <div>
-                    <div>
-
-                    </div>
                     <Type
                         key={type.typeId}
                         typeId={type.typeId}
@@ -89,7 +85,6 @@ class ProductsWithTypes extends Component {
                         typePic={type.typePic}
                         {...this.props}
                     />
-                </div>
             );
         });
         productsData=
@@ -126,7 +121,9 @@ class ProductsWithTypes extends Component {
                         component="div"
                         className="products"
                     >
-                        {typesData}
+                        {/*<div className="types">*/}
+                        {/*{typesData}*/}
+                        {/*</div>*/}
                         <InfiniteScroll
                             className="products"
                             dataLength={this.state.items.length}

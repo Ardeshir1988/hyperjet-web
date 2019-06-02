@@ -15,6 +15,7 @@ import UserAccount from "./UserAccount";
 import Registration from "./Registration";
 import PreviousOrders from "./PreviousOrders";
 import { CartContext } from "./CartContext";
+import Types from "./Types";
 
 class App extends React.Component {
 
@@ -223,12 +224,17 @@ class App extends React.Component {
                         addToCart={this.handleAddToCart}/>
                     <Switch>
                         <Route exact path={'/'} render={props => <Categories {...props} />}/>
-                        <Route path={'/cat_products'} render={props => <ProductsWithTypes {...props}
+                        <Route path={'/cat_products'} render={props =>
+                                                                                            <div>
+                                                                                                <Types {...props} />
+                                                                                        <ProductsWithTypes {...props}
                                                                                           searchTerm={this.state.term}
                                                                                           addToCart={this.handleAddToCart}
                                                                                           productQuantity={this.state.quantity}
                                                                                           updateQuantity={this.updateQuantity}
-                                                                                          openModal={this.openModal}/>}/>
+                                                                                          openModal={this.openModal}/>
+                                                                                            </div>
+                                                                                          }/>
                         <Route path={'/type_products'} render={props => <Products {...props}
                                                                                   searchTerm={this.state.term}
                                                                                   addToCart={this.handleAddToCart}

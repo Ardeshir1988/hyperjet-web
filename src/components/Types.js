@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Type from "./Type";
-import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import Category from "./Category";
 import Urls from "../utils/URLs";
+import queryString from "query-string";
 
 class Types extends Component{
 
@@ -25,7 +24,8 @@ class Types extends Component{
 
     componentDidMount() {
 
-        let url = Urls.baseUrl()+"product/typebycat?catid="+this.props.catid;
+        const values = queryString.parse(this.props.location.search);
+        let url = Urls.baseUrl()+"product/typebycat?catid="+values.catid;
         axios.get(url, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const typesList=response.data;
@@ -41,9 +41,6 @@ class Types extends Component{
         typesData=   this.state.typesList.map(type => {
             return (
                 <div>
-                    <div>
-
-                    </div>
                     <Type
                         key={type.typeId}
                         typeId={type.typeId}
@@ -54,19 +51,18 @@ class Types extends Component{
                 </div>
             );
         });
-        let view;
-            view = (
-                <CSSTransitionGroup
-                    transitionName="fadeIn"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}
-                    component="div"
-                    className="types">
-                    {typesData}
-                </CSSTransitionGroup>
-            );
 
-        return <div className="products-wrapper">{view}</div>;
+        return(
+            <div className="products-wrapper"><div className="products">
+                <div className="top-types">
+                <div className="types">
+            {typesData}
+                </div>
+
+            </div>
+            </div>
+            </div>
+                );
     }
 
 }
