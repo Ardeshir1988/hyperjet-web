@@ -104,7 +104,7 @@ class Basket extends React.Component {
 
                             </div>
 
-                            <button style={{background:"#b81aec",color:"white",marginTop:"2vh",minWidth:"100%"}}  onClick={()=>this.redirectTo("/user/checkout")}>
+                            <button className="basket-button"  onClick={()=>this.redirectTo("/user/checkout")}>
                                 <h5>{checkout}</h5>
                             </button>
 

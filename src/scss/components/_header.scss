@@ -409,3 +409,13 @@ header {
     flex: 1;
   }
 }
+.basket-button{
+  background:#b81aec;
+  color:white;
+  min-width:80%;
+  margin-top: 2vh;
+  margin-left: 1.2vw;
+  &:hover {
+    background: lighten(#b81aec, 12%);
+  }
+}
