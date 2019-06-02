@@ -26,7 +26,8 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
-    },
+        direction: 'rtl'
+    }
 });
 
 class ReviewCheckout extends React.Component {
@@ -41,7 +42,7 @@ class ReviewCheckout extends React.Component {
         addressArea:1,
         orderPhoneNumber:Dm.getUserData().mobile,
         orderInstruction:'',
-        orderPaymentType:'',
+        orderPaymentType:'web-cash-pos',
         productlist:[],
         suburb: 1,
         orderArrivalNoticeType:''
@@ -80,11 +81,14 @@ class ReviewCheckout extends React.Component {
     }
     handleBasketData(cart){
         let total=0;
+        let totalDiscount=0;
         for (var i = 0; i < cart.length; i++) {
             total += cart[i].price * parseInt(cart[i].quantity);
+            totalDiscount += cart[i].priceDiscount * parseInt(cart[i].quantity);
         }
         this.setState({
-            totalAmount: total
+            totalAmount: total,
+            totalDiscount:total-totalDiscount
         });
     }
     handleChange = name => event => {
@@ -124,6 +128,10 @@ class ReviewCheckout extends React.Component {
         const { classes } = this.props;
 
         return (
+            <div>
+            <div className="page-title-bar">
+                <Typography variant="h6" gutterBottom className="page-title">بررسی خرید</Typography>
+            </div>
             <Paper className={classes.root} elevation={1}>
                 <Dialog
                     open={this.state.open}
@@ -160,7 +168,7 @@ class ReviewCheckout extends React.Component {
                     </DialogActions>
                 </Dialog>
 
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" gutterBottom color="textSecondary">
                     آدرس محل تحویل
                 </Typography>
                 <Grid container spacing={24}>
@@ -183,8 +191,21 @@ class ReviewCheckout extends React.Component {
                             </Select>
                         </FormControl>
                     </Grid>
+                    <Grid item xs={4} style={{marginTop:"2vh"}}>
+                        <TextField
+                            required
+                            type="number"
+                            id="mobile"
+                            name="mobile"
+                            label="تلفن همراه"
+                            onChange= {this.handleChange('orderPhoneNumber')}
+                            value={this.state.orderPhoneNumber}
+                            fullWidth />
+                    </Grid>
+                    <Grid item xs={8} >
 
-                    <Grid item xs={12}>
+                    </Grid>
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
                         <TextField
                             required
                             id="address"
@@ -194,46 +215,8 @@ class ReviewCheckout extends React.Component {
                             value={this.state.addressDetail}
                             fullWidth />
                     </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="h6" gutterBottom>
-                            نحوه ی تحویل کالا
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <RadioGroup
-                            row
-                            name="orderArrivalNoticeType"
-                            aria-label="orderArrivalNoticeType">
-                            <FormControlLabel onChange={this.handleChange('orderArrivalNoticeType')} value="تماس تلفنی" control={<Radio />} label="تماس تلفنی" />
-                            <FormControlLabel onChange={this.handleChange('orderArrivalNoticeType')} value="زنگ در" control={<Radio />} label="زنگ در" />
-                        </RadioGroup>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography variant="h6" gutterBottom>
-                            نحوه ی پرداخت
-                        </Typography>
-                    </Grid>
                     <Grid item xs={12} >
-                        <RadioGroup
-                            row
-                            name="paymentType"
-                            aria-label="paymentType">
-                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="web-online" control={<Radio />} label="پرداخت آنلاین" />
-                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="web-cash-pos" control={<Radio />} label="نقد یا کارت" />
-                        </RadioGroup>
-                    </Grid>
-                    <Grid item xs={12} >
-                        <TextField
-                            required
-                            id="mobile"
-                            name="mobile"
-                            label="تلفن همراه"
-                            onChange= {this.handleChange('orderPhoneNumber')}
-                            value={this.state.orderPhoneNumber}
-                            fullWidth />
-                    </Grid>
-                    <Grid item xs={12} >
-                        <Typography variant="h6" gutterBottom>
+                        <Typography variant="h6" gutterBottom style={{marginTop:"2vh"}} color="textSecondary">
                             دستورالعمل خاص
                         </Typography>
 
@@ -251,48 +234,85 @@ class ReviewCheckout extends React.Component {
                             onChange= {this.handleChange('orderInstruction')}
                         />
                     </Grid>
-                    <Grid item xs={12} >
-
-                        <Typography variant="h6" gutterBottom>
-                            مجموع خرید     {this.state.totalAmount}
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
+                        <Typography variant="h6" gutterBottom color="textSecondary">
+                            نحوه ی تحویل کالا
                         </Typography>
-
                     </Grid>
-
-
-                    <Grid item xs={12} >
-
-                        <Typography variant="h6" gutterBottom>
-                            تخفیف     0
-                        </Typography>
-
+                    <Grid item xs={12}>
+                        <RadioGroup
+                            row
+                            name="orderArrivalNoticeType"
+                            aria-label="orderArrivalNoticeType">
+                            <FormControlLabel onChange={this.handleChange('orderArrivalNoticeType')} value="تماس تلفنی" control={<Radio />} label="تماس تلفنی" />
+                            <FormControlLabel onChange={this.handleChange('orderArrivalNoticeType')} value="زنگ در" control={<Radio />} label="زنگ در" />
+                        </RadioGroup>
                     </Grid>
-
-                    <Grid item xs={12} >
-                        <Typography variant="h6" gutterBottom>
-                            هزینه ارسال     {(this.state.totalAmount>=this.state.threshold) ? 0 : this.state.cost}
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
+                        <Typography variant="h6" gutterBottom color="textSecondary">
+                            نحوه ی پرداخت
                         </Typography>
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography variant="h6" gutterBottom>
-                            مبلغ قابل پرداخت       {(this.state.totalAmount>=this.state.threshold) ?
-                            this.state.totalAmount :this.state.totalAmount+this.state.cost }
-                        </Typography>
+                        <RadioGroup
+                            row
+                            name="paymentType"
+                            aria-label="paymentType">
+                            <FormControlLabel   onChange={this.handleChange('orderPaymentType')} value="web-online" control={<Radio />} label="پرداخت آنلاین" />
+                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="web-cash-pos" control={<Radio />} label="نقد یا کارت" />
+                        </RadioGroup>
                     </Grid>
-                    <Grid item xs={12} >
-                        <Divider />
-                    </Grid>
+                    <div className="break" />
+
+
+                    <div className="checkout-details">
+
+                        <div  className="checkout-details-item" >
+                            مجموع خرید
+                        </div>
+                        <div>
+                            {this.state.totalAmount}
+                        </div>
+                    </div>
+                    <div className="checkout-details">
+                        <div  className="checkout-details-item" >
+                            تخفیف
+                        </div>
+                        <div>
+                            {this.state.totalDiscount}-
+                        </div>
+                    </div>
+
+                    <div className="checkout-details">
+                        <div  className="checkout-details-item" >
+                            هزینه ارسال
+                        </div>
+                        <div>
+                            {(this.state.totalAmount>=this.state.threshold) ? 0 : this.state.cost}+
+                        </div>
+                    </div>
+
+                    <div className="checkout-details">
+                        <div  className="checkout-details-item" >
+                            مبلغ قابل پرداخت
+                        </div>
+                        <div style={{color:"red"}}>
+                                   {(this.state.totalAmount>=this.state.threshold) ?
+                            this.state.totalAmount :this.state.totalAmount-this.state.totalDiscount+this.state.cost }
+                            </div>
+                    </div>
                     <Grid container spacing={24}>
                         <Grid item xs>
                         </Grid>
-                        <Grid item xs={6} style={{textAlign:"center",paddingBottom:20}}>
-                            <Button onClick={()=>this.sendOrder()}  variant="contained" color="primary">خرید خود را نهایی کنید</Button>
+                        <Grid  item xs={8} style={{textAlign:"center",paddingBottom:20 , marginTop:"2vh"}}>
+                            <button onClick={()=>this.sendOrder()}   className="basket-button">خرید خود را نهایی کنید</button>
                         </Grid>
                         <Grid item xs>
                         </Grid>
                     </Grid>
                 </Grid>
             </Paper>
+            </div>
         );
     }
 }
