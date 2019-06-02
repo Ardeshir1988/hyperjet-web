@@ -1,28 +1,39 @@
 .top-types{
   z-index: 100;
   position: fixed;
-
   max-height: fit-content;
-  padding: 10px;
-  max-width: 960px;
-  margin: 0 auto;
+
+
+}
+.types-wrapper {
+
+  padding-top: 9.4vh;
+  animation: slideUp 300ms linear;
+  animation-delay: 150ms;
+  @media (min-width: 960px) {
+    margin-left: 24vw;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 7vh;
+  }
+
 }
 .types {
   display: flex;
   display: -webkit-flex;
   -webkit-flex-wrap: nowrap;
-  background: white;
+  background: #d7d7d7;
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
 
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  margin-bottom: 9vh;
-  max-width: 99vw;
-  min-height: auto;
-  margin-top: 1px;
 
+  @media (min-width: 960px) {
+    max-width: 51.5vw;
+  }
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   @media (max-width: 768px) {
     padding: 1px;

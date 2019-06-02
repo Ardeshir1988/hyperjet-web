@@ -52,14 +52,13 @@ class Types extends Component{
             );
         });
 
-        return(
-            <div className="products-wrapper"><div className="products">
+        return(<div className="types-wrapper">
+
                 <div className="top-types">
                 <div className="types">
             {typesData}
-                </div>
 
-            </div>
+                </div>
             </div>
             </div>
                 );

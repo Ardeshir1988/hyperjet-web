@@ -14,11 +14,17 @@
   display: -webkit-flex;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
-  padding: 6px;
+  padding-top: 12px;
+  padding-bottom: 6px;
   max-width: 960px;
   margin: 0 auto;
+  @media (max-width: 480px) {
+    padding-top: 12px;
+    padding-bottom: 6px;
+  }
   @media (max-width: 768px) {
-    padding: 1px;
+    padding-top: 18px;
+    padding-bottom: 6px;
   }
   .product {
 
