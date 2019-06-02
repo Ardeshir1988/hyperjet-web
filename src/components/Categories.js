@@ -62,7 +62,7 @@ class Categories extends Component {
                 </CSSTransitionGroup>
             );
 
-        return <div className="products-wrapper">{view}</div>;
+        return <div className="products-wrapper"><div className="categories">{categoriesData}</div></div>;
     }
 }
 export default Categories;

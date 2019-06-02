@@ -114,18 +114,8 @@ class ProductsWithTypes extends Component {
 
                 view = (
 
-                    <CSSTransitionGroup
-                        transitionName="fadeIn"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={300}
-                        component="div"
-                        className="products"
-                    >
-                        {/*<div className="types">*/}
-                        {/*{typesData}*/}
-                        {/*</div>*/}
                         <InfiniteScroll
-                            className="products"
+                            className="products-with-types"
                             dataLength={this.state.items.length}
                             next={this.fetchMoreData}
                             hasMore={this.state.hasMore}
@@ -142,12 +132,12 @@ class ProductsWithTypes extends Component {
                         >
                         {productsData}
                         </InfiniteScroll>
-                    </CSSTransitionGroup>
+
                 );
 
         }
 
-        return <div className="products-wrapper"><div className="products">{view}</div></div>;
+        return <div className="products-wrapper">{view}</div>;
     }
 }
 export default ProductsWithTypes;
