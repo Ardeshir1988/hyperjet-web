@@ -277,7 +277,7 @@ class ReviewCheckout extends React.Component {
                         <div  className="checkout-details-item" >
                             تخفیف
                         </div>
-                        <div className={(this.state.totalDiscount>0)?"lowColor":""}>
+                        <div className="lowColor">
                             {this.state.totalDiscount}-
                         </div>
                     </div>
@@ -286,7 +286,7 @@ class ReviewCheckout extends React.Component {
                         <div  className="checkout-details-item" >
                             هزینه ارسال
                         </div>
-                        <div className={(this.state.totalAmount<this.state.threshold) ? "highColor" :""}>
+                        <div className="highColor">
                             {(this.state.totalAmount>=this.state.threshold) ? 0 : this.state.cost}+
                         </div>
                     </div>
