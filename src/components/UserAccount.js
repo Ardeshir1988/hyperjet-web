@@ -120,37 +120,16 @@ class UserAccount extends React.Component {
 
         return (
             <div className="products">
-
+                <div className="page-title-bar">
+                    <Typography variant="h6" gutterBottom className="page-title">حساب کاربری</Typography>
+                </div>
 
             <Paper className={classes.root} elevation={1}>
-                <Paper elevation={5} style={{marginBottom:"20px"}}>
-                    <div style={{background:'#b81aec',color:"#ffffff",fontSize:"22px",textAlign:"center"}}>
-                        <div>
-                        حساب کاربری
-                        </div>
-                    </div>
-                </Paper>
-                <Dialog
-                    open={this.state.open}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">{"بررسی خرید بدون کالا"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            سبد کالا شما خالی است
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
 
-                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
-                            خرید
-                        </Button>
-                    </DialogActions>
-                </Dialog>
                 <Grid container spacing={24}>
 
                     <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" gutterBottom  color="textSecondary">
                     نام
                 </Typography>
                     </Grid>
@@ -164,7 +143,7 @@ class UserAccount extends React.Component {
                         fullWidth />
                 </Grid>
                     <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" gutterBottom  color="textSecondary">
                     تلفن
                 </Typography>
                     </Grid>
@@ -177,8 +156,8 @@ class UserAccount extends React.Component {
                         value={this.state.phone}
                         fullWidth />
                 </Grid>
-                    <Grid item xs={12} style={{marginBottom:"15px"}} >
-                    <Typography variant="h6" gutterBottom>
+                    <Grid item xs={12} >
+                    <Typography variant="h6" gutterBottom  color="textSecondary">
                         ایمیل
                     </Typography>
                 </Grid>
@@ -192,7 +171,7 @@ class UserAccount extends React.Component {
                         fullWidth />
                 </Grid>
                     <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" gutterBottom  color="textSecondary">
                     موبایل
                 </Typography>
                     </Grid>
@@ -205,7 +184,7 @@ class UserAccount extends React.Component {
                         fullWidth />
                 </Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h6" gutterBottom>
+                        <Typography variant="h6" gutterBottom  color="textSecondary">
                            آدرس
                         </Typography>
                     </Grid>
@@ -229,7 +208,7 @@ class UserAccount extends React.Component {
                         </FormControl>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
                         <TextField
                             required
                             id="address"
@@ -245,8 +224,8 @@ class UserAccount extends React.Component {
                     <Grid container spacing={24}>
                         <Grid item xs>
                         </Grid>
-                        <Grid item xs={6} style={{textAlign:"center",paddingBottom:20}}>
-                            <Button onClick={()=>this.editUserInfo()}  variant="contained" color="primary">ثبت</Button>
+                        <Grid  item xs={8} style={{textAlign:"center",paddingBottom:20 , marginTop:"3vh"}}>
+                            <button onClick={()=>this.editUserInfo()}  className="basket-button">ویرایش</button>
                         </Grid>
                         <Grid item xs>
                         </Grid>

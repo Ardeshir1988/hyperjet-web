@@ -171,7 +171,7 @@ class ReviewCheckout extends React.Component {
                     آدرس محل تحویل
                 </Typography>
                 <Grid container spacing={24}>
-                    <Grid item xs={12} >
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
                         <FormControl className={classes.formControl}>
 
                             <Select
@@ -215,7 +215,7 @@ class ReviewCheckout extends React.Component {
                             fullWidth />
                     </Grid>
                     <Grid item xs={12} >
-                        <Typography variant="h6" gutterBottom style={{marginTop:"2vh"}} color="textSecondary">
+                        <Typography variant="h6" gutterBottom style={{marginTop:"3vh"}} color="textSecondary">
                             دستورالعمل خاص
                         </Typography>
 
@@ -233,7 +233,7 @@ class ReviewCheckout extends React.Component {
                             onChange= {this.handleChange('orderInstruction')}
                         />
                     </Grid>
-                    <Grid item xs={12} style={{marginTop:"2vh"}}>
+                    <Grid item xs={12} style={{marginTop:"3vh"}}>
                         <Typography variant="h6" gutterBottom color="textSecondary">
                             نحوه ی تحویل کالا
                         </Typography>
