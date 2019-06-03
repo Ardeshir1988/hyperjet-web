@@ -23,6 +23,7 @@ const styles = theme => ({
 
     layout: {
         width: 'auto',
+        direction:'rtl',
         marginLeft: theme.spacing.unit * 2,
         marginRight: theme.spacing.unit * 2,
         [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
@@ -32,6 +33,7 @@ const styles = theme => ({
         },
     },
     paper: {
+
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
         padding: theme.spacing.unit * 2,
@@ -42,15 +44,17 @@ const styles = theme => ({
         },
     },
     stepper: {
+
         padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`,
     },
     buttons: {
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
     },
     button: {
         marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit,
+        background:'#b81aec'
     },
 });
 
@@ -143,14 +147,17 @@ class Registration extends React.Component {
 
         return (
             <React.Fragment>
+
                 <CssBaseline />
 
+                <div className="page-title-bar">
+                    <Typography variant="h5" gutterBottom className="page-title">ثبت نام</Typography>
+                </div>
                 <main className={classes.layout}>
+
                     <Paper className={classes.paper}>
-                        <Typography component="h1" variant="h4" align="center">
-                            ثبت نام
-                        </Typography>
-                        <Stepper activeStep={activeStep} className={classes.stepper}>
+
+                        <Stepper   activeStep={activeStep} className={classes.stepper}>
                             {steps.map(label => (
                                 <Step key={label}>
                                     <StepLabel>{label}</StepLabel>
@@ -160,22 +167,26 @@ class Registration extends React.Component {
                         <React.Fragment>
                             {activeStep === steps.length ? (
                                 <React.Fragment>
+                                    <div style={{textAlign:"center"}} >
                                     <Typography variant="h5" gutterBottom>
                                         به هایپرجت خوش آمدید
                                     </Typography>
                                     <Typography variant="subtitle1">
                                         مشتاقانه جهت خدمتگذاری آماده هستیم
                                     </Typography>
-                                    <Button variant="contained" color="secondary" onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
-                                    <Button style={{marginLeft:10}} variant="contained" color="primary" onClick={()=>this.redirectTo('/user/checkout')}>بررسی خرید</Button>
+                                    </div>
+                                    <div className={classes.buttons} style={{marginTop:"10%"}} >
+                                    <Button variant="contained"  color="secondary" onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
+                                    <Button  variant="contained" style={{marginRight:"10%"}} color="primary" onClick={()=>this.redirectTo('/user/checkout')}>بررسی خرید</Button>
+                                    </div>
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>
                                     {getStepContent(activeStep)}
-                                    <div className={classes.buttons}>
+                                    <div className={classes.buttons} >
                                         {activeStep !== 0 && (
                                             <Button onClick={this.handleBack} className={classes.button}>
-                                                Back
+                                                مرحله قبل
                                             </Button>
                                         )}
 
@@ -185,7 +196,7 @@ class Registration extends React.Component {
                                             onClick={this.handleNext}
                                             className={classes.button}
                                         >
-                                            {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                                            {activeStep === steps.length - 1 ? 'ثبت کد تایید' : 'مرحله بعدی'}
                                         </Button>
 
                                     </div>

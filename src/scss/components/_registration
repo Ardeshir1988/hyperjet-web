@@ -1,0 +1,9 @@
+.register-button{
+  background:#b81aec;
+  color:white;
+  margin: 25px auto;
+  min-width:70%;
+  &:hover {
+    background: lighten(#b81aec, 12%);
+  }
+}
