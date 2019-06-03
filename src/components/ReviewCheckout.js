@@ -6,7 +6,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
@@ -278,7 +277,7 @@ class ReviewCheckout extends React.Component {
                         <div  className="checkout-details-item" >
                             تخفیف
                         </div>
-                        <div>
+                        <div className={(this.state.totalDiscount>0)?"lowColor":""}>
                             {this.state.totalDiscount}-
                         </div>
                     </div>
@@ -287,7 +286,7 @@ class ReviewCheckout extends React.Component {
                         <div  className="checkout-details-item" >
                             هزینه ارسال
                         </div>
-                        <div>
+                        <div className={(this.state.totalAmount<this.state.threshold) ? "highColor" :""}>
                             {(this.state.totalAmount>=this.state.threshold) ? 0 : this.state.cost}+
                         </div>
                     </div>
@@ -296,9 +295,9 @@ class ReviewCheckout extends React.Component {
                         <div  className="checkout-details-item" >
                             مبلغ قابل پرداخت
                         </div>
-                        <div style={{color:"red"}}>
+                        <div>
                                    {(this.state.totalAmount>=this.state.threshold) ?
-                            this.state.totalAmount :this.state.totalAmount-this.state.totalDiscount+this.state.cost }
+                            this.state.totalAmount-this.state.totalDiscount :this.state.totalAmount-this.state.totalDiscount+this.state.cost }
                             </div>
                     </div>
                     <Grid container spacing={24}>

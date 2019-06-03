@@ -48,6 +48,7 @@ class Basket extends React.Component {
         const deliveryFee='هزینه تحویل';
         const checkout='ادامه خرید';
         const finalAmount='مبلغ قابل پرداخت';
+        const discount='تخفیف';
         const { classes } = this.props;
 
         return (
@@ -92,23 +93,27 @@ class Basket extends React.Component {
                                 </div>
 
                                 <div className="basketDetail">
+                                    <div className="data">{cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)-
+                                    cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)}</div>
+                                    <div className="title">{discount}</div>
+                                </div>
+                                <div className="basketDetail">
                                     <div className="data">{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ? 0 : cart.deliveryCost} </div>
                                     <div className="title">{deliveryFee}</div>
                                 </div>
 
                                 <div className="basketDetail">
-                                    <div className="data">{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
-                                        cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost }</div>
+                                    <div className="data">{(cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
+                                        cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost }</div>
                                     <div className="title">{finalAmount}</div>
                                 </div>
 
                             </div>
-
+                            <div className="basketListDetail">
                             <button className="basket-button"  onClick={()=>this.redirectTo("/user/checkout")}>
                                 <h5>{checkout}</h5>
                             </button>
-
-
+                            </div>
                         {/*  end list  */}
                         </div>
                     </div>
