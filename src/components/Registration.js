@@ -54,7 +54,8 @@ const styles = theme => ({
     button: {
         marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit,
-        background:'#b81aec'
+        background:'#b81aec',
+        color:'white'
     },
 });
 
@@ -176,9 +177,12 @@ class Registration extends React.Component {
                                     </Typography>
                                     </div>
                                     <div className={classes.buttons} style={{marginTop:"10%"}} >
-                                    <Button variant="contained"  color="secondary" onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
-                                    <Button  variant="contained" style={{marginRight:"10%"}} color="primary" onClick={()=>this.redirectTo('/user/checkout')}>بررسی خرید</Button>
+                                        <Button variant="contained"    className={classes.button}   onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
+
                                     </div>
+                                    <div className={classes.buttons} >
+                                    <Button variant="contained"    className={classes.button} onClick={()=>this.redirectTo('/user/checkout')}>بررسی خرید</Button>
+                                </div>
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>

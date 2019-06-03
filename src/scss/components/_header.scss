@@ -287,10 +287,11 @@ header {
   padding: 8px;
   .product-image {
     object-fit: scale-down;
-    max-width:50px;
-    max-height:50px;
+    max-width:85px;
+    max-height:85px;
     width: auto;
     height: auto;
+    margin-right: 10px;
   }
   .product-info {
     margin-left: 16px;
