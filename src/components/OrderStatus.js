@@ -2,22 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types/prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import SingInForm from './SignIn';
-import ConfrimForm from './Confirmation';
 import Dm from "../utils/DataManager";
-import Snackbar from '@material-ui/core/Snackbar';
-import { Route, Redirect } from 'react-router'
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Urls from "../utils/URLs";
 import axios from "axios";
 import OrderCart from "./OrderCart";
+import Typography from "@material-ui/core/Typography";
 
 
 const styles = theme => ({
@@ -54,6 +43,9 @@ class OrderStatus extends React.Component {
 
         return (
             <div>
+                <div className="page-title-bar">
+                    <Typography variant="h6" gutterBottom className="page-title">وضعیت سفارش</Typography>
+                </div>
                 <CssBaseline />
 
                 <main className={classes.layout}>

@@ -1,24 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types/prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Dm from "../utils/DataManager";
 import Urls from "../utils/URLs";
 import axios from "axios";
 import PreviousOrderCart from "./PreviousOrderCart";
-import BackIcon from '@material-ui/icons/ArrowBack';
+import BackIcon from '@material-ui/icons/Close';
 import Slide from "@material-ui/core/Slide";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Dialog from "@material-ui/core/Dialog";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -159,7 +154,11 @@ class PreviousOrders extends React.Component {
                         )}
                     </List>
                 </Dialog>
+                <div className="page-title-bar">
+                    <Typography variant="h6" gutterBottom className="page-title">خرید های گذشته</Typography>
+                </div>
                 <main className={classes.layout}>
+
                     {this.state.orders.map(order=><div onClick={()=>this.handleClickOpen(order.orderId)}><PreviousOrderCart order={order} /></div>)}
                 </main>
             </div>
