@@ -29,12 +29,12 @@
     flex: 1;
     overflow: hidden;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
     margin-bottom: 8px;
   }
   .product-price {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 18px;
     margin-bottom: 12px;
@@ -162,12 +162,12 @@
     flex: 1;
     overflow: hidden;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
     margin-bottom: 8px;
   }
   .product-price {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 18px;
     margin-bottom: 12px;
@@ -214,12 +214,18 @@
 
 }
     .plus{
-      margin: auto;
+      @media (max-width: 480px) {
+        margin-top: .5vh;
+      }
+      margin-top: 1vh;
       flex: 1;
 
     }
     .minus{
-      margin: auto;
+      @media (max-width: 480px) {
+        margin-top: .5vh;
+      }
+      margin-top: 1vh;
       flex: 1;
     }
     .cart-quantity{

@@ -334,18 +334,21 @@ header {
 .basketListDetail {
     display: flex;
   flex-direction: column;
+
   .basketDetail {
     margin-top: 2vh;
     display: flex;
 
     .title {
       margin-right: 1vw;
+      font-size: 14px;
       @media (max-width: 480px) {
         margin-right: 5vw;
       }
     }
 
     .data {
+      font-size: 16px;
       flex: 1;
       margin-left: 1vw;
       @media (max-width: 480px) {
