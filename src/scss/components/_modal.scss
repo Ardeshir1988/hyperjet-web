@@ -2,6 +2,9 @@
   display: none;
   background: rgba(0, 0, 0, 0.66);
   position: fixed;
+  animation-duration: 3s;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
   top: 0;
   z-index: 100;
   height: 100%;
@@ -16,50 +19,98 @@
     -webkit-justify-content: center;
   }
   .modal {
-    width: 100%;
-    max-width: 532px;
     margin: 16px;
     background: #fff;
     position: relative;
     border-radius: 4px;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    @media (max-width: 480px) {
+      width: 90vw;
+    }
   }
   .close {
-    position: absolute;
-    top: 0px;
-    right: 0px;
+
     font-size: 24px;
-    line-height: 36px;
-    border-radius: 0 4px 0 0;
     background: transparent;
-    color: $gray-medium;
+    color: white;
     &:hover {
       background: $gray-dark-bg;
     }
   }
 }
+.quick-view{
+  flex: 2;
+display: flex;
+flex-direction: column;
+}
 .quick-view-details {
-  padding: 24px;
+  flex: 1;
+  padding: 5px;
+  direction: rtl;
   background: $gray-medium-bg;
   border-radius: 0 0 4px 4px;
-  .product-price {
+  display: flex;
+  flex-direction: column;
+  .product-name {
+    direction: rtl;
     font-size: 18px;
   }
+  .product-detail{
+    direction: rtl;
+    font-size: 15px;
+  }
+
   .product-price {
-    color: $primary-green;
+      text-align: left;
     font-weight: bold;
-    font-size: 24px;
-    float: right;
-    &:before {
-      content: "₹ ";
-    }
+    font-size: 20px;
+    direction: rtl;
+  }
+  .product-discount-price-bf{
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: line-through;
+    direction: rtl;
+  }
+  .product-discount-price-af{
+    color: red;
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+    direction: rtl;
   }
 }
+.product-measure{
+  direction: rtl;
+  text-align: right;
+  margin: 5px;
+  font-size: 14px;
+}
 .quick-view-image {
+  margin-top: 3vh;
+  flex:2;
   img {
-    width: 100%;
-    max-width: 500px;
+    width: 300px;
+    height: 300px;
+    object-fit: scale-down;
     margin: 0 auto;
     display: block;
     border-radius: 4px 4px 0 0;
   }
+}
+.modal-bar{
+    height: 35px;
+    background: #b81aec;
+    color: white;
+    width: 100%;
+    display: flex;
+  border-radius:4px 4px 0 0;
+
+}
+.modal-title{
+  flex: 2;
+
 }

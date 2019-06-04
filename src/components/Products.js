@@ -87,10 +87,9 @@ class Products extends Component {
                     productPrice={i.product_price}
                     productDiscountPrice={i.product_price_discount}
                     productStepDiscount={i.productStepDiscount}
+                    productDetails={i.productDetails}
+                    productMeasure={i.measure}
                     productId={i.productId}
-                    addToCart={this.props.addToCart}
-                    productQuantity={this.props.productQuantity}
-                    updateQuantity={this.props.updateQuantity}
                     openModal={this.props.openModal}
                 />
 

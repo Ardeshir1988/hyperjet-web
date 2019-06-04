@@ -98,9 +98,8 @@ class ProductsWithTypes extends Component {
                                 productId={i.productId}
                                 productDiscountPrice={i.product_price_discount}
                                 productStepDiscount={i.productStepDiscount}
-                                addToCart={this.props.addToCart}
-                                productQuantity={this.props.productQuantity}
-                                updateQuantity={this.props.updateQuantity}
+                                productDetails={i.productDetails}
+                                productMeasure={i.measure}
                                 openModal={this.props.openModal}
                             />
                 ));

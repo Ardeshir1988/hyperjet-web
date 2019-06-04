@@ -16,14 +16,18 @@ class Product extends Component {
         };
     }
 
-    quickView(image, name, price, id) {
+    quickView(id, name, image, price , priceDiscount,detail,measure) {
         this.setState(
             {
                 quickViewProdcut: {
-                    image: image,
+
+                    id: id,
                     name: name,
+                    image: image,
                     price: price,
-                    id: id
+                    priceDiscount:priceDiscount,
+                    detail:detail,
+                    measure:measure
                 }
             },
             function() {
@@ -40,6 +44,9 @@ class Product extends Component {
         let stepDiscount=this.props.productStepDiscount;
         let id = this.props.productId;
         let quantity = this.props.productQuantity;
+        let measure=this.props.productMeasure;
+        let detail=this.props.productDetails;
+        console.log("measure===="+measure);
 
         return (
             <CartContext.Consumer>
@@ -51,11 +58,14 @@ class Product extends Component {
                                 src={image}
                                 onClick={this.quickView.bind(
                                     this,
-                                    image,
-                                    name,
-                                    price,
+
                                     id,
-                                    quantity
+                                    name,
+                                    image,
+                                    price,
+                                    priceDiscount,
+                                    detail,
+                                    measure
                                 )}
                             />
                         </div>
