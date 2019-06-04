@@ -298,7 +298,7 @@ header {
     flex-grow: 1;
 
     .product-price {
-      color: $gray-light;
+
       font-weight: 700;
     }
     .product-price-bf-discount{
@@ -415,6 +415,7 @@ header {
   color:white;
   margin: 25px auto;
   min-width:80%;
+  font-size: 18px;
   &:hover {
     background: lighten(#b81aec, 12%);
   }
