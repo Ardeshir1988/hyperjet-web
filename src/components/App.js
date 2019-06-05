@@ -177,8 +177,10 @@ class App extends React.Component {
     initialBasket(){
         if (Dm.getBasketData()) {
             return Dm.getBasketData();
-        }else
-        return [];
+        }else {
+            Dm.setEmptyBasket();
+            return [];
+        }
         }
 
     render() {

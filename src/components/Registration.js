@@ -12,7 +12,6 @@ import SingInForm from './SignIn';
 import ConfrimForm from './Confirmation';
 import Dm from "../utils/DataManager";
 import Snackbar from '@material-ui/core/Snackbar';
-import { Route, Redirect } from 'react-router'
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Urls from "../utils/URLs";
@@ -77,7 +76,8 @@ class Registration extends React.Component {
     state = {
         activeStep: 0,
         mobile:'',
-        msg:false
+        msg:false,
+        textMsg:''
     };
 
 
@@ -87,19 +87,17 @@ class Registration extends React.Component {
             let mobile = Dm.getUserMobile();
             if (mobile && mobile.length === 11 && mobile.startsWith('09')) {
                 this.getTempToken(mobile);
-                this.setState(state => ({
-                    activeStep: state.activeStep + 1,
-                }));
+
 
             } else {
+                let text='شماره موبایل صحیح نیست';
+                this.setState({textMsg:text});
                 this.setState({msg: true})
             }
         }else {
             console.log('=====Active========'+this.state.activeStep);
             this.confirmMobile();
-            this.setState(state => ({
-                activeStep: state.activeStep + 1,
-            }));
+
         }
     };
     getTempToken(mobile){
@@ -107,7 +105,27 @@ class Registration extends React.Component {
         axios.post(url, null,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const temp=response.data;
-                Dm.setTempToken(temp.tempToken);
+                if (temp.message === 'ok') {
+                    Dm.setTempToken(temp.tempToken);
+                    this.setState(state => ({
+                        activeStep: state.activeStep + 1,
+                    }));
+                }
+                else {
+                    if (temp.tempToken !== '') {
+                        Dm.setTempToken(temp.tempToken);
+                        this.setState(state => ({
+                            activeStep: state.activeStep + 1,
+                        }));
+                        this.setState({textMsg:temp.message});
+                        this.setState({msg: true});
+
+                    }
+                    else {
+                        this.setState({textMsg: temp.message});
+                        this.setState({msg: true})
+                    }
+                }
             });
     }
     confirmMobile(){
@@ -119,7 +137,15 @@ class Registration extends React.Component {
         axios.post(url, userConfirm,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const userToken=response.data;
-                Dm.setToken(userToken.token);
+                if(userToken.message==='ok') {
+                    Dm.setToken(userToken.token);
+                    this.setState(state => ({
+                        activeStep: state.activeStep + 1,
+                    }));
+                }else {
+                    this.setState({textMsg:userToken.message});
+                    this.setState({msg: true})
+                }
 
             });
     }
@@ -172,6 +198,9 @@ class Registration extends React.Component {
                                     <Typography variant="h5" gutterBottom>
                                         به هایپرجت خوش آمدید
                                     </Typography>
+                                        <Typography variant="subtitle1">
+                                            ثبت نام با موفقیت انجام گردید
+                                        </Typography>
                                     <Typography variant="subtitle1">
                                         مشتاقانه جهت خدمتگذاری آماده هستیم
                                     </Typography>
@@ -210,24 +239,12 @@ class Registration extends React.Component {
                                             horizontal: 'left',
                                         }}
                                         open={this.state.msg}
-                                        autoHideDuration={6000}
+                                        autoHideDuration={4000}
                                         onClose={this.handleClose}
                                         ContentProps={{
                                             'aria-describedby': 'message-id',
                                         }}
-                                        message={<span id="message-id">شماره موبایل صحیح نیست</span>}
-                                        action={[
-
-                                            <IconButton
-                                                key="close"
-                                                aria-label="Close"
-                                                color="inherit"
-                                                className={classes.close}
-                                                onClick={this.handleClose}
-                                            >
-                                                <CloseIcon />
-                                            </IconButton>,
-                                        ]}
+                                        message={<span id="message-id">{this.state.textMsg}</span>}
                                     />
                                 </React.Fragment>
                             )}
