@@ -7,6 +7,12 @@ import Urls from "../utils/URLs";
 import axios from "axios";
 import OrderCart from "./OrderCart";
 import Typography from "@material-ui/core/Typography";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 
 const styles = theme => ({
@@ -27,22 +33,60 @@ const styles = theme => ({
 
 class OrderStatus extends React.Component {
 
-    state={orders:[]};
+
+    state={orders:[],open:false,textMsg:''};
     componentDidMount() {
-        axios.post(Urls.baseUrl()+"order/getuseronproccessorders",{token:Dm.getUserData().token,message:'',key:''}, {headers:{'Authorization': Urls.getAuthToken()}})
-            .then(response => {
-                const orders=response.data;
-                this.setState({orders:orders})
-            });
+        let user=Dm.getUserData();
+        let valid=!!(user);
+        if(valid) {
+            axios.post(Urls.baseUrl() + "order/getuseronproccessorders",
+                {
+                token: Dm.getUserData().token,
+                message: '',
+                key: ''
+            },
+                {headers: {'Authorization': Urls.getAuthToken()}})
+                .then(response => {
+                    const orders = response.data;
+                    if (orders.length === 0) {
+                        this.setState({textMsg: 'هیچ سفارشی در حال انجام وجود ندارد'});
+                        this.setState({open: true})
+                    } else
+                        this.setState({orders: orders})
+                })
+        }else {
+            this.setState({textMsg: 'لطفا ثبت نام کنید'});
+                this.setState({open: true});
+        }
     }
 
-
+    backHome(){
+        window.location.replace("/");
+    }
     render() {
         const { classes } = this.props;
 
 
         return (
             <div>
+                <Dialog
+                    style={{direction:'rtl'}}
+                    open={this.state.open}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle >{"خطا"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            {this.state.textMsg}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+
+                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
+                            بازگشت
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 <div className="page-title-bar">
                     <Typography variant="h6" gutterBottom className="page-title">وضعیت سفارش</Typography>
                 </div>

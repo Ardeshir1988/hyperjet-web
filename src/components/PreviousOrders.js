@@ -41,13 +41,40 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 class PreviousOrders extends React.Component {
+//        let user=Dm.getUserData();
+//         let valid=!!(user);
+//         if(valid) {
+//             axios.post(Urls.baseUrl() + "order/getuseronproccessorders",
+//                 {
+//                 token: Dm.getUserData().token,
+//                 message: '',
+//                 key: ''
+//             },
+//                 {headers: {'Authorization': Urls.getAuthToken()}})
+//                 .then(response => {
+//                     const orders = response.data;
+//                     if (orders.length === 0) {
+//                         this.setState({textMsg: 'هیچ سفارشی در حال انجام وجود ندارد'});
+//                         this.setState({open: true})
+//                     } else
+//                         this.setState({orders: orders})
+//                 })
+//         }else {
+//             this.setState({textMsg: 'لطفا ثبت نام کنید'});
+//                 this.setState({open: true});
+//         }
+//     }
+//
+//     backHome(){
+//         window.location.replace("/");
+//     }
 
-
-    state={orders:[],open:false,products:[],openAlarm: false};
+    state={orders:[],open:false,products:[],openAlarm: false,textMsg:''};
 
 
 
     handleClickOpen(orderid) {
+
         axios.post(Urls.baseUrl()+"order/getorderproducts",{token:Dm.getUserData().token,message:'',key:orderid}, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const products=response.data;
@@ -63,14 +90,24 @@ class PreviousOrders extends React.Component {
 
 
     componentDidMount() {
-        if (Dm.getUserData() !== undefined)
+
+        let user=Dm.getUserData();
+        let valid=!!(user);
+        if(valid) {
         axios.post(Urls.baseUrl()+"order/getuserorders",{token:Dm.getUserData().token,message:'',key:''}, {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const orders=response.data;
-                this.setState({orders:orders})
+                if (orders.length === 0) {
+                    this.setState({textMsg: 'هیچ سفارشی ثبت نشده است'});
+                    this.setState({openAlarm: true})
+                } else
+                    this.setState({orders: orders})
             });
-        else
+
+        }else {
+            this.setState({textMsg: 'کاربر معتبر نیست,لطفا ثبت نام کنید'});
             this.setState({openAlarm:true});
+        }
     }
     redirectTo(path){
         window.location.href=(path);
@@ -82,21 +119,18 @@ class PreviousOrders extends React.Component {
         return (
             <div>
                 <Dialog
+                    style={{direction:'rtl'}}
                     open={this.state.openAlarm}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">{"کاربر معتبر نیست"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"خطا"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            کاربر مهمان لطفا ثبت نام کنید
+                            {this.state.textMsg}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-
-                        <Button variant="contained" onClick={()=>this.redirectTo("/user/registration")} color="secondary" autoFocus>
-                            ثبت نام
-                        </Button>
-                        <Button variant="contained" onClick={()=>this.redirectTo("/")} color="primary" >
+                        <Button variant="contained" onClick={()=>this.redirectTo("/")} color="secondary" >
                             بازگشت
                         </Button>
                     </DialogActions>
