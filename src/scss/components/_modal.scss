@@ -55,23 +55,23 @@ flex-direction: column;
   flex-direction: column;
   .product-name {
     direction: rtl;
-    font-size: 18px;
+    font-size: 17px;
   }
   .product-detail{
     direction: rtl;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .product-price {
       text-align: left;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
     direction: rtl;
   }
   .product-discount-price-bf{
     text-align: left;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
     text-decoration: line-through;
     direction: rtl;
   }
@@ -79,7 +79,7 @@ flex-direction: column;
     color: red;
     text-align: left;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 17px;
     direction: rtl;
   }
 }
