@@ -97,7 +97,10 @@ class ReviewCheckout extends React.Component {
         window.location.replace("/");
     }
     orderStatus(){
+        if(this.state.orderid!==0)
         window.location.replace("/user/orderstatus");
+        else
+            window.location.href="/";
     }
     sendOrder(){
 
@@ -110,14 +113,23 @@ class ReviewCheckout extends React.Component {
         };
 
         console.log(order);
-
+        let successOrderMsg='سفارش شما ثبت شد';
+        let orderDecs='شماره شفارش شما ';
+        let error='خطا';
         axios.post(Urls.baseUrl()+"order/ordercheck",order,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response=>{
                     const orderResponse=response.data;
-                    this.setState({orderid:orderResponse.orderId});
-                    this.setState({orderStatus:true});
-                    if (orderResponse.orderId !== 0)
-                        Dm.setEmptyBasket();
+                    if(orderResponse.orderId===0){
+                        this.setState({orderid: 0});
+                        this.setState({titleMsg:error,textMsg:orderResponse.message});
+                        this.setState({orderStatus: true});
+                    }
+                    else {
+                        this.setState({orderid: orderResponse.orderId});
+                        this.setState({titleMsg:successOrderMsg,textMsg:orderDecs+orderResponse.orderId});
+                        this.setState({orderStatus: true});
+                            Dm.setEmptyBasket();
+                    }
                 }
             );
 
@@ -150,19 +162,20 @@ class ReviewCheckout extends React.Component {
                     </DialogActions>
                 </Dialog>
                 <Dialog
+                    style={{direction:'rtl'}}
                     open={this.state.orderStatus}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">{"سفارش شما ثبت شد"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{this.state.titleMsg}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            شماره سفارش{this.state.orderid}
+                            {this.state.textMsg}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
 
                         <Button variant="contained" onClick={()=>this.orderStatus()} color="secondary" autoFocus>
-                            وضعیت سفارش
+                            { (this.state.orderid!==0)?'وضعیت سفارش':'بازگشت'}
                         </Button>
                     </DialogActions>
                 </Dialog>
