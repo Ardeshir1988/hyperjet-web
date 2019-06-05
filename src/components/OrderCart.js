@@ -5,28 +5,25 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
-import Packing from '@material-ui/icons/Layers';
-import Delivery from '@material-ui/icons/DirectionsBike';
-import Delivered from '@material-ui/icons/Beenhere';
+import Confirm from '../assets/confirm_grey.png';
+import ConfirmPassed from '../assets/confirm-purple.png';
+import Packing from '../assets/packaging_grey.png';
+import PackingPassed from '../assets/packaging_purple.png';
+import Delivery from '../assets/delivery_grey.png';
+import DeliveryPassed from '../assets/delivery_purple.png';
+import Transport from '../assets/transport_grey.png';
+import TransportPassed from '../assets/transport_purple.png';
+import Chip from '@material-ui/core/Chip';
 
 const styles = {
+
     card: {
         maxWidth: 'auto',
-        margin:'20px'
+        margin:'5px'
     },
     bullet: {
         display: 'inline-block',
@@ -44,9 +41,6 @@ const styles = {
 
 class OrderCart extends React.Component {
 
-
-    state={step1:'   12:20 25/2/1398',step2:'   12:20 25/2/1398',step3:'',step4:''};
-    //this.state({step1:'',step2:'',step3:'',step4:''});
     render() {
 
         const { classes } = this.props;
@@ -63,52 +57,92 @@ class OrderCart extends React.Component {
                     </Grid>
                     <Grid container spacing={24}>
                         <Grid item xs={6} style={{textAlign: "center"}}>
-                            {this.props.order.orderRegTime}
+                            <div className="date">{this.props.order.orderRegTime}</div>
                         </Grid>
                         <Grid item xs={6} style={{textAlign: "center"}}>
-                            {this.props.order.orderId}
+                            <div className="date">{this.props.order.orderId}</div>
                         </Grid>
                     </Grid>
                     <List component="nav">
+                        <div className="order-step">
+                            {(this.props.order.step1.startsWith('2000'))?(
                         <ListItem style={{textAlign: "right"}}>
-                            <ListItemText primary="تایید گردید" secondary={this.props.order.step1}/>
-                            <Avatar>
-                                <AssignmentTurnedIn/>
-                            </Avatar>
-
+                                <ListItemText primary="تایید گردید" secondary='در انتظار'/>
+                                <img style={{height:'50px'}} src={Confirm}/>
                         </ListItem>
+                                ):(
+                                <ListItem style={{textAlign: "right"}}>
+
+                                    <ListItemText primary="تایید گردید"  secondary={<div className="date">{this.props.order.step1}</div>}/>
+                                        <img style={{height:'50px'}} src={ConfirmPassed}/>
+                                 </ListItem>
+                            )
+                            }
+                        </div>
+                        <div className="order-step">
+                            {(this.props.order.step2.startsWith('2000')) ? (
+                                <ListItem style={{textAlign: "right"}}>
+                                    <ListItemText primary="آماده و بسته بندی شد" secondary='در انتظار'/>
+                                    <img style={{height: '50px'}} src={Packing}/>
+                                </ListItem>
+
+                            ) : (
+                                <ListItem style={{textAlign: "right"}}>
+                                    <ListItemText primary="آماده و بسته بندی شد" secondary={<div className="date">{this.props.order.step2}</div>}/>
+                                    <img style={{height: '50px'}} src={PackingPassed}/>
+                                </ListItem>
+                            )
+                            }
+                                </div>
+                        <div className="order-step">
+                            {(this.props.order.step3.startsWith('2000')) ? (
                         <ListItem style={{textAlign: "right"}}>
-                            <ListItemText primary="آماده و بسته بندی شد" secondary={this.props.order.step2}/>
-                            <Avatar>
-                                <Packing/>
-                            </Avatar>
-
-                        </ListItem>
+                            <ListItemText primary="ارسال گردید و در راه میباشد" secondary='در انتظار'/>
+                            <img style={{height: '50px'}} src={Transport}/>
+                        </ListItem>):(
+                                <ListItem style={{textAlign: "right"}}>
+                                    <ListItemText primary="ارسال گردید و در راه میباشد" secondary={<div className="date">{this.props.order.step3}</div>}/>
+                                    <img style={{height: '50px'}} src={TransportPassed}/>
+                                </ListItem>
+                            )}
+                        </div>
+                        <div className="order-step">
+                            {(this.props.order.step4.startsWith('2000')) ? (
                         <ListItem style={{textAlign: "right"}}>
-                            <ListItemText primary="ارسال گردید و در راه میباشد" secondary={this.props.order.step3}/>
-                            <Avatar>
-                                <Delivery/>
-                            </Avatar>
+                            <ListItemText primary="تحویل گردید" secondary='در انتظار'/>
+                            <img style={{height: '50px'}} src={Delivery}/>
 
-                        </ListItem>
-                        <ListItem style={{textAlign: "right"}}>
-                            <ListItemText primary="تحویل گردید" secondary={this.props.order.step4}/>
-                            <Avatar>
-                                <Delivered/>
-                            </Avatar>
-
-                        </ListItem>
+                        </ListItem>):(
+                                <ListItem style={{textAlign: "right"}}>
+                                    <ListItemText primary="تحویل گردید" secondary={<div className="date">{this.props.order.step4}</div>}/>
+                                    <img style={{height: '50px'}} src={DeliveryPassed}/>
+                                </ListItem>
+                            )
+                            }
+                        </div>
                     </List>
                 </CardContent>
                 <CardActions>
                     <Grid container spacing={24}>
-                        <Grid item xs={7} style={{textAlign: "center"}}>
-                    <Button variant="contained" color="secondary" size="large">پرداخت آنلاین</Button>
-                        </Grid>
+                        {(this.props.order.paymentStatus===1)?
+
+                            (<Grid item xs={7} style={{textAlign: "center"}}>
+
+                        <Button variant="contained" color="secondary" size="medium">پرداخت آنلاین</Button>
+
+                        </Grid>):(<Grid item xs={7} style={{textAlign: "center"}}>
+
+                                <Chip
+                                    label="پرداخت شده"
+                                    color="secondary"
+                                    variant="outlined"
+                                />
+                            </Grid>)}
                         <Grid item xs={5} style={{textAlign: "center"}}>
-                            <Button size={"large"}>{this.props.order.orderTotalAmount}</Button>
+                            <Button style={{direction:'rtl'}} size={"large"}>{this.props.order.orderTotalDiscount+' تومان'}</Button>
 
                         </Grid>
+
                     </Grid>
                 </CardActions>
             </Card>
