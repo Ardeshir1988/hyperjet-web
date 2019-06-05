@@ -71,7 +71,7 @@ class Basket extends React.Component {
             <div>
                 <Snack
                 anchorOrigin={{
-                    vertical: 'center',
+                    vertical: 'bottom',
                     horizontal: 'center',
                 }}
                 open={this.state.msg}
