@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import OrderStatusIcon from '@material-ui/icons/Restore';
 import PreviousOrderIcon from "@material-ui/icons/LibraryBooks";
+import Refresh from "@material-ui/icons/Refresh";
 import ContactIcon from "@material-ui/icons/ContactPhone";
 import Dm from "../utils/DataManager";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -48,6 +49,11 @@ class SideMenu extends React.Component {
         window.location.href=(path);
     }
 
+    refresh(){
+        Dm.removeUserData();
+        this.redirectTo('/user/registration')
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -75,6 +81,11 @@ class SideMenu extends React.Component {
                 </List>
                 <Divider />
                 <List>
+                    <ListItem button style={{textAlign:"right"}}onClick={()=>this.refresh()} >
+                        <ListItemText primary="ثبت نام مجدد"/>
+                        <ListItemIcon> <Refresh /> </ListItemIcon>
+
+                    </ListItem>
                     <ListItem button style={{textAlign:"right"}}>
                         <ListItemText primary="تماس با پشتیبانی" />
                         <ListItemIcon> <ContactIcon /> </ListItemIcon>

@@ -97,14 +97,11 @@ class DataManager {
      static getBasketData(){
         return  store.get('basket');
     }
-    static setDeliveryThreshold(cost,threshold){
-        store.set('deliverythreshold',{cost:cost,threshold:threshold})
-    }
-    static getDeliveryThreshold(){
-       return store.get('deliverythreshold')
-    }
-     getOrderData(){
-
+     static removeUserData(){
+        store.remove('validuser');
+         store.remove('user');
+         store.remove('temp');
+         store.remove('confirmcode');
     }
 }
 export default DataManager
