@@ -29,7 +29,7 @@ class Products extends Component {
             let newPage=this.state.page+1;
             this.setState({page:newPage});
             this.setState({
-                items: this.state.items.concat(this.state.productList.slice(this.state.page*25,(this.state.page*25)+25))
+                items: this.state.items.concat(this.state.productList.slice(this.state.page*20,(this.state.page*20)+20))
             });
         }, 500);
     };
@@ -46,7 +46,7 @@ class Products extends Component {
                 .then(response => {
                     const productList = response.data;
                     this.setState({productList});
-                    this.setState({items: productList.slice(0, 25)})
+                    this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)})
                 });
             // this.setState({typeid: typeid})
         }
@@ -56,7 +56,7 @@ class Products extends Component {
                 .then(response => {
                     const productList = response.data;
                     this.setState({productList});
-                    this.setState({items: productList.slice(0, 25)})
+                    this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)})
                 });
             // this.setState({typeid: typeid})
         }
