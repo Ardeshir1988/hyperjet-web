@@ -2,20 +2,18 @@
   z-index: 100;
   position: fixed;
   max-height: fit-content;
-
-
+  @media (min-width: 960px) {
+    right: 24vw;
+  }
+    right: 0;
 }
 .types-wrapper {
 
-  padding-top: 9.4vh;
+  padding-top: 9.6vh;
   animation: slideUp 300ms linear;
   animation-delay: 150ms;
-  @media (min-width: 960px) {
-    margin-left: 24vw;
-  }
-
   @media (max-width: 480px) {
-    padding-top: 7vh;
+    padding-top: 7.5vh;
   }
 
 }
