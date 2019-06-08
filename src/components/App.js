@@ -14,6 +14,7 @@ import axios from "axios/index";
 import UserAccount from "./UserAccount";
 import Registration from "./Registration";
 import PreviousOrders from "./PreviousOrders";
+import PaymentStatus from "./PaymentStatus";
 import { CartContext } from "./CartContext";
 import Types from "./Types";
 
@@ -197,6 +198,8 @@ class App extends React.Component {
                     return (<Registration/>);
                 case "orders":
                     return (<PreviousOrders/>);
+                case "payment":
+                    return (<PaymentStatus/>);
                 default:
                     return (<Checkout/>);
             }

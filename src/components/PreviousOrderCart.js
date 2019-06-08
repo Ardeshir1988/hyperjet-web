@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 
 const styles = {
     card: {
@@ -40,17 +41,18 @@ class PreviousOrderCart extends React.Component {
                     <Grid container spacing={24}>
 
                         <Grid item xs={6}>
-                            <div style={{textAlign: "left"}} >
+                            <div style={{textAlign: "left",color:"limegreen"}} >
                                 {this.props.order.orderId}
                             </div>
                         </Grid>
 
-                        <Grid item xs={6} className={classes.grid} >
+                        <Grid item xs={6} className={classes.grid}>
                             <div style={{textAlign: "right"}}>
                                 شماره سفارش
                             </div>
                         </Grid>
-                        <Grid item xs={6} >
+
+                        <Grid item xs={6}>
                             <div style={{textAlign: "left"}}>
                                 {this.props.order.orderRegTime}
                             </div>
@@ -93,7 +95,11 @@ class PreviousOrderCart extends React.Component {
                                 مبلغ باقیمانده
                             </div>
                         </Grid>
-
+                        <Grid item xs={12}>
+                            <Button variant="outlined" color="secondary" style={{minWidth:"100%"}}>
+                                نمایش جزئیات
+                            </Button>
+                        </Grid>
                     </Grid>
                 </ListItem>
             </Card>

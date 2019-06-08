@@ -284,7 +284,7 @@ header {
   display: -webkit-flex;
   align-items: center;
   -webkit-align-items: center;
-  padding: 8px;
+  padding: 5px;
   .product-image {
     object-fit: scale-down;
     max-width:85px;
@@ -336,7 +336,7 @@ header {
   flex-direction: column;
 
   .basketDetail {
-    margin-top: 2vh;
+    margin-top:.75vh;
     display: flex;
 
     .title {

@@ -15,11 +15,6 @@ import Button from '@material-ui/core/Button';
 import Urls from "../utils/URLs";
 import axios from "axios";
 import Dm from "../utils/DataManager";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
     root: {
@@ -183,7 +178,7 @@ class UserAccount extends React.Component {
                         value={this.state.mobile}
                         fullWidth />
                 </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <Typography variant="h6" gutterBottom  color="textSecondary">
                            آدرس
                         </Typography>
@@ -192,7 +187,7 @@ class UserAccount extends React.Component {
                     <Grid item xs={12}>
                         <FormControl >
                             <Select
-                                style={{width:'45vw'}}
+                                style={{width:'100%'}}
                                 native
                                 value={10}>
 
@@ -202,7 +197,7 @@ class UserAccount extends React.Component {
                         <FormControl >
                             <Select
                                 value={this.state.suburb}
-                                style={{width:'45vw'}}
+                                style={{width:'100%'}}
                                 onChange={this.handleChange('suburb')}
                                 native>
                                 { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}
@@ -215,7 +210,6 @@ class UserAccount extends React.Component {
                             required
                             id="address"
                             name="address"
-                            label="آدرس"
                             onChange= {this.handleChange('addressDetail')}
                             value={this.state.addressDetail}
                             fullWidth />

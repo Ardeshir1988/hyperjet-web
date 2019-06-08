@@ -72,10 +72,13 @@
     text-align: center;
     background: #b81aec;
     .add-to-cart{
-      height: 4vh;
-      margin-top: 1.1vh;
+      height: 5vh;
+      padding-top: 1.2vh;
+      @media (max-width: 480px) {
+        padding-top: .75vh;
+      }
       img{
-        height: 24px;
+        height: 25px;
       }
     }  &:hover {
          background: lighten(#b81aec, 12%);
@@ -206,10 +209,10 @@
   color: white;
   background:#b81aec ;
   display: flex;
-  height: 4.4vh;
+  height: 5vh;
 
   img{
-    height: 24px;
+    height: 28px;
   }
 
 }

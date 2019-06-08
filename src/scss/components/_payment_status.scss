@@ -1,0 +1,32 @@
+.payment-container{
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  padding-top: 1px;
+  padding-bottom: 6px;
+  max-width: 500px;
+  margin: 0 auto;
+  @media (max-width: 480px) {
+    max-width: 90vw;
+  }
+  direction: rtl;
+}
+.payment-content{
+  margin: 0 auto;
+  min-width: 100%;
+  text-align: center;
+  .success{
+    margin-top: 15px;
+    color: limegreen;
+  }
+  .failed{
+    margin-top: 15px;
+    color: red;
+  }
+}
+.payment-logo{
+  padding-top: 50px;
+  margin: 0 auto;
+}

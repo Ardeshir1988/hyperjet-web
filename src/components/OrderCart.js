@@ -40,6 +40,9 @@ const styles = {
 
 
 class OrderCart extends React.Component {
+    redirectToBank(){
+        window.location.href='https://maxproapp.com/payment/pay?orderid='+this.props.order.orderId;
+    }
 
     render() {
 
@@ -128,7 +131,7 @@ class OrderCart extends React.Component {
 
                             (<Grid item xs={7} style={{textAlign: "center"}}>
 
-                        <Button variant="contained" color="secondary" size="medium">پرداخت آنلاین</Button>
+                        <Button variant="contained" color="secondary" size="medium" onClick={()=>this.redirectToBank()}>پرداخت آنلاین</Button>
 
                         </Grid>):(<Grid item xs={7} style={{textAlign: "center"}}>
 

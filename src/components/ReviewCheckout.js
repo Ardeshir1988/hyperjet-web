@@ -41,7 +41,7 @@ class ReviewCheckout extends React.Component {
         addressArea:1,
         orderPhoneNumber:Dm.getUserData().mobile,
         orderInstruction:'',
-        orderPaymentType:'web-cash-pos',
+        orderPaymentType:'cash-pos',
         productlist:[],
         suburb: 1,
         orderArrivalNoticeType:''
@@ -109,7 +109,7 @@ class ReviewCheckout extends React.Component {
             addressArea:this.state.suburbs.filter(s=>s.tblsuburbId===parseInt(this.state.suburb)).map(s=>s.tblsuburbName).toString(),
             addressDetail:this.state.addressDetail,addressName:'',
             orderArrivalNoticeType:this.state.orderArrivalNoticeType,orderPhoneNumber:this.state.orderPhoneNumber,
-            orderInstruction:this.state.orderInstruction,orderSubTotal:"",orderPaymentType:this.state.orderPaymentType,orderDeliveryCost:0
+            orderInstruction:this.state.orderInstruction,orderSubTotal:"",orderPaymentType:'web-'+this.state.orderPaymentType,orderDeliveryCost:0
         };
 
         console.log(order);
@@ -192,14 +192,34 @@ class ReviewCheckout extends React.Component {
                                 <option value={10}>تهران</option>
                             </Select>
                         </FormControl>
-                        {/*<FormControl className={classes.formControl}>*/}
-                        {/*    <Select*/}
-                        {/*        value={this.state.suburb}*/}
-                        {/*        onChange={this.handleChange('suburb')}*/}
-                        {/*        native>*/}
-                        {/*        { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}*/}
-                        {/*    </Select>*/}
-                        {/*</FormControl>*/}
+                        <FormControl className={classes.formControl}>
+                            <Select
+                                value={this.state.suburb}
+                                onChange={this.handleChange('suburb')}
+                                native>
+                                { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
+                        <Typography gutterBottom color="textSecondary">
+                            آدرس
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} style={{marginTop:"1vh"}}>
+                        <TextField
+                            required
+                            id="address"
+                            name="address"
+                            onChange= {this.handleChange('addressDetail')}
+                            value={this.state.addressDetail}
+                            fullWidth />
+                    </Grid>
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
+                        <Typography variant="h6" gutterBottom color="textSecondary">
+                            تلفن همراه
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} style={{marginTop:"2vh"}}>
                         <TextField
@@ -207,22 +227,8 @@ class ReviewCheckout extends React.Component {
                             type="number"
                             id="mobile"
                             name="mobile"
-                            label="تلفن همراه"
                             onChange= {this.handleChange('orderPhoneNumber')}
                             value={this.state.orderPhoneNumber}
-                            fullWidth />
-                    </Grid>
-                    <Grid item xs={8} >
-
-                    </Grid>
-                    <Grid item xs={12} style={{marginTop:"2vh"}}>
-                        <TextField
-                            required
-                            id="address"
-                            name="address"
-                            label="آدرس"
-                            onChange= {this.handleChange('addressDetail')}
-                            value={this.state.addressDetail}
                             fullWidth />
                     </Grid>
                     <Grid item xs={12} >
@@ -230,7 +236,9 @@ class ReviewCheckout extends React.Component {
                             دستورالعمل خاص
                         </Typography>
 
-
+                        <Typography  gutterBottom style={{marginTop:".5vh"}} color="textSecondary">
+                            مانند نام تحویل گیرنده
+                        </Typography>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -238,7 +246,6 @@ class ReviewCheckout extends React.Component {
                             required
                             id="address"
                             name="address"
-                            label="مانند نام تحویل گیرنده"
                             fullWidth
                             value={this.state.orderInstruction}
                             onChange= {this.handleChange('orderInstruction')}
@@ -268,8 +275,8 @@ class ReviewCheckout extends React.Component {
                             row
                             name="paymentType"
                             aria-label="paymentType">
-                            <FormControlLabel   onChange={this.handleChange('orderPaymentType')} value="web-online" control={<Radio />} label="پرداخت آنلاین" />
-                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="web-cash-pos" control={<Radio />} label="نقد یا کارت" />
+                            <FormControlLabel   onChange={this.handleChange('orderPaymentType')} value="online" control={<Radio />} label="پرداخت آنلاین" />
+                            <FormControlLabel onChange={this.handleChange('orderPaymentType')} value="cash-pos" control={<Radio />} label="نقد یا کارت" />
                         </RadioGroup>
                     </Grid>
                     <div className="break" />
@@ -314,7 +321,7 @@ class ReviewCheckout extends React.Component {
                     <Grid container spacing={24}>
                         <Grid item xs>
                         </Grid>
-                        <Grid  item xs={12} style={{textAlign:"center",paddingBottom:20 , marginTop:"2vh"}}>
+                        <Grid  item xs={12} style={{textAlign:"center",paddingBottom:5 , marginTop:".5vh"}}>
                             <button onClick={()=>this.sendOrder()}   className="basket-button">خرید خود را نهایی کنید</button>
                         </Grid>
                         <Grid item xs>
