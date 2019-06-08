@@ -185,25 +185,23 @@ class ReviewCheckout extends React.Component {
                 </Typography>
                 <Grid container spacing={24}>
                     <Grid item xs={12} style={{marginTop:"2vh"}}>
-                        <FormControl className={classes.formControl}>
-
+                        <FormControl>
                             <Select
                                 native
                                 value={10}>
-
                                 <option value={10}>تهران</option>
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl}>
-                            <Select
-                                value={this.state.suburb}
-                                onChange={this.handleChange('suburb')}
-                                native>
-                                { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}
-                            </Select>
-                        </FormControl>
+                        {/*<FormControl className={classes.formControl}>*/}
+                        {/*    <Select*/}
+                        {/*        value={this.state.suburb}*/}
+                        {/*        onChange={this.handleChange('suburb')}*/}
+                        {/*        native>*/}
+                        {/*        { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}*/}
+                        {/*    </Select>*/}
+                        {/*</FormControl>*/}
                     </Grid>
-                    <Grid item xs={4} style={{marginTop:"2vh"}}>
+                    <Grid item xs={12} style={{marginTop:"2vh"}}>
                         <TextField
                             required
                             type="number"
@@ -316,7 +314,7 @@ class ReviewCheckout extends React.Component {
                     <Grid container spacing={24}>
                         <Grid item xs>
                         </Grid>
-                        <Grid  item xs={8} style={{textAlign:"center",paddingBottom:20 , marginTop:"2vh"}}>
+                        <Grid  item xs={12} style={{textAlign:"center",paddingBottom:20 , marginTop:"2vh"}}>
                             <button onClick={()=>this.sendOrder()}   className="basket-button">خرید خود را نهایی کنید</button>
                         </Grid>
                         <Grid item xs>

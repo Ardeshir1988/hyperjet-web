@@ -133,7 +133,7 @@ class UserAccount extends React.Component {
                     نام
                 </Typography>
                     </Grid>
-                <Grid item xs={6} style={{marginBottom:"15px"}} >
+                <Grid item xs={12} style={{marginBottom:"15px"}} >
                     <TextField
                         required
                         id="username"
@@ -147,7 +147,7 @@ class UserAccount extends React.Component {
                     تلفن
                 </Typography>
                     </Grid>
-                <Grid item xs={6} style={{marginBottom:"15px"}} >
+                <Grid item xs={12} style={{marginBottom:"15px"}} >
                     <TextField
                         required
                         id="phone"
@@ -161,7 +161,7 @@ class UserAccount extends React.Component {
                         ایمیل
                     </Typography>
                 </Grid>
-                <Grid item xs={6} style={{marginBottom:"15px"}} >
+                <Grid item xs={12} style={{marginBottom:"15px"}} >
                     <TextField
                         required
                         id="email"
@@ -175,7 +175,7 @@ class UserAccount extends React.Component {
                     موبایل
                 </Typography>
                     </Grid>
-                <Grid item xs={6} style={{marginBottom:"15px"}} >
+                <Grid item xs={12} style={{marginBottom:"15px"}} >
                     <TextField
                         disabled
                         id="mobile"
@@ -190,17 +190,19 @@ class UserAccount extends React.Component {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <FormControl className={classes.formControl}>
+                        <FormControl >
                             <Select
+                                style={{width:'45vw'}}
                                 native
                                 value={10}>
 
                                 <option value={10}>تهران</option>
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.formControl}>
+                        <FormControl >
                             <Select
                                 value={this.state.suburb}
+                                style={{width:'45vw'}}
                                 onChange={this.handleChange('suburb')}
                                 native>
                                 { this.state.suburbs.map(s=><option value={s.tblsuburbId}>{s.tblsuburbName}</option>)}
