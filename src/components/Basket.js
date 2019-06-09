@@ -7,6 +7,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 import {CartContext} from "./CartContext";
 import Snackbar from "@material-ui/core/Snackbar";
+import NumberFormat from "react-number-format";
 
 const styles = {
     list: {
@@ -106,29 +107,30 @@ class Basket extends React.Component {
                             <div className="basketListDetail">
 
                                 <div className="basketDetail">
-                                    <div className="data">{cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} </div>
+                                    <NumberFormat value={cart.items.map(c=>c.quantity).reduce((partial_sum, a) => partial_sum + a,0)} displayType={'text'} thousandSeparator={true} renderText={value => <div className="data"> {value}</div>} />
                                     <div className="title"> {quantity}</div>
                                 </div>
 
                                 <div className="basketDetail">
-                                    <div className="data">{cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)}</div>
+                                    <NumberFormat value={cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)} displayType={'text'} thousandSeparator={true} renderText={value => <div className="data"> {value}</div>} />
                                     <div className="title">{totalAmount}</div>
                                 </div>
 
                                 <div className="basketDetail">
-                                    <div className="data" style={{color:"limegreen"}}>-{cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)-
-                                    cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)}</div>
+                                    <NumberFormat value={cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)-
+                                    cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)} displayType={'text'} thousandSeparator={true} renderText={value => <div className="data"  style={{color:"limegreen"}}> -{value}</div>} />
                                     <div className="title">{discount}</div>
                                 </div>
                                 <div className="basketDetail">
-                                    <div className="data" style={{color:"red"}}>+{(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ? 0 : cart.deliveryCost} </div>
+                                    <NumberFormat value={(cart.items.map(c=>c.quantity*c.price).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ? 0 : cart.deliveryCost} displayType={'text'} thousandSeparator={true} renderText={value => <div className="data"  style={{color:"red"}}> +{value}</div>} />
+
                                     <div className="title">{deliveryFee}</div>
                                 </div>
 
                                 <div className="basketDetail">
-                                    <div className="data">{(cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
-                                        cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost }</div>
-                                    <div className="title">{finalAmount}</div>
+                                    <NumberFormat value={(cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)>=cart.threshold) ?
+                                        cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0) :cart.items.map(c=>c.quantity*c.priceDiscount).reduce((partial_sum, a) => partial_sum + a,0)+cart.deliveryCost } displayType={'text'} thousandSeparator={true} renderText={value => <div className="data"> {value}</div>} />
+                                        <div className="title">{finalAmount}</div>
                                 </div>
 
                             </div>

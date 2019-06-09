@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
 import Chip from '@material-ui/core/Chip';
+import NumberFormat from "react-number-format";
 
 
 class QuickView extends Component {
@@ -76,19 +77,18 @@ class QuickView extends Component {
               <span className="product-name">{this.props.product.name}</span>
               <span className="product-detail">{this.props.product.detail}</span>
               {(this.props.product.price === this.props.product.priceDiscount) ?(
-              < span className="product-price">{this.props.product.price}تومان</span>
+                  <NumberFormat value={this.props.product.price} displayType={'text'} thousandSeparator={true} renderText={value =>   < span className="product-price">{value}تومان</span>} />
                   ):(
                       <div className="product-price">
                         <div>
-                <span className="product-discount-price-bf">{this.props.product.price}تومان</span>
+                          <NumberFormat value={this.props.product.price} displayType={'text'} thousandSeparator={true} renderText={value =>   < span className="product-discount-price-bf">{value}تومان</span>} />
                         </div>
                         <div>
-                <span className="product-discount-price-af">{this.props.product.priceDiscount}تومان</span>
+                          <NumberFormat value={this.props.product.priceDiscount} displayType={'text'} thousandSeparator={true} renderText={value =>   < span className="product-discount-price-af">{value}تومان</span>} />
                         </div>
                       </div>
                 )
               }
-
        </div>
           </div>
 

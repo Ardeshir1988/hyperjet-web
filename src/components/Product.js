@@ -4,6 +4,7 @@ import { CartContext } from "./CartContext";
 import AddIcon from "../assets/add-button.svg";
 import RemoveIcon from "../assets/remove-button.svg";
 import AddtoCart from "../assets/add_shopping_cart.svg";
+import NumberFormat from 'react-number-format';
 
 class Product extends Component {
 
@@ -72,10 +73,13 @@ class Product extends Component {
                         <h4 className="product-name">{name}</h4>
                         {(priceDiscount!==price)?
                             ( <div>
-                                <h2 className="product-price-bf-discount">{price + ' تومان'}</h2>
-                                <h2 className="product-price-af-discount">{priceDiscount + ' تومان'}</h2>
+                                <NumberFormat value={price} displayType={'text'} thousandSeparator={true} renderText={value => <h2 className="product-price-bf-discount"> {value + ' تومان'}</h2>} />
+                                {/*<h2 className="product-price-bf-discount">{price + ' تومان'}</h2>*/}
+                                {/*<h2 className="product-price-af-discount">{priceDiscount + ' تومان'}</h2>*/}
+                                <NumberFormat value={priceDiscount} displayType={'text'} thousandSeparator={true} renderText={value => <h2 className="product-price-af-discount"> {value + ' تومان'}</h2>} />
                             </div>):(
-                                 <h2 className="product-price">{price + ' تومان'}</h2>)
+                                <NumberFormat value={price} displayType={'text'} thousandSeparator={true} renderText={value =>  <h2 className="product-price">{value + ' تومان'}</h2>} />
+                                )
 
                             }
                         <div className="product-action">

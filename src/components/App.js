@@ -254,7 +254,7 @@ class App extends React.Component {
                                                                                       openModal={this.openModal}/>}/>
                     </Switch>
 
-                    <Footer/>
+                    {/*<Footer/>*/}
                     <QuickView
                         product={this.state.quickViewProduct}
                         openModal={this.state.modalActive}

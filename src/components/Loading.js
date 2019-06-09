@@ -23,10 +23,9 @@ class Loading extends Component {
         return (
 
                 <div className="loding-container">
-
                     <ColorLinearProgress />
                     <img src={Logo}/>
-                    <div className="text-hyper">هایپرجت یار همیشه همراه</div>
+                    <div className="text-hyper">هایپرجت یار هوشمند و سریع شما</div>
                 </div>
         );
     }

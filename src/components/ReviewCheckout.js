@@ -19,6 +19,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import NumberFormat from "react-number-format";
 
 const styles = theme => ({
     root: {
@@ -287,36 +288,31 @@ class ReviewCheckout extends React.Component {
                         <div  className="checkout-details-item" >
                             مجموع خرید
                         </div>
-                        <div>
-                            {this.state.totalAmount}
-                        </div>
+                        <NumberFormat value= {this.state.totalAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div> {value + ' تومان'}</div>} />
                     </div>
                     <div className="checkout-details">
                         <div  className="checkout-details-item" >
                             تخفیف
                         </div>
-                        <div className="lowColor">
-                            {this.state.totalDiscount}-
-                        </div>
+                        <NumberFormat value= {this.state.totalDiscount} displayType={'text'} thousandSeparator={true} renderText={value => <div className="lowColor"> {value + ' تومان'}</div>} />
+
                     </div>
 
                     <div className="checkout-details">
                         <div  className="checkout-details-item" >
                             هزینه ارسال
                         </div>
-                        <div className="highColor">
-                            {(this.state.totalAmount>=this.state.threshold) ? 0 : this.state.cost}+
-                        </div>
+                            <NumberFormat value= {(this.state.totalAmount>=this.state.threshold) ? 0 : this.state.cost} displayType={'text'} thousandSeparator={true} renderText={value => <div className="highColor"> {value + ' تومان'}</div>} />
                     </div>
 
                     <div className="checkout-details">
                         <div  className="checkout-details-item" >
                             مبلغ قابل پرداخت
                         </div>
-                        <div>
-                                   {(this.state.totalAmount>=this.state.threshold) ?
+                        <NumberFormat value= {(this.state.totalAmount>=this.state.threshold) ?
                             this.state.totalAmount-this.state.totalDiscount :this.state.totalAmount-this.state.totalDiscount+this.state.cost }
-                            </div>
+                                      displayType={'text'} thousandSeparator={true} renderText={value => <div> {value + ' تومان'}</div>} />
+
                     </div>
                     <Grid container spacing={24}>
                         <Grid item xs>

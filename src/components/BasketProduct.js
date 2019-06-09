@@ -4,6 +4,7 @@ import AddIcon from "../assets/add-button-purple.svg";
 import RemoveIcon from "../assets/remove-button-purple.svg";
 import {CartContext} from "./CartContext";
 import Divider from "@material-ui/core/Divider";
+import NumberFormat from "react-number-format";
 
 
 class BasketProduct extends React.Component{
@@ -17,8 +18,6 @@ class BasketProduct extends React.Component{
 
     }
 
-
-
     render() {
 
         let price=this.props.price;
@@ -26,8 +25,6 @@ class BasketProduct extends React.Component{
         let id=this.props.id;
         let image=this.props.image;
         let quantity=1;
-
-
         return(
             <CartContext.Consumer>
                 {cart=>(
@@ -39,18 +36,27 @@ class BasketProduct extends React.Component{
                     <p className={(this.props.price!==this.props.priceDiscount)?
                         "product-price-af-discount":
                         "product-price"}>
-                        {this.props.priceDiscount}
-                    </p>
-                    <p className="product-price">
-                        {this.props.priceDiscount*cart.items
-                            .filter(item=>item.id===id)
-                            .map(item=>item.quantity)}
+                        {(this.props.price!==this.props.priceDiscount)? <NumberFormat value={this.props.price} displayType={'text'}
+                                                                                      thousandSeparator={true}
+                                                                                      renderText={value =>
+                                                                                          <p className="product-price-bf-discount"> {value + ' تومان'}</p>} />:<p />}
+                        <NumberFormat value={this.props.priceDiscount} displayType={'text'}
+                                      thousandSeparator={true}
+                                      renderText={value =>
+                                          <div> {value + ' تومان'}</div>}/>
+
                     </p>
 
+
+                        <NumberFormat value={this.props.priceDiscount*cart.items
+                            .filter(item=>item.id===id)
+                            .map(item=>item.quantity)} displayType={'text'}
+                                      thousandSeparator={true}
+                                      renderText={value =>
+                                          <p className="product-price"> {value +' تومان'}</p>}/>
+
                 </div>
-                <div className="product-info">
-                    {(this.props.price!==this.props.priceDiscount)?<p className="product-price-bf-discount">{this.props.price}</p>:<p />}
-                </div>
+
 
                 <img className="product-image" src={this.props.image} />
 

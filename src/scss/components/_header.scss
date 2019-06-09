@@ -286,6 +286,7 @@ header {
   -webkit-align-items: center;
   padding: 5px;
   .product-image {
+    text-align: center;
     object-fit: scale-down;
     max-width:85px;
     max-height:85px;
@@ -294,19 +295,20 @@ header {
     margin-right: 10px;
   }
   .product-info {
-    margin-left: 16px;
-    flex-grow: 1;
-
+    margin-left: 1px;
+    flex-grow: 5;
+    direction: rtl;
+    text-align: left;
     .product-price {
-
-      font-weight: 700;
+      font-weight: 600;
     }
     .product-price-bf-discount{
       color: $gray-light;
-      font-weight: 500;
+      font-size: 14px;
       text-decoration: line-through;
     }
     .product-price-af-discount{
+
       color: $red;
       font-weight: 700;
     }
