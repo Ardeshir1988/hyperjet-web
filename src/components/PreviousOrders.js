@@ -18,6 +18,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
+import InfiniteScroll from "react-infinite-scroll-component";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 
 
 const styles = theme => ({
@@ -41,35 +44,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 class PreviousOrders extends React.Component {
-//        let user=Dm.getUserData();
-//         let valid=!!(user);
-//         if(valid) {
-//             axios.post(Urls.baseUrl() + "order/getuseronproccessorders",
-//                 {
-//                 token: Dm.getUserData().token,
-//                 message: '',
-//                 key: ''
-//             },
-//                 {headers: {'Authorization': Urls.getAuthToken()}})
-//                 .then(response => {
-//                     const orders = response.data;
-//                     if (orders.length === 0) {
-//                         this.setState({textMsg: 'هیچ سفارشی در حال انجام وجود ندارد'});
-//                         this.setState({open: true})
-//                     } else
-//                         this.setState({orders: orders})
-//                 })
-//         }else {
-//             this.setState({textMsg: 'لطفا ثبت نام کنید'});
-//                 this.setState({open: true});
-//         }
-//     }
-//
-//     backHome(){
-//         window.location.replace("/");
-//     }
 
-    state={orders:[],open:false,products:[],openAlarm: false,textMsg:''};
+    state={
+        orders:[],
+        open:false,
+        products:[],
+        openAlarm: false,
+        textMsg:'',
+        items: [],
+        hasMore: true,
+        page:0
+    };
 
 
 
@@ -100,8 +85,10 @@ class PreviousOrders extends React.Component {
                 if (orders.length === 0) {
                     this.setState({textMsg: 'هیچ سفارشی ثبت نشده است'});
                     this.setState({openAlarm: true})
-                } else
-                    this.setState({orders: orders})
+                } else {
+                    this.setState({orders: orders});
+                    this.setState({items: orders.slice(0, (orders.length>=7)?7:orders.length)});
+                }
             });
 
         }else {
@@ -109,11 +96,29 @@ class PreviousOrders extends React.Component {
             this.setState({openAlarm:true});
         }
     }
+
+    fetchMoreData = () => {
+        if (this.state.items.length >= this.state.orders.length) {
+            this.setState({ hasMore: false });
+            return;
+        }
+        // a fake async api call like which sends
+        // 20 more records in .5 secs
+        setTimeout(() => {
+            let newPage=this.state.page+1;
+            this.setState({page:newPage});
+            this.setState({
+                items: this.state.items.concat(this.state.orders.slice(this.state.page*7,(this.state.page*7)+7))
+            });
+        }, 500);
+    };
+
     redirectTo(path){
         window.location.href=(path);
     }
     render() {
         const { classes } = this.props;
+        let ordersData=           this.state.items.map(order=><div onClick={()=>this.handleClickOpen(order.orderId)}><PreviousOrderCart order={order} /></div>)
 
 
         return (
@@ -193,8 +198,25 @@ class PreviousOrders extends React.Component {
                 </div>
                 <main className={classes.layout}>
 
-                    {this.state.orders.map(order=><div onClick={()=>this.handleClickOpen(order.orderId)}><PreviousOrderCart order={order} /></div>)}
-                </main>
+                    <InfiniteScroll
+                        dataLength={this.state.items.length}
+                        next={this.fetchMoreData}
+                        hasMore={this.state.hasMore}
+                        loader={
+                            <div className="loader-end">
+                                <CircularProgress color="secondary"  />
+                            </div>
+                        }
+                        endMessage={
+                            <div className="loader-end">
+                                <b >پایان محصولات این بخش</b>
+                            </div>
+                        }
+                    >
+                        {ordersData}
+                    </InfiniteScroll>
+
+          </main>
             </div>
         );
     }
