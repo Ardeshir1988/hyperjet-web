@@ -14,6 +14,13 @@ import Refresh from "@material-ui/icons/Refresh";
 import ContactIcon from "@material-ui/icons/ContactPhone";
 import Dm from "../utils/DataManager";
 import MenuIcon from '@material-ui/icons/Menu';
+ import Dialog from "@material-ui/core/Dialog";
+ import DialogTitle from "@material-ui/core/DialogTitle";
+ import DialogContent from "@material-ui/core/DialogContent";
+ import DialogContentText from "@material-ui/core/DialogContentText";
+ import DialogActions from "@material-ui/core/DialogActions";
+ import Button from "@material-ui/core/Button";
+ import Paper from "@material-ui/core/Paper";
 
 
 const styles = {
@@ -31,7 +38,8 @@ class SideMenu extends React.Component {
         status:false,
         menuname:'ثبت نام',
         menupath:'/user/registration',
-        registered:'true'
+        registered:'true',
+        open:false
     };
 
 
@@ -53,13 +61,36 @@ class SideMenu extends React.Component {
         Dm.removeUserData();
         this.redirectTo('/user/registration')
     }
-
+    closeDialog(){
+        this.setState({open:false});
+    }
+    openDialog(){
+        this.setState({open:true});
+    }
     render() {
 
         const { classes } = this.props;
 
         const sideList = (
             <div className={classes.list}>
+
+                <Dialog
+                    open={this.state.open}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title">{"تماس با پشتیبانی"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            22823567
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+
+                        <Button variant="contained" onClick={()=>this.closeDialog()} color="secondary" autoFocus>
+                            بستن
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 <List>
                     <ListItem button style={{textAlign:"right"}} onClick={()=>this.redirectTo(this.state.menupath)}>
                         <ListItemText  primary={ this.state.menuname} />
@@ -81,15 +112,14 @@ class SideMenu extends React.Component {
                 </List>
                 <Divider />
                 <List>
-                    <ListItem button style={{textAlign:"right"}}onClick={()=>this.refresh()} >
-                        <ListItemText primary="ثبت نام مجدد"/>
-                        <ListItemIcon> <Refresh /> </ListItemIcon>
 
-                    </ListItem>
-                    <ListItem button style={{textAlign:"right"}}>
+                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.openDialog()}>
                         <ListItemText primary="تماس با پشتیبانی" />
                         <ListItemIcon> <ContactIcon /> </ListItemIcon>
-
+                    </ListItem>
+                    <ListItem button style={{textAlign:"right"}} onClick={()=>this.refresh()} >
+                        <ListItemText primary="خروج"/>
+                        <ListItemIcon> <Refresh /> </ListItemIcon>
                     </ListItem>
                 </List>
             </div>
