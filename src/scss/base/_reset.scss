@@ -115,3 +115,21 @@ form {
 .lowColor{
   color: limegreen;
 }
+.loding-container{
+  min-height: 95vh;
+  flex-direction: column;
+  display: flex;
+img{
+  margin-top: 25vh;
+  margin-left: auto;
+  margin-right: auto;
+  height: 110px;
+  width: 110px;
+}
+.text-hyper{
+  margin-top: 1%;
+  font-size: 11px;
+  margin-left: auto;
+  margin-right: auto;
+}
+}

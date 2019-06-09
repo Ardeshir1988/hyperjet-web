@@ -5,12 +5,14 @@ import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Urls from "../utils/URLs"
 import Dm from "../utils/DataManager"
+import Loading from "./Loading";
 
 class Categories extends Component {
 
 
     state = {
-        cats: []
+        cats: [],
+        loaded:false
     };
 
     componentDidMount() {
@@ -19,6 +21,7 @@ class Categories extends Component {
         .then(response => {
             const cats=response.data;
         this.setState({cats});
+        this.setState({loaded:true})
     });
 
         // axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
@@ -62,7 +65,7 @@ class Categories extends Component {
                 </CSSTransitionGroup>
             );
 
-        return <div className="products-wrapper"><div className="categories">{categoriesData}</div></div>;
+        return <div>{(this.state.loaded)?<div className="products-wrapper"><div className="categories">{categoriesData}</div></div>:<Loading />}</div>;
     }
 }
 export default Categories;

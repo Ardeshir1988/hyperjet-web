@@ -7,13 +7,14 @@ import NoResults from "../empty-states/NoResults";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Loading from "./Loading";
 
 
 class Products extends Component {
     state = {
         items: [],
         hasMore: true,
-
+        loaded:false,
         productList: [],
         page:0
     };
@@ -46,7 +47,8 @@ class Products extends Component {
                 .then(response => {
                     const productList = response.data;
                     this.setState({productList});
-                    this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)})
+                    this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)});
+                    this.setState({loaded:true});
                 });
             // this.setState({typeid: typeid})
         }
@@ -56,9 +58,11 @@ class Products extends Component {
                 .then(response => {
                     const productList = response.data;
                     this.setState({productList});
-                    this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)})
+                    this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)});
+                    this.setState({loaded:true});
                 });
             // this.setState({typeid: typeid})
+
         }
 
     }
@@ -136,7 +140,7 @@ class Products extends Component {
 
         }
 
-        return <div className="products-wrapper"><div className="products">{view}</div></div>;
+        return <div>{(this.state.loaded)?<div className="products-wrapper"><div className="products">{view}</div></div>:<Loading />}</div>;
 
     }
 }

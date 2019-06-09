@@ -10,6 +10,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Type from "./Type";
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Loading from "./Loading";
 
 const useStyles = makeStyles(theme => ({
     progress: {
@@ -26,7 +27,8 @@ class ProductsWithTypes extends Component {
         hasMore: true,
         typesList: [],
         productList: [],
-        page:0
+        page:0,
+        loaded:false
     };
 
 
@@ -63,7 +65,8 @@ class ProductsWithTypes extends Component {
             .then(response => {
                 const productList=response.data;
                 this.setState({productList});
-                this.setState({items:productList.slice(0,(productList.length>=20)?20:productList.length)})
+                this.setState({items:productList.slice(0,(productList.length>=20)?20:productList.length)});
+                this.setState({loaded:true});
 
             });
         this.setState({catid:values.catid});
@@ -138,7 +141,7 @@ class ProductsWithTypes extends Component {
 
         }
 
-        return <div className="products-wrapper">{view}</div>;
+        return <div>{(this.state.loaded)?<div className="products-wrapper">{view}</div>:<Loading />}</div>;
     }
 }
 export default ProductsWithTypes;

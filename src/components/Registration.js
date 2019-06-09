@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Urls from "../utils/URLs";
 import axios from "axios";
+import Loading from "./Loading";
 
 
 const styles = theme => ({
@@ -77,7 +78,8 @@ class Registration extends React.Component {
         activeStep: 0,
         mobile:'',
         msg:false,
-        textMsg:''
+        textMsg:'',
+        loaded:true
     };
 
 
@@ -87,7 +89,6 @@ class Registration extends React.Component {
             let mobile = Dm.getUserMobile();
             if (mobile && mobile.length === 11 && mobile.startsWith('09')) {
                 this.getTempToken(mobile);
-
 
             } else {
                 let text='شماره موبایل صحیح نیست';
@@ -102,10 +103,14 @@ class Registration extends React.Component {
     };
     getTempToken(mobile){
         let url = Urls.baseUrl()+"user/register?mobile="+mobile;
+
+        this.setState({loaded:false});
         axios.post(url, null,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const temp=response.data;
+                this.setState({loaded:true});
                 if (temp.message === 'ok') {
+
                     Dm.setTempToken(temp.tempToken);
                     this.setState(state => ({
                         activeStep: state.activeStep + 1,
@@ -134,9 +139,11 @@ class Registration extends React.Component {
         let userConfirm={id:tempToken,confirmcode:code,message:''};
         console.log(userConfirm);
         let url = Urls.baseUrl()+"user/confirm";
+        this.setState({loaded:false});
         axios.post(url, userConfirm,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const userToken=response.data;
+                this.setState({loaded:true});
                 if(userToken.message==='ok') {
                     Dm.setToken(userToken.token);
                     this.setState(state => ({
@@ -192,7 +199,7 @@ class Registration extends React.Component {
                             ))}
                         </Stepper>
                         <React.Fragment>
-                            {activeStep === steps.length ? (
+                            {(this.state.loaded)?activeStep === steps.length ? (
                                 <React.Fragment>
                                     <div style={{textAlign:"center"}} >
                                     <Typography variant="h5" gutterBottom>
@@ -247,7 +254,7 @@ class Registration extends React.Component {
                                         message={<span id="message-id">{this.state.textMsg}</span>}
                                     />
                                 </React.Fragment>
-                            )}
+                            ):<Loading />}
                         </React.Fragment>
                     </Paper>
                 </main>
