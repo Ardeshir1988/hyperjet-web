@@ -18,12 +18,13 @@ import DeliveryPassed from '../assets/delivery_purple.png';
 import Transport from '../assets/transport_grey.png';
 import TransportPassed from '../assets/transport_purple.png';
 import Chip from '@material-ui/core/Chip';
+import Divider from "@material-ui/core/Divider";
 
 const styles = {
 
     card: {
-        maxWidth: 'auto',
-        margin:'5px'
+
+        margin:'15px'
     },
     bullet: {
         display: 'inline-block',
@@ -66,18 +67,19 @@ class OrderCart extends React.Component {
                             <div className="date">{this.props.order.orderId}</div>
                         </Grid>
                     </Grid>
+                    <Divider style={{marginTop:"10px"}}/>
                     <List component="nav">
                         <div className="order-step">
                             {(this.props.order.step1.startsWith('2000'))?(
                         <ListItem style={{textAlign: "right"}}>
                                 <ListItemText primary="تایید گردید" secondary='در انتظار'/>
-                                <img style={{height:'50px'}} src={Confirm}/>
+                                <img style={{height:'40px'}} src={Confirm}/>
                         </ListItem>
                                 ):(
                                 <ListItem style={{textAlign: "right"}}>
 
                                     <ListItemText primary="تایید گردید"  secondary={<div className="date">{this.props.order.step1}</div>}/>
-                                        <img style={{height:'50px'}} src={ConfirmPassed}/>
+                                        <img style={{height:'40px'}} src={ConfirmPassed}/>
                                  </ListItem>
                             )
                             }
@@ -86,13 +88,13 @@ class OrderCart extends React.Component {
                             {(this.props.order.step2.startsWith('2000')) ? (
                                 <ListItem style={{textAlign: "right"}}>
                                     <ListItemText primary="آماده و بسته بندی شد" secondary='در انتظار'/>
-                                    <img style={{height: '50px'}} src={Packing}/>
+                                    <img style={{height: '40px'}} src={Packing}/>
                                 </ListItem>
 
                             ) : (
                                 <ListItem style={{textAlign: "right"}}>
                                     <ListItemText primary="آماده و بسته بندی شد" secondary={<div className="date">{this.props.order.step2}</div>}/>
-                                    <img style={{height: '50px'}} src={PackingPassed}/>
+                                    <img style={{height: '40px'}} src={PackingPassed}/>
                                 </ListItem>
                             )
                             }
@@ -101,11 +103,11 @@ class OrderCart extends React.Component {
                             {(this.props.order.step3.startsWith('2000')) ? (
                         <ListItem style={{textAlign: "right"}}>
                             <ListItemText primary="ارسال گردید و در راه میباشد" secondary='در انتظار'/>
-                            <img style={{height: '50px'}} src={Transport}/>
+                            <img style={{height: '40px'}} src={Transport}/>
                         </ListItem>):(
                                 <ListItem style={{textAlign: "right"}}>
                                     <ListItemText primary="ارسال گردید و در راه میباشد" secondary={<div className="date">{this.props.order.step3}</div>}/>
-                                    <img style={{height: '50px'}} src={TransportPassed}/>
+                                    <img style={{height: '40px'}} src={TransportPassed}/>
                                 </ListItem>
                             )}
                         </div>
@@ -113,12 +115,12 @@ class OrderCart extends React.Component {
                             {(this.props.order.step4.startsWith('2000')) ? (
                         <ListItem style={{textAlign: "right"}}>
                             <ListItemText primary="تحویل گردید" secondary='در انتظار'/>
-                            <img style={{height: '50px'}} src={Delivery}/>
+                            <img style={{height: '40px'}} src={Delivery}/>
 
                         </ListItem>):(
                                 <ListItem style={{textAlign: "right"}}>
                                     <ListItemText primary="تحویل گردید" secondary={<div className="date">{this.props.order.step4}</div>}/>
-                                    <img style={{height: '50px'}} src={DeliveryPassed}/>
+                                    <img style={{height: '40px'}} src={DeliveryPassed}/>
                                 </ListItem>
                             )
                             }
@@ -142,7 +144,7 @@ class OrderCart extends React.Component {
                                 />
                             </Grid>)}
                         <Grid item xs={5} style={{textAlign: "center"}}>
-                            <Button style={{direction:'rtl'}} size={"large"}>{this.props.order.orderTotalDiscount+' تومان'}</Button>
+                            <Button style={{direction:'rtl'}} size={"medium"}>{this.props.order.orderTotalDiscount+' تومان'}</Button>
 
                         </Grid>
 
