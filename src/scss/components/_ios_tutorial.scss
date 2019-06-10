@@ -1,0 +1,56 @@
+.ios-tutorial-container{
+  display: flex;
+  flex-direction: column;
+
+  .step1{
+    margin: 1vh auto;
+    display: flex;
+      img{
+        margin-right:10px;
+        height: 35px;
+        width: 35px;
+      }
+    }
+  .title{
+    margin: auto 10px;
+  }
+  .step2{
+    border: 1px solid #b6b6b6;
+    border-radius: 7px;
+    margin: 10px;
+    height: 75px;
+    display: flex;
+    img{
+
+      margin-right:10px;
+
+      height: 35px;
+      width: 35px;
+    }
+    .line-ins{
+      margin: 29px 0;
+      display: flex;
+    }
+  }
+  .step3{
+    border: 1px solid #b6b6b6;
+    border-radius: 7px;
+    margin: 10px;
+    height: 255px;
+    display: flex;
+    img{
+      margin: auto 35px;
+    }
+    .line-ins{
+      margin: 29px auto;
+      display: flex;
+    }
+    .step3-content{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+.start{
+  margin: auto auto;
+}

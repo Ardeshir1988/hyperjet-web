@@ -1,19 +1,35 @@
 import React, { Component } from "react";
 import Category from "./Category";
 import axios from "axios/index";
-import NoResults from "../empty-states/NoResults";
-import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Urls from "../utils/URLs"
-import Dm from "../utils/DataManager"
 import Loading from "./Loading";
+import Dm from "../utils/DataManager";
+import { detect } from "detect-browser";
+import CloseIcon from "../assets/close.svg";
+import LogoIcon from "../assets/icon-152x152.png";
+import Dialog from "@material-ui/core/Dialog";
+import Slide from "@material-ui/core/Slide";
+import BackIcon from '@material-ui/icons/Close';
+import Typography from "@material-ui/core/Typography";
+import IOSTutorial from "./IOSTutorial";
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 class Categories extends Component {
 
 
     state = {
         cats: [],
-        loaded:false
+        loaded:false,
+        isFirst:Dm.isFirstTime()
     };
+    closeIOSDialog(){
+        Dm.setSecondTime();
+        this.setState({isFirst:'false'})
+    }
 
     componentDidMount() {
     let url = Urls.baseUrl()+"product/getcats";
@@ -23,23 +39,28 @@ class Categories extends Component {
         this.setState({cats});
         this.setState({loaded:true})
     });
+        const browser = detect();
 
-        // axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
-        //     .then(response => {
-        //         const setting=response.data;
-        //         Dm.setDeliveryThreshold(setting.deliveryCost,setting.threshold)
-        //     });
+        if (browser) {
+            console.log(browser.name);
+            console.log(browser.version);
+            console.log(browser.os);
+        }
     }
-
+    handleOpen() {
+        this.setState({open:true});
+    }
+    handleClose() {
+        this.setState({open:false});
+    }
     render() {
         let categoriesData;
-        let term = this.props.searchTerm;
+        const browser = detect();
 
-        function searchingFor(term) {
-            return function(x) {
-                return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
-            };
-        }
+            console.log(browser.name);
+            console.log(browser.version);
+            console.log(browser.os);
+
 
         categoriesData=    this.state.cats.map(cat => {
                 return (
@@ -52,20 +73,43 @@ class Categories extends Component {
                     />
                     );
             });
+//(browser.name==='ios'|| browser.name=== 'safari' )
 
-        //
-        let view = (
-                <CSSTransitionGroup
-                    transitionName="fadeIn"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}
-                    component="div"
-                    className="categories">
-                    {categoriesData}
-                </CSSTransitionGroup>
-            );
+        return <div>{(this.state.loaded)?<div className="products-wrapper">
+            <Dialog style={{direction:'rtl'}} fullScreen open={this.state.open} onClose={()=>this.handleClose()} TransitionComponent={Transition}>
+                <div className="ios-guide">
+               <div className="ios-dialog-top">
 
-        return <div>{(this.state.loaded)?<div className="products-wrapper"><div className="categories">{categoriesData}</div></div>:<Loading />}</div>;
+                       <div className="page-title">راهنما</div>
+
+                <div style={{marginTop:"9px",marginLeft:"9px"}} onClick={()=>this.handleClose()}>
+                    <BackIcon />
+                </div>
+               </div>
+
+                    <div className="ios-dialog-content">
+                    <IOSTutorial />
+                    </div>
+                </div>
+            </Dialog>
+                {(this.state.isFirst==='true' && (browser.name==='ios'|| browser.name=== 'safari' ))
+            ?<div className="iosAlarm" >
+                    <button onClick={()=>this.handleOpen()}>
+                            نصب
+                    </button>
+                    <div className="text">
+                        <h5>وب اپلیکیشن هایپرجت</h5>
+                        <h6 style={{color:"grey"}}>تجربه کاربری بهتر</h6>
+                    </div>
+                    <div className="img-logo">
+                        <img src={LogoIcon}/>
+                    </div>
+                    <div  className="img-logo" onClick={()=>this.closeIOSDialog()}>
+                        <img style={{height:"25px",width:"25px"}} src={CloseIcon}/>
+                    </div>
+            </div>:
+            ''}
+            <div className="categories">{categoriesData}</div></div>:<Loading />}</div>;
     }
 }
 export default Categories;

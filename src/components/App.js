@@ -1,7 +1,6 @@
 import React from 'react';
 import {BrowserRouter,Switch,Route} from 'react-router-dom'
 import Header from "./Header";
-import Footer from "./Footer";
 import Categories from "./Categories";
 import Products from "./Products";
 import QuickView from "./QuickView";
@@ -18,6 +17,8 @@ import PaymentStatus from "./PaymentStatus";
 import { CartContext } from "./CartContext";
 import Types from "./Types";
 
+
+
 class App extends React.Component {
 
     constructor() {
@@ -25,7 +26,6 @@ class App extends React.Component {
         this.state = {
             products: [],
             cart: this.initialBasket(),
-
             term: "",
             category: "",
             cartBounce: false,
@@ -179,6 +179,7 @@ class App extends React.Component {
         if (Dm.getBasketData()) {
             return Dm.getBasketData();
         }else {
+            Dm.setFirstTime();
             Dm.setEmptyBasket();
             return [];
         }

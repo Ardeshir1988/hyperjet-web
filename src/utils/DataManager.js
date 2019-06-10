@@ -103,5 +103,14 @@ class DataManager {
          store.remove('temp');
          store.remove('confirmcode');
     }
+    static setFirstTime(){
+        store.set('first','true');
+    }
+    static setSecondTime(){
+        store.set('first','false');
+    }
+    static isFirstTime(){
+       return  store.get('first');
+    }
 }
 export default DataManager

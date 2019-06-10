@@ -182,3 +182,52 @@
     color: #999;
   }
 }
+.iosAlarm{
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  max-width: 960px;
+  margin: auto auto;
+  height:60px;
+  background: #dddddd;
+  button{
+    margin: 14px auto;
+    background: #2655ff;
+    border-radius: 6px;
+  }
+  img{
+    margin: 12px auto;
+    height: 40px;
+    width: 40px;
+  }
+  .text{
+    text-align: right;
+    margin: 11px auto;
+  }
+  .img-logo{
+    margin: auto auto;
+  }
+
+}
+
+.ios-dialog-top{
+
+  margin-top: -1px;
+  height: 6vh;
+  background: #b81aec;
+  color: white;
+  width: 100%;
+  display: flex;
+  .page-title{
+    margin: auto auto;
+  }
+}
+
+.ios-guide{
+  display: flex;
+  flex-direction: column;
+}
+.ios-dialog-content{
+
+}
