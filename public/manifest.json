@@ -1,7 +1,7 @@
 {
-  "short_name": "hyperjet",
+  "short_name": "HyperJet",
   "name": "HyperJet",
-  "theme_color": "#9721f3",
+  "theme_color": "#8235F5",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",

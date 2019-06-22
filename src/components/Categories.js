@@ -50,6 +50,9 @@ class Categories extends Component {
     handleOpen() {
         this.setState({open:true});
     }
+    handleURL() {
+        window.location.href='https://play.google.com/store/apps/details?id=ir.mobile.hyper&hl';
+    }
     handleClose() {
         this.setState({open:false});
     }
@@ -73,7 +76,6 @@ class Categories extends Component {
                     />
                     );
             });
-//(browser.name==='ios'|| browser.name=== 'safari' )
 
         return <div>{(this.state.loaded)?<div className="products-wrapper">
             <Dialog style={{direction:'rtl'}} fullScreen open={this.state.open} onClose={()=>this.handleClose()} TransitionComponent={Transition}>
@@ -99,7 +101,7 @@ class Categories extends Component {
                     </button>
                     <div className="text">
                         <h5>وب اپلیکیشن هایپرجت</h5>
-                        <h6 style={{color:"grey"}}>تجربه کاربری بهتر</h6>
+                        <h6 style={{color:"grey"}}>یار هوشمند و سریع شما</h6>
                     </div>
                     <div className="img-logo">
                         <img src={LogoIcon}/>
@@ -109,6 +111,23 @@ class Categories extends Component {
                     </div>
             </div>:
             ''}
+            {(this.state.isFirst==='true' && (browser.name!=='ios'&& browser.name!== 'safari' ))
+                ?<div className="iosAlarm" >
+                    <button onClick={()=>this.handleURL()}>
+                        نصب
+                    </button>
+                    <div className="text">
+                        <h5>اپلیکیشن هایپرجت</h5>
+                        <h6 style={{color:"grey"}}>یار هوشمند و سریع شما</h6>
+                    </div>
+                    <div className="img-logo">
+                        <img src={LogoIcon}/>
+                    </div>
+                    <div  className="img-logo" onClick={()=>this.closeIOSDialog()}>
+                        <img style={{height:"25px",width:"25px"}} src={CloseIcon}/>
+                    </div>
+                </div>:
+                ''}
             <div className="categories">{categoriesData}</div></div>:<Loading />}</div>;
     }
 }

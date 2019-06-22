@@ -1,5 +1,5 @@
 header {
-  background: #b81aec;
+  background: #9929ef;
   padding: 25px 20px;
   box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.033);
   position: fixed;
@@ -80,7 +80,7 @@ header {
   }
   .search-keyword {
     height: 36px;
-    border: 1px solid #b81aec;
+    border: 1px solid #9929ef;
     padding: 0 16px;
     border-radius: 2px 0 0 2px;
     width: 100%;
@@ -95,7 +95,7 @@ header {
   }
   .search-button {
     border-radius: 0 2px 2px 0;
-    background: #b81aec
+    background: #9929ef
       url(https://res.cloudinary.com/sivadass/image/upload/v1494692031/icons/search.png)
       center no-repeat;
     width: 96px;
@@ -141,7 +141,7 @@ header {
 }
 .cart-info table {
   font-size: 14px;
-  color: #b81aec;
+  color: #9929ef;
   text-align: right;
   tr {
     padding: 0;
@@ -416,12 +416,12 @@ header {
   }
 }
 .basket-button{
-  background:#b81aec;
+  background:#9929ef;
   color:white;
   margin: 25px auto;
   min-width:90%;
   font-size: 18px;
   &:hover {
-    background: lighten(#b81aec, 12%);
+    background: lighten(#9929ef, 12%);
   }
 }
