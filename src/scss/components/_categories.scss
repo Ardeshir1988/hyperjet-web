@@ -14,12 +14,14 @@
   display: -webkit-flex;
   flex-wrap: wrap;
   -webkit-flex-wrap: wrap;
-  padding: 16px;
+  //padding: 16px;
   max-width: 960px;
-  margin: 0 auto;
+  margin: 5px auto;
+
   @media (max-width: 768px) {
-    padding: 1px;
+    padding: auto;
   }
+  width: 98%;
   .category {
     min-height: 215px;
     min-width: 114px;
@@ -28,12 +30,13 @@
     @media (max-width: 768px) {
       flex-basis: calc(33% - 16px);
       -webkit-flex-basis: calc(33% - 16px);
-      margin: 2px;
+      margin: 2px auto;
     }
     @media (max-width: 480px) {
       flex-basis: calc(31% - 3px);
       -webkit-flex-basis: calc(31% - 3px);
       min-height: 110px;
+      margin: 2px auto;
       .category-image{
         max-width: 114px;
         max-height: 114px;
@@ -49,6 +52,7 @@
     @media (max-width: 320px) {
       flex-basis: 100%;
       -webkit-flex-basis: 100%;
+      margin: 2px auto;
     }
   }
 }
@@ -182,6 +186,15 @@
     color: #999;
   }
 }
+.install-button{
+  background: #1ab91d;
+  color:white;
+  margin: auto auto;
+  font-size: 18px;
+  &:hover {
+    background: lighten(#148217, 12%);
+  }
+}
 .iosAlarm{
   display: flex;
   display: -webkit-flex;
@@ -189,26 +202,70 @@
   -webkit-flex-wrap: wrap;
   max-width: 960px;
   margin: auto auto;
-  height:60px;
-  background: #dddddd;
-  button{
-    margin: 14px auto;
-    background: #2655ff;
-    border-radius: 6px;
+  height:80px;
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.1);
+  //button{
+  //  margin: 14px auto;
+  //  background: #2655ff;
+  //  border-radius: 6px;
+  //}
+.caption-description-light{
+  font-weight: 400;
+  color: #aaa;
+}
+  .caption-description-hero{
+    font-weight: 400;
+    color: #6b6b6b;
   }
-  img{
-    margin: 12px auto;
-    height: 40px;
-    width: 40px;
-  }
-  .text{
+  .caption-description-title{
+    line-height: 0;
+    color: #000;
+    font-weight: 500;
+    font-size: 1.3em;
     text-align: right;
-    margin: 11px auto;
-  }
-  .img-logo{
-    margin: auto auto;
+    margin-bottom: .7em;
+    margin-top: 0;
   }
 
+  .text{
+    text-align: right;
+    margin: 12px auto;
+  }
+  .img-logo{
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    height: 100%;
+    img{
+      margin: auto auto;
+      height: 54px;
+      width: 54px;
+    }
+  }
+  .img-close{
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    height: 100%;
+
+      img{
+        margin: auto 6px;
+        height: 24px;
+        width: 24px;
+      }
+  }
+  @media (min-width: 700px) {
+    visibility: hidden;
+    display: block;
+  }
+
+}
+
+.iosAlarm-deactive{
+  visibility: hidden;
+  display: block;
 }
 
 .ios-dialog-top{
@@ -227,6 +284,7 @@
 .ios-guide{
   display: flex;
   flex-direction: column;
+  margin-bottom: 70px;
 }
 .ios-dialog-content{
 

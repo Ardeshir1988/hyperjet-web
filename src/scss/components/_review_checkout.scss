@@ -12,3 +12,30 @@ flex: 1;
 
   flex: 1;
 }
+.dialog-empty-cart{
+  text-align: -webkit-center;
+}
+.dialog-header{
+  margin-top: 10px;
+  text-align: -webkit-center;
+}
+.dialog-header-success {
+  min-height: 48px;
+  direction: rtl;
+    .img-logo{
+      width: 100%;
+      display: flex;
+      display: -webkit-flex;
+      flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      margin: auto auto;
+    img{
+      vertical-align: center;
+      horiz-align: center;
+      margin: auto auto;
+      height: 48px;
+      width: 48px;
+
+  }}
+
+}

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../scss/style.scss";
 import RightSideMenu from './SideMenu';
 import Basket from "./Basket";
-import Search from '@material-ui/icons/Search';
-import BackIcon from "../assets/back-24dp.png";
+import Search from "../assets/searchicon.svg";
+import BackIcon from "../assets/go-back-left-arrow.svg";
 
 class Header extends Component {
     constructor(props) {
@@ -58,13 +58,10 @@ class Header extends Component {
                 <Basket/>
 
                     <div className="search">
-                        <a
-                            className="mobile-search"
-                            href="#"
-                            onClick={this.handleMobileSearch.bind(this)}>
+                        <div className="mobile-search" onClick={this.handleMobileSearch.bind(this)}>
+                            <img src={Search}/>
+                        </div>
 
-                            <Search style={{color:"white"}} />
-                        </a>
                         <form
                             action="#"
                             method="get"
@@ -72,18 +69,10 @@ class Header extends Component {
                                 this.state.mobileSearch ? "search-form active" : "search-form"
                             }
                         >
-                            <a
-                                className="back-button"
-                                href="#"
-                                onClick={this.handleSearchNav.bind(this)}
-                            >
-                                <div style={{marginTop:5}}>
-                                <img
-                                    src={BackIcon}
-                                    alt="back"
-                                />
-                                </div>
-                            </a>
+                            <div className="back-button" onClick={this.handleSearchNav.bind(this)}>
+                                <img src={BackIcon}/>
+                            </div>
+
                             <input
                                 type="search"
                                 ref="searchBox"
@@ -92,11 +81,11 @@ class Header extends Component {
                                 onChange= {this.handleChange('keyword')}
                                 value={this.state.keyword}
                             />
-                            <button
-                                className="search-button"
-                                type="submit"
-                                onClick={this.handleSubmit.bind(this)}
-                            />
+
+                            <div className="search-button" type="submit" onClick={this.handleSubmit.bind(this)}>
+                                <img src={Search}/>
+                            </div>
+
                         </form>
                     </div>
 

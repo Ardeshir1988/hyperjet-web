@@ -16,6 +16,7 @@ import PreviousOrders from "./PreviousOrders";
 import PaymentStatus from "./PaymentStatus";
 import { CartContext } from "./CartContext";
 import Types from "./Types";
+import Footer from "./Footer";
 
 
 
@@ -37,7 +38,6 @@ class App extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleMobileSearch = this.handleMobileSearch.bind(this);
         this.handleCategory = this.handleCategory.bind(this);
-
 
         this.checkProduct = this.checkProduct.bind(this);
         this.updateQuantity = this.updateQuantity.bind(this);
@@ -109,7 +109,6 @@ class App extends React.Component {
         let cartItems = this.state.cart;
 
         if (this.checkProduct(productId)) {
-
             let index = cartItems.findIndex(x => x.id === productId);
             if (cartItems[index].quantity === 1) {
                 cartItems.splice(index, 1);
@@ -122,7 +121,6 @@ class App extends React.Component {
                 this.setState({
                     cart: cartItems
                 });
-
             }
             Dm.decreaseQuantity(productId);
 
@@ -255,7 +253,7 @@ class App extends React.Component {
                                                                                       openModal={this.openModal}/>}/>
                     </Switch>
 
-                    {/*<Footer/>*/}
+
                     <QuickView
                         product={this.state.quickViewProduct}
                         openModal={this.state.modalActive}

@@ -21,23 +21,43 @@ import DialogActions from "@material-ui/core/DialogActions";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
+import NumberFormat from "react-number-format";
+
 
 
 const styles = theme => ({
-
-    layout: {
-        width: 'auto',
-        height:'auto',
-        marginLeft: theme.spacing.unit * 2,
-        marginRight: theme.spacing.unit * 2,
-        [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
-            width: 600,
-            marginLeft: 'auto',
-            marginRight: 'auto'
-        },
-    }
+    root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+        direction: 'rtl'
+    },
 });
-
+const theme = createMuiTheme({
+    direction: 'rtl',
+    typography: {
+        // Use the system font.
+        fontFamily:
+            'iran-sans',
+    },
+    palette: {
+        width:'90%',
+        primary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#9929ef',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated to contast with palette.primary.main
+        },
+        secondary: {
+            light: '#1ab91d',
+            main: '#1ab91d',
+            // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffffff',
+        },
+        // error: will us the default color
+    },
+})
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -55,8 +75,6 @@ class PreviousOrders extends React.Component {
         hasMore: true,
         page:0
     };
-
-
 
     handleClickOpen(orderid) {
 
@@ -118,10 +136,9 @@ class PreviousOrders extends React.Component {
     }
     render() {
         const { classes } = this.props;
-        let ordersData=           this.state.items.map(order=><div onClick={()=>this.handleClickOpen(order.orderId)}><PreviousOrderCart order={order} /></div>)
-
-
+        let ordersData=this.state.items.map(order=><div onClick={()=>this.handleClickOpen(order.orderId)}><PreviousOrderCart order={order} /></div>)
         return (
+            <MuiThemeProvider theme={theme}>
             <div>
                 <Dialog
                     style={{direction:'rtl'}}
@@ -141,28 +158,14 @@ class PreviousOrders extends React.Component {
                     </DialogActions>
                 </Dialog>
                 <Dialog style={{direction:'rtl'}} fullScreen open={this.state.open} onClose={()=>this.handleClose()} TransitionComponent={Transition}>
-                    <div>
-                        <Grid container spacing={24} style={{background:'#b81aec',color:"#ffffff"}}>
-                            <Grid item xs={7} >
-                                <div style={{textAlign:'left'}}>
-                                <Typography variant="h6">
-                                    کالاها
-                                </Typography>
-                                    </div>
-                            </Grid>
-                            <Grid item xs={5} >
-                                <div style={{textAlign:'left'}}>
-                                <Button color="inherit" onClick={()=>this.handleClose()}>
+                            <div className="page-title-bar">
+                                <Typography variant="h6" gutterBottom className="page-title">کالاها</Typography>
+                                <Button className="page-close" color="inherit" onClick={()=>this.handleClose()}>
                                     <BackIcon />
                                 </Button>
-                                </div>
-                            </Grid>
-
-                        </Grid>
+                            </div>
                         <div >
                         </div>
-                    </div>
-
                     <List >
                         {this.state.products.map(p=>
                             <div>
@@ -170,9 +173,7 @@ class PreviousOrders extends React.Component {
                                     <Grid container spacing={24}>
                                         <Grid item xs={12}>
                                             <div style={{textAlign: "right",fontSize:'15px'}}>
-
                                                     {p.productName}
-
                                             </div>
                                         </Grid>
                                         <Grid item xs={6}>
@@ -182,10 +183,9 @@ class PreviousOrders extends React.Component {
                                         </Grid>
                                         <Grid item xs={6}>
                                             <div style={{textAlign: "right"}}>
-                                                 {p.price}تومان
+                                                <NumberFormat value={p.price} displayType={'text'} thousandSeparator={true} renderText={value =>  <h4 className="product-price">{value + ' تومان'}</h4>} />
                                             </div>
                                         </Grid>
-
                                     </Grid>
                                 </ListItem>
                                 <Divider />
@@ -196,8 +196,8 @@ class PreviousOrders extends React.Component {
                 <div className="page-title-bar">
                     <Typography variant="h6" gutterBottom className="page-title">خرید های گذشته</Typography>
                 </div>
-                <main className={classes.layout}>
 
+                <main className={classes.layout}>
                     <InfiniteScroll
                         dataLength={this.state.items.length}
                         next={this.fetchMoreData}
@@ -215,9 +215,9 @@ class PreviousOrders extends React.Component {
                     >
                         {ordersData}
                     </InfiniteScroll>
-
           </main>
             </div>
+            </MuiThemeProvider>
         );
     }
 }

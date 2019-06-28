@@ -1,9 +1,12 @@
 footer {
+
+
   color: $gray-light;
-  font-size: 14px;
+
   text-align: center;
-  padding: 32px;
-  background: $gray-dark-bg;
+
+  background: #f6f6f6;
+
   strong {
     color: $gray-medium;
   }
@@ -11,7 +14,64 @@ footer {
     margin-bottom: 24px;
     a {
       margin: 0 8px;
-      color: $gray-medium;
+      color: #999999;
     }
   }
+  .img-namad{
+      height: 50px;
+      width: 50px;
+    }
+
+  .branch-banner-iframe{
+
+  }
+
+  .container{
+    border-top: 1px solid rgb(153, 153, 153);
+    font-size: 10px;
+    margin-bottom: 0px;
+    .row{
+
+    padding: 10px 36px;
+  }
+  }
+
+  .container-first{
+    border-top: 1px solid rgb(153, 153, 153);
+    font-size: 10px;
+    margin-bottom: 80px;
+    @media (min-width: 700px) {
+      margin-bottom: 0;
+    }
+    .row{
+
+      padding: 10px 36px;
+    }
+  }
+
+
+}
+
+.downloadApp{
+  background: #e7e7e7;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+  }
+
+  .icons{
+    width: fit-content;
+    margin: auto auto;
+    @media (min-width: 481px) {
+      display: -webkit-flex;
+    }
+  }
+  .download-icon{
+    margin: auto auto;
+    width: 182px;
+  }
+
+
 }

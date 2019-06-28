@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {createMuiTheme, withStyles, MuiThemeProvider} from '@material-ui/core/styles';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControl from '@material-ui/core/FormControl';
@@ -20,6 +20,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import NumberFormat from "react-number-format";
+import Success from "../assets/checkbox-marked.svg";
+import Fail from "../assets/close-circle.svg";
 
 const styles = theme => ({
     root: {
@@ -28,8 +30,34 @@ const styles = theme => ({
         paddingBottom: theme.spacing.unit * 2,
         direction: 'rtl'
     }
-});
 
+});
+const theme = createMuiTheme({
+    direction: 'rtl',
+    typography: {
+        // Use the system font.
+        fontFamily:
+            'iran-sans',
+
+    },
+    palette: {
+        width:'90%',
+        primary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#9929ef',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated to contast with palette.primary.main
+        },
+        secondary: {
+            light: '#1ab91d',
+            main: '#1ab91d',
+            // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffffff',
+        },
+        // error: will us the default color
+    },
+
+})
 class ReviewCheckout extends React.Component {
     state={
         open: false,
@@ -45,7 +73,9 @@ class ReviewCheckout extends React.Component {
         orderPaymentType:'cash-pos',
         productlist:[],
         suburb: 1,
-        orderArrivalNoticeType:''
+        orderArrivalNoticeType:'',
+        orderDate: '',
+        sentRequest: true
     };
     componentDidMount() {
 
@@ -58,7 +88,6 @@ class ReviewCheckout extends React.Component {
                 axios.post(Urls.baseUrl()+"user/getuseraddress",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
                     .then(response=>{
                             const address=response.data[0];
-                            console.log('=========='+address.addressDetail);
                             if (address.addressDetail !== undefined)
                                 this.setState({
                                     addressDetail:address.addressDetail,
@@ -66,8 +95,8 @@ class ReviewCheckout extends React.Component {
                                     addressId:address.addressId,
                                     addressArea:address.addressArea
                                 })
-                        }
-                    );
+                        this.setState({sentRequest : false});
+                    });
             });
         let basket=Dm.getBasketData();
         if (basket.length === 0)
@@ -104,79 +133,164 @@ class ReviewCheckout extends React.Component {
             window.location.href="/";
     }
     sendOrder(){
+       if(this.state.sentRequest === false) {
+           this.setState({sentRequest : false});
+           let order = {
+               token: this.state.token,
+               productlist: this.state.productlist,
+               addressId: parseInt(this.state.addressId),
+               addressCity: "تهران",
+               addressArea: this.state.suburbs.filter(s => s.tblsuburbId === parseInt(this.state.suburb)).map(s => s.tblsuburbName).toString(),
+               addressDetail: this.state.addressDetail,
+               addressName: '',
+               orderArrivalNoticeType: this.state.orderArrivalNoticeType,
+               orderPhoneNumber: this.state.orderPhoneNumber,
+               orderInstruction: this.state.orderInstruction,
+               orderSubTotal: "",
+               orderPaymentType: this.state.orderPaymentType,
+               orderDeliveryCost: 0
+           };
 
-        let order={token:this.state.token,productlist:this.state.productlist,
-            addressId:parseInt(this.state.addressId), addressCity:"تهران",
-            addressArea:this.state.suburbs.filter(s=>s.tblsuburbId===parseInt(this.state.suburb)).map(s=>s.tblsuburbName).toString(),
-            addressDetail:this.state.addressDetail,addressName:'',
-            orderArrivalNoticeType:this.state.orderArrivalNoticeType,orderPhoneNumber:this.state.orderPhoneNumber,
-            orderInstruction:this.state.orderInstruction,orderSubTotal:"",orderPaymentType:'web-'+this.state.orderPaymentType,orderDeliveryCost:0
-        };
+           let successOrderMsg = 'با تشکر';
+           let error = 'سفارش شما ثبت نگردید!';
+           axios.post(Urls.baseUrl() + "order/ordercheck", order, {headers: {'Authorization': Urls.getAuthToken()}})
+               .then(response => {
+                       const orderResponse = response.data;
+                       if (orderResponse.orderId === 0) {
+                           this.setState({orderid: 0});
+                           this.setState({titleMsg: error, textMsg: orderResponse.message});
+                           this.setState({orderStatus: true});
+                           this.setState({sentRequest : false});
+                       } else {
+                           Dm.setEmptyBasket();
+                           if (order.orderPaymentType === 'online') {
+                               window.location.href = 'https://maxproapp.com/payment/pay?orderid=' + orderResponse.orderId;
+                               this.state.sentRequest = false;
+                           }
 
-        console.log(order);
-        let successOrderMsg='سفارش شما ثبت شد';
-        let orderDecs='شماره شفارش شما ';
-        let error='خطا';
-        axios.post(Urls.baseUrl()+"order/ordercheck",order,{headers:{'Authorization': Urls.getAuthToken()}})
-            .then(response=>{
-                    const orderResponse=response.data;
-                    if(orderResponse.orderId===0){
-                        this.setState({orderid: 0});
-                        this.setState({titleMsg:error,textMsg:orderResponse.message});
-                        this.setState({orderStatus: true});
-                    }
-                    else {
-                        this.setState({orderid: orderResponse.orderId});
-                        this.setState({titleMsg:successOrderMsg,textMsg:orderDecs+orderResponse.orderId});
-                        this.setState({orderStatus: true});
-                            Dm.setEmptyBasket();
-                    }
-                }
-            );
+                               this.setState({orderid: orderResponse.orderId});
+                               this.setState({titleMsg: successOrderMsg,
+                                   orderDate: orderResponse.detail});
+                               this.setState({orderStatus: true});
+                               this.setState({sentRequest : false});
 
-
+                       }
+                   }
+               );
+       }
     };
     render() {
         const { classes } = this.props;
-
         return (
+            <MuiThemeProvider theme={theme}>
             <div>
             <div className="page-title-bar">
                 <Typography variant="h6" gutterBottom className="page-title">بررسی خرید</Typography>
             </div>
             <Paper className={classes.root} elevation={1}>
-                <Dialog
+
+                <Dialog maxWidth ={'80%'}
                     open={this.state.open}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">{"بررسی خرید بدون کالا"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">
+                            <div className= "dialog-header-success">
+                                    <div className="img-logo">
+                                        <img src={Fail}/>
+                                    </div>
+                                <h4> بررسی خرید بدون کالا</h4>
+                            </div>
+                    </DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
+                        <DialogContentText>
+                            <div className= "dialog-empty-cart">
                             سبد کالا شما خالی است
+                            </div>
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-
-                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
-                            خرید
-                        </Button>
+                             <Button variant="contained" onClick={()=>this.backHome()} color="secondary" fullWidth={true} size={"large"}>
+                                  خرید
+                            </Button>
                     </DialogActions>
                 </Dialog>
-                <Dialog
+
+                <Dialog fullWidth={'80%'}
                     style={{direction:'rtl'}}
                     open={this.state.orderStatus}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">{this.state.titleMsg}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">
+                        <div className= "dialog-header-success">
+                            {(this.state.orderid !== 0)
+                                ?<div className="img-logo">
+                                    <img src={Success}/>
+                                </div>
+                             :
+                                <div className="img-logo">
+                                    <img src={Fail}/>
+                                </div>
+                            }
+                        </div>
+                        <div className= "dialog-header">
+                            <h4> {this.state.titleMsg} </h4>
+                        </div>
+                    </DialogTitle>
+
+
+
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            {this.state.textMsg}
+
+                            {(this.state.orderid !== 0)
+                                ?
+                                <div className= "dialog-header">
+                                    <Grid container spacing={24}>
+                                        <Grid item xs={6} className={classes.grid}>
+                                            <div style={{textAlign: "left"}}>
+                                                شماره سفارش
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <div style={{textAlign: "center",color:"limegreen"}} >
+                                                <h3> {this.state.orderid} </h3>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={6}  className={classes.grid}>
+                                            <div style={{textAlign: "left"}}>
+                                                تاریخ ثبت سفارش
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <div style={{textAlign: "center"}}>
+                                                {this.state.orderDate}
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={12}  className={classes.grid}>
+                                            <div style={{textAlign: "right", fontSize:"14px"}}>
+                                                جهت کسب اطلاعات بیشتر در مورد سفارش خود به قسمت وضعیت سفارش مراجعه نمایید.
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                    <div>
+                                    </div>
+                                </div>
+                                :
+                                <div className= "dialog-header">
+                                    {this.state.textMsg}
+                                </div>
+                            }
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-
-                        <Button variant="contained" onClick={()=>this.orderStatus()} color="secondary" autoFocus>
+                        <Button variant="contained" onClick={()=>this.orderStatus()} color="secondary"  fullWidth={true} size={"large"}>
                             { (this.state.orderid!==0)?'وضعیت سفارش':'بازگشت'}
+                        </Button>
+                        <div className= "dialog-header">
+
+                       </div>
+                        <Button variant="contained" onClick={()=>this.backHome()} color="primary"  fullWidth={true} size={"large"}>
+                            صفحه اصلی
                         </Button>
                     </DialogActions>
                 </Dialog>
@@ -326,6 +440,7 @@ class ReviewCheckout extends React.Component {
                 </Grid>
             </Paper>
             </div>
+            </MuiThemeProvider>
         );
     }
 }

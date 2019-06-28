@@ -47,7 +47,6 @@ class Product extends Component {
         let quantity = this.props.productQuantity;
         let measure=this.props.productMeasure;
         let detail=this.props.productDetails;
-        console.log("measure===="+measure);
 
         return (
             <CartContext.Consumer>

@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {createMuiTheme, withStyles, MuiThemeProvider} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
@@ -24,7 +24,29 @@ const styles = theme => ({
         direction: 'rtl'
     },
 });
-
+const theme = createMuiTheme({
+    direction: 'rtl',
+    typography: {
+        // Use the system font.
+        fontFamily:
+            'iran-sans',
+    },
+    palette: {
+        primary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#1ab91d',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated to contast with palette.primary.main
+        },
+        secondary: {
+            light: '#1ab91d',
+            main: '#1ab91d',
+            // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffcc00',
+        },
+        // error: will us the default color
+    },
+})
 
 class UserAccount extends React.Component {
     state={
@@ -39,7 +61,8 @@ class UserAccount extends React.Component {
         suburb: 1,
         username:'',
         phone:'',
-        email: ''
+        email: '',
+        sentRequest: true
     };
     componentDidMount() {
         if (Dm.getUserData()===undefined)
@@ -55,14 +78,14 @@ class UserAccount extends React.Component {
                 axios.post(Urls.baseUrl()+"user/getuseraddress",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
                     .then(response=>{
                             const address=response.data[0];
-                            console.log('=========='+address.addressDetail);
-                            if (address.addressDetail !== undefined)
+                            if (response.data[0] !== undefined) {
                                 this.setState({
                                     addressDetail:address.addressDetail,
                                     suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId),
                                     addressId:address.addressId,
                                     addressArea:address.addressArea
                                 })
+                            }
                         }
                     );
                 axios.post(Urls.baseUrl()+"user/getuserinfo",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
@@ -74,22 +97,24 @@ class UserAccount extends React.Component {
                                     phone:userInfo.phone,
                                     email:userInfo.email
                                 })
+                        this.setState({sentRequest : false});
                         }
                     );
             });
     }
 
     editUserInfo(){
+        if(this.state.sentRequest === false) {
+            this.setState({sentRequest : true});
         let userAddress={token:this.state.token,
             addressId:parseInt(this.state.addressId),
             addressCity:"تهران",
             addressArea: this.state.suburbs.filter(s=>s.tblsuburbId===parseInt(this.state.suburb)).map(s=>s.tblsuburbName).toString(),
             addressDetail:this.state.addressDetail,
-            addressName:''};
+            addressName:'Default'};
         axios.post(Urls.baseUrl()+"user/addaddress",userAddress,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response=>{
                     const useraddress=response.data;
-                console.log("======useraddress=="+useraddress)
                 }
             );
         let userInfo={token:this.state.token,
@@ -98,11 +123,12 @@ class UserAccount extends React.Component {
         axios.post(Urls.baseUrl()+"user/edituser",userInfo,{headers:{'Authorization': Urls.getAuthToken()}})
             .then(response=>{
                     const userInfo=response.data;
-                    console.log("======ResUSERINFO=="+userInfo)
-
+                    this.setState({sentRequest : false});
                 window.location.href=('/user/account');
+
                 }
             );
+        }
     }
 
     handleChange = name => event => {
@@ -114,6 +140,7 @@ class UserAccount extends React.Component {
         const { classes } = this.props;
 
         return (
+            <MuiThemeProvider theme={theme}>
             <div className="products">
                 <div className="page-title-bar">
                     <Typography variant="h6" gutterBottom className="page-title">حساب کاربری</Typography>
@@ -229,6 +256,7 @@ class UserAccount extends React.Component {
                 </Grid>
             </Paper>
             </div>
+            </MuiThemeProvider>
         );
     }
 }

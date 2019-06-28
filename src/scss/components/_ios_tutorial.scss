@@ -42,7 +42,7 @@
       margin: auto 35px;
     }
     .line-ins{
-      margin: 29px auto;
+      margin: 29px 0;
       display: flex;
     }
     .step3-content{
@@ -52,5 +52,19 @@
   }
 }
 .start{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 60px;
+  background: white;
+  boxShadow: 0 0 5px rgba(0, 0, 0, .35);
+  right: 0;
+  border: 0;
+  zIndex: 99999;
+  width: 100%;
   margin: auto auto;
+  div{
+    width: fit-content;
+    margin: auto auto;
+  }
 }

@@ -15,7 +15,7 @@ class Type extends Component{
         return(
             <div className="type">
             <div className="type-image" >
-            <img onClick={()=>this.redirectToTarget()} src={image} alt={name}/>
+            <img onClick={()=>this.redirectToTarget()} src={image}/>
             </div>
             <h4 className="type-name">{name}</h4>
         </div>)

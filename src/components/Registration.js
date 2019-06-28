@@ -12,11 +12,11 @@ import SingInForm from './SignIn';
 import ConfrimForm from './Confirmation';
 import Dm from "../utils/DataManager";
 import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import Urls from "../utils/URLs";
 import axios from "axios";
 import Loading from "./Loading";
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
+
 
 
 const styles = theme => ({
@@ -31,9 +31,9 @@ const styles = theme => ({
             marginLeft: 'auto',
             marginRight: 'auto',
         },
+        fontFamily:'iran-sans',
     },
     paper: {
-
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
         padding: theme.spacing.unit * 2,
@@ -42,24 +42,58 @@ const styles = theme => ({
             marginBottom: theme.spacing.unit * 6,
             padding: theme.spacing.unit * 3,
         },
+        fontFamily:'iran-sans',
     },
     stepper: {
-
         padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`,
     },
     buttons: {
         display: 'flex',
         justifyContent: 'center',
+        fontFamily:'iran-sans',
     },
     button: {
         marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit,
-        background:'#b81aec',
-        color:'white'
+        background:'#9929ef',
+        color:'white',
+        // fontFamily:'iran-sans',
+    },
+    buttonconfirm: {
+        marginTop: theme.spacing.unit * 3,
+        marginLeft: theme.spacing.unit,
+        background:'#1ab91d',
+        color:'white',
+        // fontFamily:'iran-sans',
     },
 });
 
-const steps = ['ثبت شماره موبایل', 'تایید شماره موبایل'];
+const theme = createMuiTheme({
+    direction: 'rtl',
+    typography: {
+        // Use the system font.
+        fontFamily:
+            'iran-sans',
+
+    },
+    palette: {
+        primary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#1ab91d',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated to contast with palette.primary.main
+        },
+        secondary: {
+            light: '#1ab91d',
+            main: '#1ab91d',
+            // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffcc00',
+        },
+        // error: will us the default color
+    },
+})
+
+const steps = [' ثبت شماره موبایل ', ' تایید شماره موبایل'];
 
 function getStepContent(step) {
     switch (step) {
@@ -79,7 +113,8 @@ class Registration extends React.Component {
         mobile:'',
         msg:false,
         textMsg:'',
-        loaded:true
+        loaded:true,
+        cart: Dm.getBasketData()
     };
 
 
@@ -105,7 +140,7 @@ class Registration extends React.Component {
         let url = Urls.baseUrl()+"user/register?mobile="+mobile;
 
         this.setState({loaded:false});
-        axios.post(url, null,{headers:{'Authorization': Urls.getAuthToken()}})
+        axios.post(url, null,{headers:{'Authorization': Urls.getAuthToken(),'OS':'web-app'}})
             .then(response => {
                 const temp=response.data;
                 this.setState({loaded:true});
@@ -153,7 +188,6 @@ class Registration extends React.Component {
                     this.setState({textMsg:userToken.message});
                     this.setState({msg: true})
                 }
-
             });
     }
 
@@ -180,8 +214,9 @@ class Registration extends React.Component {
         const { activeStep } = this.state;
 
         return (
-            <React.Fragment>
 
+            <React.Fragment>
+                <MuiThemeProvider theme={theme}>
                 <CssBaseline />
 
                 <div className="page-title-bar">
@@ -199,6 +234,8 @@ class Registration extends React.Component {
                             ))}
                         </Stepper>
                         <React.Fragment>
+
+
                             {(this.state.loaded)?activeStep === steps.length ? (
                                 <React.Fragment>
                                     <div style={{textAlign:"center"}} >
@@ -216,29 +253,39 @@ class Registration extends React.Component {
                                         <Button variant="contained"    className={classes.button}   onClick={()=>this.redirectTo('/')}>بازگشت به صفحه اصلی</Button>
 
                                     </div>
-                                    <div className={classes.buttons} >
-                                    <Button variant="contained"    className={classes.button} onClick={()=>this.redirectTo('/user/checkout')}>بررسی خرید</Button>
-                                </div>
+
+                                    {(this.state.cart.length > 0) ?
+                                            <div className={classes.buttons} >
+                                            <Button variant="contained"    className={classes.button} onClick={()=>this.redirectTo('/user/checkout')}> بررسی خرید</Button>
+                                             </div> : ''}
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>
                                     {getStepContent(activeStep)}
                                     <div className={classes.buttons} >
-                                        {activeStep !== 0 && (
+                                        {activeStep === 1 && (
                                             <Button onClick={this.handleBack} className={classes.button}>
                                                 مرحله قبل
                                             </Button>
                                         )}
-
+                                        {activeStep === 0 && (
                                         <Button
                                             variant="contained"
-                                            color="primary"
                                             onClick={this.handleNext}
                                             className={classes.button}
                                         >
-                                            {activeStep === steps.length - 1 ? 'ثبت کد تایید' : 'مرحله بعدی'}
+                                            مرحله بعدی
                                         </Button>
-
+                                        )}
+                                        {activeStep === 1 && (
+                                        <Button
+                                            variant="contained"
+                                            onClick={this.handleNext}
+                                            className={classes.buttonconfirm}
+                                        >
+                                            ثبت کد تایید
+                                        </Button>
+                                        )}
                                     </div>
                                     <Snackbar
                                         anchorOrigin={{
@@ -258,7 +305,9 @@ class Registration extends React.Component {
                         </React.Fragment>
                     </Paper>
                 </main>
+                </MuiThemeProvider>
             </React.Fragment>
+
         );
     }
 }
@@ -267,3 +316,4 @@ Registration.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 export default withStyles(styles)(Registration);
+

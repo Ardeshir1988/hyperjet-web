@@ -12,7 +12,6 @@ header {
     display: flex;
     display: -webkit-flex;
     max-width: 960px;
-
     padding: 0 32px;
     margin:1vh auto auto;
   }
@@ -48,6 +47,7 @@ header {
 
 // Search Box
 .search {
+  display: inline-flex;
   margin-top:-.7vh;
   margin-left: 3vw;
   flex-grow: 1;
@@ -58,12 +58,13 @@ header {
   @media (max-width: 480px) {
     flex-grow: initial;
     -webkit-flex-grow: initial;
-   margin-left: auto ;
+   margin-left: 10px ;
   }
 }
 .search-form {
   display: flex;
   display: -webkit-flex;
+  height: 100%;
   @media (max-width: 480px) {
     display: none;
     position: absolute;
@@ -88,38 +89,73 @@ header {
     &:focus {
       outline: none;
     }
+    font-family: iran-sans;
+    margin: auto auto;
+    direction: rtl;
     @media (max-width: 480px) {
-      height: 32px;
-      margin: 2px 0;
+
     }
   }
   .search-button {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
     border-radius: 0 2px 2px 0;
-    background: #9929ef
-      url(https://res.cloudinary.com/sivadass/image/upload/v1494692031/icons/search.png)
-      center no-repeat;
+    background: #9929ef;
     width: 96px;
+    height: 36px;
+
+    img{
+      vertical-align: center;
+      horiz-align: center;
+      margin: auto auto;
+      height: 24px;
+      width: 24px;
+    }
+    margin: auto auto;
     @media (max-width: 480px) {
-      height: 32px;
-      margin: 2px 0;
+
+
     }
   }
 }
 @media (min-width: 481px) {
-  .mobile-search,
+  .mobile-search{
+    display: none;
+  }
   .back-button {
     display: none;
+    margin-top: 1vh;
+    margin-left: 10px;
+    margin-right: 10px;
+    img{    margin-left: 10px;
+      margin-right: 10px;
+      height: 24px;
+      width: 24px;
+    }
   }
 }
 @media (max-width: 480px) {
   .mobile-search {
     display: block;
-    margin-top: .5vh;
-
+    margin-top: .8vh;
+    margin-left: 10px;
+    img{
+      height: 24px;
+      width: 24px;
+    }
   }
   .back-button {
     display: block;
+    margin-top: 1vh;
     margin-right: 8px;
+
+    img{    margin-left: 5px;
+      margin-right: 5px;
+      height: 24px;
+      width: 24px;
+    }
   }
 }
 
@@ -290,9 +326,14 @@ header {
     object-fit: scale-down;
     max-width:85px;
     max-height:85px;
-    width: auto;
-    height: auto;
+    //width: auto;
+    //height: auto;
     margin-right: 10px;
+    width: 85px;
+    height: 85px;
+    margin-top: auto;
+    object-fit: scale-down;
+    margin: 0 auto;
   }
   .product-info {
     margin-left: 1px;
@@ -397,7 +438,7 @@ header {
 }
 .companyName{
   color: white;
-  margin-left: 25px;
+  margin-left: auto;
   margin-right: 25px;
 }
 .basketProductOperations{
@@ -409,6 +450,7 @@ header {
   }
   .operand{
     flex: 2;
+
   }
   .counter{
     margin: auto;

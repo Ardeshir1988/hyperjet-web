@@ -4,15 +4,19 @@ ul,
 ol {
   margin: 0;
   padding: 0;
+  fontFamily:'iran-sans';
 }
+
 
 body {
   color: $gray-dark;
   font-weight: 800;
   background: $gray-light-bg;
+  fontFamily:'iran-sans';
 }
 * {
   box-sizing: border-box;
+  fontFamily:'iran-sans';
 }
 ::selection {
   background: $primary-green;
@@ -27,11 +31,14 @@ body {
 input[type="number"] {
   -moz-appearance: textfield;
   margin: 0;
+  fontFamily:'iran-sans';
+
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+  fontFamily:'iran-sans';
 }
 // Searchbox Styles
 input[type="search"]::-webkit-search-decoration,
@@ -39,6 +46,7 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   -webkit-appearance: none;
+  fontFamily:'iran-sans';
 }
 strong {
   font-weight: 700;
@@ -53,6 +61,7 @@ h4,
 h5,
 h6,
 p {
+  fontFamily:'iran-sans';
   margin: 0;
 }
 ul {
@@ -63,7 +72,6 @@ button {
   border-radius: 2px;
   text-align: center;
   color: $white;
-
   border: 0;
   font-weight: 400;
   padding: 0 16px;
@@ -79,28 +87,34 @@ button {
   &:active {
     background: lighten($primary-green, 15%);
   }
+  fontFamily:'iran-sans';
 }
 
 input,
 select {
   font-size: inherit;
-  font-family: inherit;
+  fontFamily:'iran-sans';
 }
 
 form {
   margin: 0;
+  fontFamily:'iran-sans';
 }
 .page-title-bar{
-
   margin-top: -1px;
   height: 8vh;
-  background: #8235F5;
+  background: #9929ef;
   color: white;
   width: 100%;
   display: flex;
   .page-title{
     margin: auto auto;
   }
+  .page-close{
+    margin: auto 0;
+  }
+  font-family: 'iran-sans';
+
 }
 .break {
   background: #2c2c2c;

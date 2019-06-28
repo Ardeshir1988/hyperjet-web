@@ -13,6 +13,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import {createMuiTheme} from "@material-ui/core";
+import {MuiThemeProvider} from "@material-ui/core/styles";
 
 
 const styles = theme => ({
@@ -30,6 +32,30 @@ const styles = theme => ({
     }
 });
 
+const theme = createMuiTheme({
+    direction: 'rtl',
+    typography: {
+        // Use the system font.
+        fontFamily:
+            'iran-sans',
+    },
+    palette: {
+        width:'90%',
+        primary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#9929ef',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated to contast with palette.primary.main
+        },
+        secondary: {
+            light: '#1ab91d',
+            main: '#1ab91d',
+            // dark: will be calculated from palette.secondary.main,
+            contrastText: '#ffffff',
+        },
+        // error: will us the default color
+    },
+})
 
 class OrderStatus extends React.Component {
 
@@ -68,6 +94,7 @@ class OrderStatus extends React.Component {
 
 
         return (
+            <MuiThemeProvider theme={theme}>
             <div>
                 <Dialog
                     style={{direction:'rtl'}}
@@ -81,8 +108,7 @@ class OrderStatus extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-
-                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" autoFocus>
+                        <Button variant="contained" onClick={()=>this.backHome()} color="secondary" >
                             بازگشت
                         </Button>
                     </DialogActions>
@@ -91,12 +117,11 @@ class OrderStatus extends React.Component {
                     <Typography variant="h6" gutterBottom className="page-title">وضعیت سفارش</Typography>
                 </div>
                 <CssBaseline />
-
                 <main className={classes.layout}>
-
                     {this.state.orders.map(order=><OrderCart order={order} />)}
                 </main>
             </div>
+            </MuiThemeProvider>
         );
     }
 }
