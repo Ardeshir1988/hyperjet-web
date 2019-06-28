@@ -26,6 +26,7 @@ class App extends React.Component {
         super();
         this.state = {
             products: [],
+            banners:[],
             cart: this.initialBasket(),
             term: "",
             category: "",
@@ -50,7 +51,11 @@ class App extends React.Component {
         axios.get(Urls.baseUrl()+"user/getusersetting", {headers:{'Authorization': Urls.getAuthToken()}})
             .then(response => {
                 const setting=response.data;
-                this.setState({deliveryCost:setting.deliveryCost,threshold:setting.threshold})
+                this.setState({deliveryCost:setting.deliveryCost,threshold:setting.threshold});
+                if (setting.urlFirst !== '')
+                    this.setState({banners:[...this.state.banners, setting.urlFirst]});
+                if (setting.urlSecond !=='')
+                    this.setState({banners:[...this.state.banners, setting.urlSecond]});
             });
     }
 
@@ -227,7 +232,8 @@ class App extends React.Component {
                         productQuantity={this.state.moq}
                         addToCart={this.handleAddToCart}/>
                     <Switch>
-                        <Route exact path={'/'} render={props => <Categories {...props} />}/>
+                        <Route exact path={'/'} render={props => <Categories {...props}
+                                                                                banners={this.state.banners}/>}/>
                         <Route path={'/cat_products'} render={props =>
                                                                                             <div>
                                                                                                 <Types {...props} />

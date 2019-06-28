@@ -63,12 +63,12 @@ class Categories extends Component {
     }
     handleOpen() {
         Dm.setSecondTime();
-        this.setState({isFirst:'false'})
+        this.setState({isFirst:'false'});
         this.setState({open:true});
     }
     handleURL() {
         Dm.setSecondTime();
-        this.setState({isFirst:'false'})
+        this.setState({isFirst:'false'});
         window.location.href='https://play.google.com/store/apps/details?id=ir.mobile.hyper&hl';
     }
     handleClose() {
@@ -101,29 +101,20 @@ class Categories extends Component {
             <Dialog style={{direction:'rtl'}} fullScreen open={this.state.open} onClose={()=>this.handleClose()} TransitionComponent={Transition}>
                 <div className="ios-guide">
                <div className="ios-dialog-top">
-
                        <div className="page-title">راهنما</div>
-
                 <div style={{marginTop:"9px",marginLeft:"9px"}} onClick={()=>this.handleClose()}>
                     <BackIcon />
                 </div>
                </div>
-
                     <div className="ios-dialog-content">
                     <IOSTutorial />
                     </div>
                 </div>
             </Dialog>
 
-
-            <SwiperSlide/>
+            <SwiperSlide banners={this.props.banners}/>
 
             <div className="categories">{categoriesData}</div></div>:<Loading />
-
-
-
-
-
 
             }
             { (window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches)?

@@ -1,49 +1,26 @@
-import React from "react";
-import { MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBContainer } from
-        "mdbreact";
+import React, { Component } from 'react';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
-const SwiperSlide = () => {
-    return (
-        <MDBContainer>
-            <MDBCarousel
-                activeItem={1}
-                length={3}
-                showControls={true}
-                showIndicators={true}
-                className="z-depth-1"
+class SwiperSlide extends Component {
+    render() {
+        return (
+            <Carousel className="banner"
+                      autoPlay={true}
+                      stopOnHover={true}
+                      interval={3000}
+                      transitionTime={300}
+                      showIndicators={false}
+                      showThumbs={false}
+                      showStatus={false}
             >
-                <MDBCarouselInner>
-                    <MDBCarouselItem itemId="1">
-                        <MDBView>
-                            <img
-                                className="d-block w-100"
-                                src="https://mdbootstrap.com/img/Photos/Slides/img%20(130).jpg"
-                                alt="First slide"
-                            />
-                        </MDBView>
-                    </MDBCarouselItem>
-                    <MDBCarouselItem itemId="2">
-                        <MDBView>
-                            <img
-                                className="d-block w-100"
-                                src="https://mdbootstrap.com/img/Photos/Slides/img%20(129).jpg"
-                                alt="Second slide"
-                            />
-                        </MDBView>
-                    </MDBCarouselItem>
-                    <MDBCarouselItem itemId="3">
-                        <MDBView>
-                            <img
-                                className="d-block w-100"
-                                src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
-                                alt="Third slide"
-                            />
-                        </MDBView>
-                    </MDBCarouselItem>
-                </MDBCarouselInner>
-            </MDBCarousel>
-        </MDBContainer>
-    );
+                { this.props.banners.map(banner=>
+               <div >
+                 <img  src={'https://maxproapp.com/files/'+banner} />
+                </div>
+                )}
+            </Carousel>
+        );
+    }
 }
-
-export default SwiperSlide;
+export default SwiperSlide

@@ -467,3 +467,14 @@ header {
     background: lighten(#9929ef, 12%);
   }
 }
+.banner{
+  display: flex;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  padding-top: 1px;
+  padding-bottom: 6px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
