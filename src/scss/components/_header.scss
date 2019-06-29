@@ -480,16 +480,25 @@ header {
   max-width: 960px;
   margin: 0 auto;
   width: 100%;
-
 }
 
+.delivery-header{
+  direction: rtl;
+  background: #0fa716;
+  width: 100%;
+  text-align: center;
+  padding: 2px;
+  font-size: 13px;
+  color: #ffffff;
+  border: 0;
+}
 .delivery-detail{
   direction: rtl;
   background: #ffffff;
   width: 100%;
   text-align: center;
   padding: 2px;
-  font-size: 14px;
-  color: #141414;
+  font-size: 12px;
+  color: #000000;
   border: 0;
 }

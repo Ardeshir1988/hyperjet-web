@@ -53,13 +53,6 @@ class Categories extends Component {
         this.setState({cats});
         this.setState({loaded:true})
     });
-        const browser = detect();
-
-        if (browser) {
-            console.log(browser.name);
-            console.log(browser.version);
-            console.log(browser.os);
-        }
     }
     handleOpen() {
         Dm.setSecondTime();
@@ -77,11 +70,6 @@ class Categories extends Component {
     render() {
         let categoriesData;
         const browser = detect();
-
-            console.log(browser.name);
-            console.log(browser.version);
-            console.log(browser.os);
-
 
         categoriesData=    this.state.cats.map(cat => {
                 return (

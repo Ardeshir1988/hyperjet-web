@@ -86,7 +86,7 @@ class PreviousOrderCart extends React.Component {
                             </div>
                         </Grid>
                         <Grid item xs={6} >
-                            <div style={{textAlign: "left"}}>
+                            <div style={{textAlign: "left", direction:"rtl"}}>
                                 <NumberFormat value={this.props.order.orderTotalAmount-this.props.order.orderTotalDiscount} displayType={'text'} thousandSeparator={true} renderText={value =>  <h4 className="product-price">{value + ' تومان'}</h4>} />
                             </div>
                         </Grid>
@@ -97,7 +97,7 @@ class PreviousOrderCart extends React.Component {
                             </div>
                         </Grid>
                         <Grid item xs={6} >
-                            <div style={{textAlign: "left"}}>
+                            <div style={{textAlign: "left", direction:"rtl"}}>
                                 <NumberFormat value={this.props.order.orderTotalDiscount+this.props.order.deliveryFee} displayType={'text'} thousandSeparator={true} renderText={value =>  <h4 className="product-price">{value + ' تومان'}</h4>} />
                             </div>
                         </Grid>
@@ -107,7 +107,7 @@ class PreviousOrderCart extends React.Component {
                             </div>
                         </Grid>
                         <Grid item xs={6} >
-                            <div style={{textAlign: "left"}}>
+                            <div style={{textAlign: "left", direction:"rtl"}}>
                                 <NumberFormat value={this.props.order.debt_amount} displayType={'text'} thousandSeparator={true} renderText={value =>  <h4 className="product-price">{value + ' تومان'}</h4>} />
                             </div>
                         </Grid>

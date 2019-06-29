@@ -260,12 +260,12 @@ class ReviewCheckout extends React.Component {
                                             </div>
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <div style={{textAlign: "center"}}>
+                                            <div style={{textAlign: "center", direction:"ltr"}}>
                                                 {this.state.orderDate}
                                             </div>
                                         </Grid>
                                         <Grid item xs={12}  className={classes.grid}>
-                                            <div style={{textAlign: "right", fontSize:"14px"}}>
+                                            <div style={{textAlign: "right", fontSize:"11px"}}>
                                                 جهت کسب اطلاعات بیشتر در مورد سفارش خود به قسمت وضعیت سفارش مراجعه نمایید.
                                             </div>
                                         </Grid>
@@ -281,13 +281,13 @@ class ReviewCheckout extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={()=>this.orderStatus()} color="secondary"  fullWidth={true} size={"large"}>
+                        <Button variant="contained" onClick={()=>this.orderStatus()} color="secondary"  fullWidth={true} size={"medium"}>
                             { (this.state.orderid!==0)?'وضعیت سفارش':'بازگشت'}
                         </Button>
                         <div className= "dialog-header">
 
                        </div>
-                        <Button variant="contained" onClick={()=>this.backHome()} color="primary"  fullWidth={true} size={"large"}>
+                        <Button variant="contained" onClick={()=>this.backHome()} color="primary"  fullWidth={true} size={"medium"}>
                             صفحه اصلی
                         </Button>
                     </DialogActions>

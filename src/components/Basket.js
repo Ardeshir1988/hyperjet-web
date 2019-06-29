@@ -20,6 +20,7 @@ import Grid from "@material-ui/core/Grid";
 import TimeIcon from "@material-ui/icons/AccessTime"
 import MoneyIcon from "@material-ui/icons/AttachMoney"
 import ReceiptIcon from "@material-ui/icons/Receipt"
+import Divider from "@material-ui/core/Divider";
 
 
 const styles = {
@@ -49,13 +50,13 @@ const theme = createMuiTheme({
             light: '#1ab91d',
             main: '#1ab91d',
             // dark: will be calculated from palette.secondary.main,
-            contrastText: '#ffcc00',
+
         },
         // error: will us the default color
     },
 
 
-})
+});
 
 const Snack = withStyles({
     root: {
@@ -71,7 +72,8 @@ class Basket extends React.Component {
         this.state = {
             status:false,
             msg:false,
-            open:false
+            open:false,
+            deliveryCost: 0
         };
     }
     toggleDrawer = (status) => () => {
@@ -102,12 +104,16 @@ class Basket extends React.Component {
     closeDialog(){
         this.setState({open:false});
     }
+    setDeliveryFee(cost){
+        this.setState({deliveryCost: cost});
+    }
+
     render() {
         console.log("=======RenderBasket");
         const quantity='تعداد';
         const totalAmount='مجموع خرید';
         const deliveryFee='هزینه ارسال';
-        const deliveryFree=' (رایگان)';
+        const deliveryFree=' (توضیحات)';
         const checkout='ادامه خرید';
         const finalAmount='مبلغ قابل پرداخت';
         const discount='تخفیف';
@@ -144,16 +150,16 @@ class Basket extends React.Component {
                                 </div>
                             </div>
                         </DialogTitle>
+
                         <DialogContent style={{padding:"0"}}>
                             <DialogContentText>
-
                                 <Grid container spacing={24} className="delivery-detail">
-                                    <Grid item xs={4} >
+                                    <Grid item xs={3} >
                                         <div style={{textAlign: "center"}}>
                                             <TimeIcon />
                                         </div>
                                     </Grid>
-                                    <Grid item xs={4}>
+                                    <Grid item xs={5}>
                                         <div style={{textAlign: "center"}}>
                                             <MoneyIcon />
                                         </div>
@@ -164,15 +170,18 @@ class Basket extends React.Component {
                                         </div>
                                     </Grid>
 
-                                    <Grid item xs={4}>
+                                    <Grid item xs={12} >
+                                        <Divider />
+                                    </Grid>
+                                    <Grid item xs={3}>
                                         <div style={{textAlign: "center"}} >
                                              ۷ الی ۲۴
                                         </div>
                                     </Grid>
 
-                                    <Grid item xs={4}>
+                                    <Grid item xs={5}>
                                         <div style={{textAlign: "center"}} >
-                                             ۳۰ هزار تومان
+                                               ۳۰ هزار تومان به بالا
                                         </div>
                                     </Grid>
                                     <Grid item xs={4}>
@@ -181,13 +190,17 @@ class Basket extends React.Component {
                                         </div>
                                     </Grid>
 
-                                    <Grid item xs={4}>
+                                    <Grid item xs={12} >
+                                        <Divider />
+                                    </Grid>
+
+                                    <Grid item xs={3}>
                                         <div style={{textAlign: "center"}} >
                                              ۲۴ الی ۷
                                         </div>
                                     </Grid>
 
-                                    <Grid item xs={4}>
+                                    <Grid item xs={5}>
                                         <div style={{textAlign: "center"}} >
                                              تمامی سفارشات
                                         </div>
@@ -196,6 +209,10 @@ class Basket extends React.Component {
                                         <div style={{textAlign: "center"}} >
                                               شامل هزینه
                                         </div>
+                                    </Grid>
+
+                                    <Grid item xs={12} >
+                                        <Divider />
                                     </Grid>
                                 </Grid>
 
@@ -211,10 +228,8 @@ class Basket extends React.Component {
 
 
                 <Drawer anchor="left" open={(cart.items.length>0)?this.state.status:this.closeDrawer()}  onClose={this.toggleDrawer( false)}>
-                    <div
-                        tabIndex={0}
-                        role="button">
-
+                    <div>
+                         <div className="delivery-header"> ارسال رایگان سفارش ۳۰ هزار تومان به بالا </div>
                         <div className={classes.list}>
                             <List>
                                 {cart.items.map(p=> {
