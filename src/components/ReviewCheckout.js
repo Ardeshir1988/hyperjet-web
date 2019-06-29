@@ -237,8 +237,6 @@ class ReviewCheckout extends React.Component {
                         </div>
                     </DialogTitle>
 
-
-
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
 

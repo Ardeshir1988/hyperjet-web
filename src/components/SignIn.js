@@ -61,12 +61,12 @@ render() {
             <Paper className={classes.paper}>
 
                 <Typography component="h1" variant="h6">
-                    ثبت شماره
+                     شماره همراه
                 </Typography>
                 <form className={classes.form}>
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">شماره موبایل</InputLabel>
-                        <Input  id="mobile" name="mobile" onChange={event => this.handleChange(event)} autoComplete="موبایل" autoFocus/>
+                        {/*<InputLabel htmlFor="email">شماره موبایل</InputLabel>*/}
+                        <Input  id="mobile" type={"number"} name="mobile" onChange={event => this.handleChange(event)} autoComplete="موبایل" autoFocus/>
                     </FormControl>
                     <div >
                     {/*<Button*/}

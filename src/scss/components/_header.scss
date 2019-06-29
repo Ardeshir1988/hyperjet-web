@@ -4,10 +4,10 @@ header {
   box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.033);
   position: fixed;
   top: 0;
-
   width: 100%;
   z-index: 100;
   animation: slideUp 300ms linear;
+  min-height: 52px;
   .container {
     display: flex;
     display: -webkit-flex;
@@ -375,14 +375,16 @@ header {
 }
 
 .basketListDetail {
+
     display: flex;
   flex-direction: column;
 
   .basketDetail {
-    margin-top:.75vh;
+    margin-top:.3vh;
     display: flex;
 
     .title {
+      direction: rtl;
       margin-right: 1vw;
       font-size: 14px;
       @media (max-width: 480px) {
@@ -398,6 +400,7 @@ header {
         margin-left: 5vw;
       }
     }
+
   }
 }
 
@@ -460,7 +463,7 @@ header {
 .basket-button{
   background:#9929ef;
   color:white;
-  margin: 25px auto;
+  margin: 10px auto;
   min-width:90%;
   font-size: 18px;
   &:hover {
@@ -477,4 +480,16 @@ header {
   max-width: 960px;
   margin: 0 auto;
   width: 100%;
+
+}
+
+.delivery-detail{
+  direction: rtl;
+  background: #ffffff;
+  width: 100%;
+  text-align: center;
+  padding: 2px;
+  font-size: 14px;
+  color: #141414;
+  border: 0;
 }

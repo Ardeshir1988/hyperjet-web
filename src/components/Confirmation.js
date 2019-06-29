@@ -64,8 +64,8 @@ class SignIn extends React.Component{
                     </Typography>
                     <form className={classes.form}>
                         <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="email">کد تایید</InputLabel>
-                            <Input  id="mobile" name="mobile" onChange={event => this.handleChange(event)} autoComplete="موبایل" autoFocus/>
+                            {/*<InputLabel htmlFor="email">کد تایید</InputLabel>*/}
+                            <Input  id="mobile" name="mobile" type={"number"} onChange={event => this.handleChange(event)} autoComplete="موبایل" autoFocus/>
                         </FormControl>
                         <div >
                             {/*<Button*/}

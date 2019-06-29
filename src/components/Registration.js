@@ -223,9 +223,7 @@ class Registration extends React.Component {
                     <Typography variant="h5" gutterBottom className="page-title">ثبت نام</Typography>
                 </div>
                 <main className={classes.layout}>
-
                     <Paper className={classes.paper}>
-
                         <Stepper   activeStep={activeStep} className={classes.stepper}>
                             {steps.map(label => (
                                 <Step key={label}>
@@ -234,8 +232,6 @@ class Registration extends React.Component {
                             ))}
                         </Stepper>
                         <React.Fragment>
-
-
                             {(this.state.loaded)?activeStep === steps.length ? (
                                 <React.Fragment>
                                     <div style={{textAlign:"center"}} >

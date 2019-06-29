@@ -220,6 +220,7 @@ class App extends React.Component {
                 }}
                 >
                 <div className="container">
+
                     <Header
                         cartBounce={this.state.cartBounce}
                         cartItems={this.state.cart}

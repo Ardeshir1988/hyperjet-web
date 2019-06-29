@@ -120,7 +120,6 @@ class SideMenu extends React.Component {
                     <DialogTitle id="alert-dialog-title">
                         <div className= "dialog-header-success">
                             <Link color={"primary"} href="tel:02122823567" > <div className="img-logo">
-
                                     <img src={SupportIcon}/>
                             </div>
                                 </Link>

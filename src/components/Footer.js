@@ -23,6 +23,10 @@ class Footer extends React.Component {
         this.setState({open: true});
     }
 
+    handleURLEnamad() {
+        window.location.href = 'https://trustseal.enamad.ir/Verify.aspx?id=45299&amp;p=btgu8urloClvVIdv';
+    }
+
     handleURL() {
         Dm.setSecondTime();
         this.setState({isFirst: 'false'})
@@ -84,7 +88,7 @@ class Footer extends React.Component {
                         <div className='row'>
                             <img className="img-namad"
                                  src="https://trustseal.enamad.ir/logo.aspx?id=45299&amp;p=btgu8urloClvVIdv" alt=""
-                                 onClick="window.open(&quot;https://trustseal.enamad.ir/Verify.aspx?id=45299&amp;p=btgu8urloClvVIdv&quot;, &quot;Popup&quot;,&quot;toolbar=no, location=no, statusbar=no, menubar=no, scrollbars=1, resizable=0, width=580, height=600, top=30&quot;)"
+                                 onClick={() => this.handleURLEnamad()}
                                  style={{cursor: "pointer"}} id="btgu8urloClvVIdv"/>
 
                             <div className='col-sm-6'>
