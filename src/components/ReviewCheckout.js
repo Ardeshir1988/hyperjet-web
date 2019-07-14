@@ -87,14 +87,15 @@ class ReviewCheckout extends React.Component {
                 this.setState({cost:response.data.deliveryCost});
                 axios.post(Urls.baseUrl()+"user/getuseraddress",{key:'',message:'',token:Dm.getUserData().token},{headers:{'Authorization': Urls.getAuthToken()}})
                     .then(response=>{
-                            const address=response.data[0];
-                            if (address.addressDetail !== undefined)
-                                this.setState({
-                                    addressDetail:address.addressDetail,
-                                    suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId),
-                                    addressId:address.addressId,
-                                    addressArea:address.addressArea
-                                })
+                        const address=response.data[0];
+                        if (response.data[0] !== undefined) {
+                            this.setState({
+                                addressDetail:address.addressDetail,
+                                suburb:this.state.suburbs.filter(s=>s.tblsuburbName===address.addressArea).map(s=>s.tblsuburbId),
+                                addressId:address.addressId,
+                                addressArea:address.addressArea
+                            })
+                        }
                         this.setState({sentRequest : false});
                     });
             });
