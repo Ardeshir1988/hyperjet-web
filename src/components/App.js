@@ -190,6 +190,7 @@ class App extends React.Component {
 
     render() {
         if (window.location.pathname.startsWith('/user')) {
+
             let path = window.location.pathname.split('/');
             switch (path[2]) {
                 case "checkout":
@@ -202,11 +203,12 @@ class App extends React.Component {
                     return (<Registration/>);
                 case "orders":
                     return (<PreviousOrders/>);
-                case "payment":
-                    return (<PaymentStatus/>);
+                // case "payment":
+                //     return (<PaymentStatus/>);
                 default:
                     return (<Checkout/>);
             }
+
         } else {
             // this.updateBasket();
             return (
@@ -258,9 +260,8 @@ class App extends React.Component {
                                                                                       productQuantity={this.state.quantity}
                                                                                       updateQuantity={this.updateQuantity}
                                                                                       openModal={this.openModal}/>}/>
+                        <Route path={'/payment'} render={props => <PaymentStatus/> } />
                     </Switch>
-
-
                     <QuickView
                         product={this.state.quickViewProduct}
                         openModal={this.state.modalActive}
