@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter,Switch,Route} from 'react-router-dom'
+import {HashHistory,Switch,Route} from 'react-router-dom'
 import Header from "./Header";
 import Categories from "./Categories";
 import Products from "./Products";
@@ -171,6 +171,9 @@ class App extends React.Component {
             modalActive: false
         });
     }
+    randomGen(){
+      return   Math.random();
+    }
 
     // updateBasket(){
     //         if (Dm.getBasketData()) {
@@ -186,6 +189,9 @@ class App extends React.Component {
             Dm.setEmptyBasket();
             return [];
         }
+        }
+        onChangeRoute(){
+        console.log("asdfochangeeeeeeeeeeeeeeeeeeeee");
         }
 
     render() {
@@ -254,7 +260,8 @@ class App extends React.Component {
                                                                                   productQuantity={this.state.quantity}
                                                                                   updateQuantity={this.updateQuantity}
                                                                                   openModal={this.openModal}/>}/>
-                        <Route path={'/searched_products'} render={props => <Products {...props}
+                        <Route path={'/searched_products/:keyword'} render={props => <Products {...props}
+                                                                                               key={this.randomGen()}
                                                                                       searchTerm={this.state.term}
                                                                                       addToCart={this.handleAddToCart}
                                                                                       productQuantity={this.state.quantity}

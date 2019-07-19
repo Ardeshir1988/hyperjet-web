@@ -5,6 +5,7 @@ import Basket from "./Basket";
 import Search from "../assets/searchicon.svg";
 import BackIcon from "../assets/go-back-left-arrow.svg";
 
+
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -17,10 +18,9 @@ class Header extends Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
-        console.log("before handele search");
 
-            window.location.href='/searched_products?keyword=' + this.state.keyword;
+        console.log("before handele search");
+            window.location.href='/#/searched_products/' + this.state.keyword;
             console.log("after handele search");
 
     }

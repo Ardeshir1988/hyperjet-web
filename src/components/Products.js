@@ -19,6 +19,8 @@ class Products extends Component {
         page:0
     };
 
+
+
     fetchMoreData = () => {
         if (this.state.items.length >= this.state.productList.length) {
             this.setState({ hasMore: false });
@@ -36,18 +38,23 @@ class Products extends Component {
     };
 
     componentDidMount() {
+        const { match: { params } } = this.props;
         const values = queryString.parse(this.props.location.search);
         let typeid=values.typeid;
-        let keyword=values.keyword;
-        console.log('keyword======'+keyword);
+        let keyword=params.keyword;
+        console.log('keyword====='+keyword);
         console.log('typeid======'+typeid);
         if(typeid!==undefined) {
             let url = Urls.baseUrl() + "product/productbytype?typeid=" + typeid;
             axios.get(url, {headers: {'Authorization': Urls.getAuthToken()}})
                 .then(response => {
                     const productList = response.data;
+                    if (productList !== '') {
                     this.setState({productList});
                     this.setState({items: productList.slice(0, (productList.length>=20)?20:productList.length)});
+                        }else {
+                        this.setState({productList:[],items:[]})
+                    }
                     this.setState({loaded:true});
                 });
             // this.setState({typeid: typeid})
@@ -81,7 +88,6 @@ class Products extends Component {
         }
 
         productsData=
-
             this.state.items.map((i, index) => (
 
                 <Product
@@ -102,9 +108,7 @@ class Products extends Component {
             ));
 
         let view;
-        if (productsData.length <= 0 && !term) {
-
-        } else if (productsData.length <= 0 && term) {
+       if (productsData.length===0) {
             view = <NoResults />;
         } else {
 
